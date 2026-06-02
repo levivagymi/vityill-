@@ -95,6 +95,7 @@ export default function CustomCursor() {
       <div
         ref={outerRef}
         aria-hidden
+        className="ce-cursor-outer"
         style={{
           position: 'fixed',
           top: 0,
@@ -113,6 +114,7 @@ export default function CustomCursor() {
       <div
         ref={innerRef}
         aria-hidden
+        className="ce-cursor-inner"
         style={{
           position: 'fixed',
           top: 0,

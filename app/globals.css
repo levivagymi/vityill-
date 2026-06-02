@@ -172,6 +172,14 @@
   }
 }
 
+/* Hide custom cursor rings while the cinematic section is active.
+   data-cinematic is toggled on <html> by CinematicStory ScrollTrigger callbacks. */
+[data-cinematic="true"] .ce-cursor-outer,
+[data-cinematic="true"] .ce-cursor-inner {
+  opacity: 0 !important;
+  transition: opacity 0.25s ease;
+}
+
 /* Theme-responsive section and surface backgrounds.
    Unlayered rules have higher cascade priority than @layer utilities,
    so these override hardcoded Tailwind bg classes without !important. */

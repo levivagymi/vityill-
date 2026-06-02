@@ -4,6 +4,7 @@ import { DictProvider } from '@/components/providers/DictProvider'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import Hero from '@/components/sections/Hero'
+import CinematicStory from '@/components/sections/CinematicStory'
 import About from '@/components/sections/About'
 import Amenities from '@/components/sections/Amenities'
 import Rooms from '@/components/sections/Rooms'
@@ -22,6 +23,7 @@ export default async function LangPage({ params }: PageProps<'/[lang]'>) {
       <Navbar />
       <main>
         <Hero />
+        <CinematicStory />
         <About />
         <Amenities />
         <Rooms />
