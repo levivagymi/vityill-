@@ -1,0 +1,81 @@
+'use client'
+import { useRef, useEffect } from 'react'
+import {
+  Flame, Waves, Trees, Lightbulb, Mountain, Wind,
+  Tv, ChefHat, UtensilsCrossed,
+} from 'lucide-react'
+import gsap, { ScrollTrigger } from '@/lib/gsap'
+import { useDict } from '@/components/providers/DictProvider'
+
+type AmenityKey = 'sauna' | 'pool' | 'forest' | 'lighting' | 'view' | 'ac' | 'tv' | 'kitchen' | 'grill'
+
+const AMENITY_ICONS: Record<AmenityKey, React.ElementType> = {
+  sauna: Flame, pool: Waves, forest: Trees, lighting: Lightbulb,
+  view: Mountain, ac: Wind, tv: Tv, kitchen: ChefHat, grill: UtensilsCrossed,
+}
+
+const AMENITY_KEYS: AmenityKey[] = ['sauna', 'pool', 'forest', 'lighting', 'view', 'ac', 'tv', 'kitchen', 'grill']
+
+export default function Amenities() {
+  const dict = useDict()
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const cardsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.amenities-header', { opacity: 0, y: 40 }, {
+        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
+      })
+      gsap.fromTo('.amenity-card', { opacity: 0, y: 50, scale: 0.95 }, {
+        opacity: 1, y: 0, scale: 1, stagger: 0.07, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: cardsRef.current, start: 'top 80%' },
+      })
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <section id="amenities" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.03] via-transparent to-foreground/[0.05]" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="amenities-header text-center mb-16 lg:mb-20" style={{ opacity: 0 }}>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="h-px w-10 bg-foreground/30" />
+            <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.3em]">{dict.amenities.label}</span>
+            <div className="h-px w-10 bg-foreground/30" />
+          </div>
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl mb-4">{dict.amenities.title}</h2>
+          <p className="font-sans text-base max-w-xl mx-auto">{dict.amenities.subtitle}</p>
+        </div>
+
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+          {AMENITY_KEYS.map((key) => {
+            const Icon = AMENITY_ICONS[key]
+            return (
+              <div
+                key={key}
+                className="amenity-card group relative bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 lg:p-7
+                           hover:border-foreground/15 hover:bg-foreground/[0.06] transition-all duration-300
+                           hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/10"
+                style={{ opacity: 0 }}
+              >
+                <div className="w-12 h-12 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center mb-5
+                                group-hover:bg-foreground/[0.12] group-hover:border-foreground/20 transition-all duration-300">
+                  <Icon size={22} className="text-foreground" />
+                </div>
+                <h3 className="font-heading text-lg mb-2">{dict.amenities[key].name}</h3>
+                <p className="font-sans text-sm leading-relaxed">{dict.amenities[key].desc}</p>
+                <div className="absolute top-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute top-3 right-3 w-px h-8 bg-gradient-to-b from-foreground/30 to-transparent" />
+                  <div className="absolute top-3 right-3 w-8 h-px bg-gradient-to-l from-foreground/30 to-transparent" />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}

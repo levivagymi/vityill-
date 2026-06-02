@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { ChevronDown } from 'lucide-react'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
-import StringCanvas from '@/components/engine/StringCanvas'
 
 export default function Hero() {
   const dict = useDict()
@@ -71,8 +70,6 @@ export default function Hero() {
 
       <div ref={overlayRef} className="absolute inset-0 bg-[#0a1f14]" style={{ opacity: 0.5 }} />
       <div className="absolute inset-0 bg-gradient-to-b from-[#1A4731]/30 via-transparent to-[#1A4731]/70" />
-
-      <StringCanvas sectionRef={sectionRef} />
 
       <div
         ref={contentRef}

@@ -1,26 +1,200 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-sans: var(--font-inter);
+  --font-mono: ui-monospace, monospace;
+  --font-heading: var(--font-playfair);
+
+  --color-forest: #1A4731;
+  --color-cream: #FFF4CC;
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Light mode */
+:root {
+  color-scheme: light;
+  --background: #FFF4CC;
+  --foreground: #1A4731;
+  --card: #FFF4CC;
+  --card-foreground: #1A4731;
+  --popover: #FFF4CC;
+  --popover-foreground: #1A4731;
+  --primary: #1A4731;
+  --primary-foreground: #FFF4CC;
+  --secondary: rgba(26,71,49,0.08);
+  --secondary-foreground: #1A4731;
+  --muted: rgba(26,71,49,0.06);
+  --muted-foreground: rgba(26,71,49,0.55);
+  --accent: rgba(26,71,49,0.08);
+  --accent-foreground: #1A4731;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(26,71,49,0.12);
+  --input: rgba(26,71,49,0.12);
+  --ring: #1A4731;
+  --chart-1: #1A4731;
+  --chart-2: #FFF4CC;
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: #FFF4CC;
+  --sidebar-foreground: #1A4731;
+  --sidebar-primary: #1A4731;
+  --sidebar-primary-foreground: #FFF4CC;
+  --sidebar-accent: rgba(26,71,49,0.08);
+  --sidebar-accent-foreground: #1A4731;
+  --sidebar-border: rgba(26,71,49,0.12);
+  --sidebar-ring: #1A4731;
+}
+
+/* Dark mode — deep forest palette */
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #1A4731;
+  --foreground: #FFF4CC;
+  --card: #152d20;
+  --card-foreground: #FFF4CC;
+  --popover: #152d20;
+  --popover-foreground: #FFF4CC;
+  --primary: #FFF4CC;
+  --primary-foreground: #1A4731;
+  --secondary: rgba(255,244,204,0.06);
+  --secondary-foreground: #FFF4CC;
+  --muted: rgba(255,244,204,0.05);
+  --muted-foreground: rgba(255,244,204,0.5);
+  --accent: rgba(255,244,204,0.06);
+  --accent-foreground: #FFF4CC;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgba(255,244,204,0.08);
+  --input: rgba(255,244,204,0.08);
+  --ring: #FFF4CC;
+  --chart-1: #FFF4CC;
+  --chart-2: #1A4731;
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: #152d20;
+  --sidebar-foreground: #FFF4CC;
+  --sidebar-primary: #FFF4CC;
+  --sidebar-primary-foreground: #1A4731;
+  --sidebar-accent: rgba(255,244,204,0.06);
+  --sidebar-accent-foreground: #FFF4CC;
+  --sidebar-border: rgba(255,244,204,0.08);
+  --sidebar-ring: #FFF4CC;
+}
+
+[data-theme="light"] {
+  --background: #FFF4CC;
+  --foreground: #1A4731;
+  --card: #FFF4CC;
+  --card-foreground: #1A4731;
+  --popover: #FFF4CC;
+  --popover-foreground: #1A4731;
+  --primary: #1A4731;
+  --primary-foreground: #FFF4CC;
+  --secondary: rgba(26,71,49,0.08);
+  --secondary-foreground: #1A4731;
+  --muted: rgba(26,71,49,0.06);
+  --muted-foreground: rgba(26,71,49,0.55);
+  --accent: rgba(26,71,49,0.08);
+  --accent-foreground: #1A4731;
+  --border: rgba(26,71,49,0.12);
+  --input: rgba(26,71,49,0.12);
+  --ring: #1A4731;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
   }
 }
 
-body {
-  background: var(--background);
+[id] {
+  scroll-margin-top: 80px;
+}
+
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Theme-responsive section and surface backgrounds.
+   Unlayered rules have higher cascade priority than @layer utilities,
+   so these override hardcoded Tailwind bg classes without !important. */
+/* Unlayered — higher cascade priority than @layer utilities.
+   Overrides hardcoded Tailwind bg/text classes in sections for both themes. */
+section {
+  background-color: var(--background);
+}
+footer {
+  background-color: var(--card);
+}
+
+/* Headings and body text adapt to the active theme palette */
+section h1, section h2, section h3, section h4 {
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+section p, section span {
+  color: var(--muted-foreground);
+}
+
+/* CTA buttons always invert: fg bg with bg text */
+section button[class*="bg-foreground"],
+section a[class*="bg-foreground"] {
+  background-color: var(--foreground);
+  color: var(--background);
 }
