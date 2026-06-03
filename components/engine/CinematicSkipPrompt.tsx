@@ -19,8 +19,10 @@ export default function CinematicSkipPrompt() {
 
   // Unmount cleanup: kill in-flight tweens and ensure Lenis is re-started
   useEffect(() => {
+    const card    = cardRef.current
+    const overlay = overlayRef.current
     return () => {
-      gsap.killTweensOf([cardRef.current, overlayRef.current])
+      gsap.killTweensOf([card, overlay])
       lenis?.start()
     }
   }, [lenis])
