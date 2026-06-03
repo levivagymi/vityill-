@@ -3,7 +3,6 @@ import { getDictionary, hasLocale } from './dictionaries'
 import { DictProvider } from '@/components/providers/DictProvider'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import Hero from '@/components/sections/Hero'
 import CinematicStory from '@/components/sections/CinematicStory'
 import About from '@/components/sections/About'
 import Amenities from '@/components/sections/Amenities'
@@ -22,7 +21,6 @@ export default async function LangPage({ params }: PageProps<'/[lang]'>) {
     <DictProvider dict={dict}>
       <Navbar />
       <main>
-        <Hero />
         <CinematicStory />
         <About />
         <Amenities />
