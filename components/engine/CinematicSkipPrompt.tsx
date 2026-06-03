@@ -12,13 +12,18 @@ export default function CinematicSkipPrompt() {
 
   // Show after 1s; skip if already seen this session
   useEffect(() => {
-    if (typeof sessionStorage !== 'undefined' &&
-        sessionStorage.getItem('cinematic-prompt-seen')) {
-      return
-    }
+    if (sessionStorage.getItem('cinematic-prompt-seen')) return
     const timer = setTimeout(() => setVisible(true), 1000)
     return () => clearTimeout(timer)
   }, [])
+
+  // Unmount cleanup: kill in-flight tweens and ensure Lenis is re-started
+  useEffect(() => {
+    return () => {
+      gsap.killTweensOf([cardRef.current, overlayRef.current])
+      lenis?.start()
+    }
+  }, [lenis])
 
   // Animate in + lock scroll when visible becomes true
   useEffect(() => {
@@ -61,7 +66,8 @@ export default function CinematicSkipPrompt() {
 
   const handleSkip = () =>
     dismiss(() => {
-      document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+      const about = document.getElementById('about')
+      if (about) lenis?.scrollTo(about)
     })
 
   if (!visible) return null
