@@ -11,6 +11,7 @@ import Gallery from '@/components/sections/Gallery'
 import Booking from '@/components/sections/Booking'
 import Location from '@/components/sections/Location'
 import Testimonials from '@/components/sections/Testimonials'
+import CinematicSkipPrompt from '@/components/engine/CinematicSkipPrompt'
 
 export default async function LangPage({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params
@@ -19,6 +20,7 @@ export default async function LangPage({ params }: PageProps<'/[lang]'>) {
 
   return (
     <DictProvider dict={dict}>
+      <CinematicSkipPrompt />
       <Navbar />
       <main>
         <CinematicStory />
