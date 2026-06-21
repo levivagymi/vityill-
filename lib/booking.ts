@@ -1,5 +1,8 @@
 import { z } from 'zod'
 
+/** Set to true when the site is ready to accept real bookings. */
+export const BOOKING_ENABLED = false
+
 /** Nightly prices in EUR, indicative, for two guests. */
 export const ROOM_PRICES = { room1: 120, room2: 100, both: 200 } as const
 export const CLEANING_FEE = 35 // EUR, one-off

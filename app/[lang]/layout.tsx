@@ -10,6 +10,7 @@ import { DictProvider } from '@/components/providers/DictProvider'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import CookieBanner from '@/components/layout/CookieBanner'
+import DevNoticeModal from '@/components/layout/DevNoticeModal'
 
 type Props = { children: React.ReactNode; params: Promise<{ lang: string }> }
 
@@ -55,6 +56,7 @@ export default async function LangLayout({ children, params }: Props) {
     <ThemeProvider>
       <LenisProvider>
         <DictProvider dict={dict}>
+          <DevNoticeModal />
           <LangUpdater lang={lang} />
           <PageTransitionOverlay />
           <CustomCursor />

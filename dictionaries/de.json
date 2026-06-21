@@ -196,6 +196,7 @@
     "next": "Weiter",
     "back": "Zurück",
     "confirm": "Buchung bestätigen",
+    "disabledNotice": "Die Buchungsfunktion ist derzeit nicht aktiv – dies ist eine Vorschauversion.",
     "nights": "Nächte",
     "nightLabelShort": "Nacht",
     "estimatedTotal": "Geschätzter Gesamtbetrag",

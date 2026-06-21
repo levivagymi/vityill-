@@ -196,6 +196,7 @@
     "next": "Continue",
     "back": "Back",
     "confirm": "Confirm booking",
+    "disabledNotice": "Booking is currently unavailable – this is a preview version.",
     "nights": "nights",
     "nightLabelShort": "night",
     "estimatedTotal": "Estimated total",

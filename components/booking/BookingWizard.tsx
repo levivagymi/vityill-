@@ -12,7 +12,7 @@ import {
 import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { href } from '@/lib/nav'
-import { COUNTRIES, ROOM_PRICES, CLEANING_FEE, nightsBetween, estimateTotal, type RoomChoice } from '@/lib/booking'
+import { BOOKING_ENABLED, COUNTRIES, ROOM_PRICES, CLEANING_FEE, nightsBetween, estimateTotal, type RoomChoice } from '@/lib/booking'
 import type { Locale } from '@/lib/types'
 
 type FormData = {
@@ -318,6 +318,14 @@ export default function BookingWizard() {
                   )}
                 </div>
 
+                {!BOOKING_ENABLED && (
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+                    <p className="text-sm font-sans text-amber-300 font-semibold flex items-center gap-2">
+                      <AlertCircle size={14} /> {d.disabledNotice ?? 'Foglalás jelenleg nem aktív – ez egy bemutató verzió.'}
+                    </p>
+                  </div>
+                )}
+
                 {status === 'error' && (
                   <div className="rounded-xl border border-red-400/30 bg-red-400/10 p-4">
                     <p className="text-sm font-sans text-red-300 font-semibold mb-1 flex items-center gap-2">
@@ -352,8 +360,9 @@ export default function BookingWizard() {
             ) : (
               <button
                 type="submit"
-                disabled={status === 'submitting'}
-                className="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 disabled:opacity-50 disabled:cursor-not-allowed text-background font-sans font-semibold text-sm px-6 py-3 rounded-full transition-all hover:scale-[1.02] cursor-pointer"
+                disabled={status === 'submitting' || !BOOKING_ENABLED}
+                title={!BOOKING_ENABLED ? (d.disabledNotice ?? 'Foglalás jelenleg nem aktív – bemutató verzió') : undefined}
+                className="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 disabled:opacity-40 disabled:cursor-not-allowed text-background font-sans font-semibold text-sm px-6 py-3 rounded-full transition-all hover:scale-[1.02] cursor-pointer"
               >
                 {status === 'submitting' ? d.submitting : d.confirm}
               </button>

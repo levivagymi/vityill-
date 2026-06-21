@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { promises as fs } from 'fs'
 import path from 'path'
 import { randomUUID } from 'crypto'
-import { bookingServerSchema, type BookingPayload } from '@/lib/booking'
+import { BOOKING_ENABLED, bookingServerSchema, type BookingPayload } from '@/lib/booking'
 
 type BookingRecord = BookingPayload & { id: string; receivedAt: string }
 
@@ -30,6 +30,10 @@ async function notifyHost(record: BookingRecord) {
 }
 
 export async function POST(request: Request) {
+  if (!BOOKING_ENABLED) {
+    return NextResponse.json({ ok: false, error: 'booking_disabled' }, { status: 503 })
+  }
+
   let json: unknown
   try {
     json = await request.json()

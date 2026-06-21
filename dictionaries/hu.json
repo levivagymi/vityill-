@@ -196,6 +196,7 @@
     "next": "Tovább",
     "back": "Vissza",
     "confirm": "Foglalás megerősítése",
+    "disabledNotice": "A foglalási funkció jelenleg nem aktív – ez egy bemutató verzió.",
     "nights": "éjszaka",
     "nightLabelShort": "éj",
     "estimatedTotal": "Becsült végösszeg",

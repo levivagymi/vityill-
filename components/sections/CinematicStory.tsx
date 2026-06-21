@@ -210,9 +210,11 @@ export default function CinematicStory() {
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
-            onEnter:     () => setCinematic(true),
+            // Only hide the cursor once the user actually starts scrolling (progress > 0).
+            // At progress=0 (page load, before any scroll) the cursor stays visible so the
+            // cookie banner and cinematic-prompt card are still navigable.
+            onUpdate: (self) => setCinematic(self.progress > 0.002),
             onLeave:     () => setCinematic(false),
-            onEnterBack: () => setCinematic(true),
             onLeaveBack: () => setCinematic(false),
           },
         })
