@@ -7,10 +7,21 @@
     "about": "About",
     "amenities": "Amenities",
     "rooms": "Rooms",
+    "experiences": "Experiences",
     "gallery": "Gallery",
-    "book": "Book",
+    "book": "Booking",
     "location": "Location",
+    "contact": "Contact",
     "bookNow": "Book Now"
+  },
+  "common": {
+    "home": "Home",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "backHome": "Back to home",
+    "from": "From",
+    "perNight": "/ night",
+    "explore": "Explore"
   },
   "hero": {
     "eyebrow": "Szomód, Gerecse Hills",
@@ -47,32 +58,83 @@
     "label": "Our Rooms",
     "title": "Choose Your Room",
     "subtitle": "Comfort and elegance on every level",
+    "heroSubtitle": "Two thoughtfully furnished floors for up to 10 guests in total — with direct forest views.",
     "from": "From",
     "night": "night",
+    "perNight": "/ night",
     "capacity": "Capacity",
     "maxGuests": "Max. 10 guests total",
     "book": "Reserve",
+    "allRooms": "All rooms",
+    "viewDetails": "View details",
+    "bookThis": "Reserve this room",
+    "overviewTitle": "Overview",
+    "featuresTitle": "Features",
+    "galleryTitle": "Photos",
+    "sizeLabel": "Floor area",
+    "guestsLabel": "Capacity",
+    "bedsLabel": "Beds",
+    "priceNote": "Indicative price for two guests, per night.",
     "room1": {
       "name": "Upper Floor",
       "tagline": "Master bedroom & living area",
       "desc": "Spacious master bedroom with a double bed, elegant living area and full bathroom with shower cabin. Direct forest panorama views.",
+      "long": "The upper floor is Vityilló's most spacious unit: a comfortable double bed, a separate living corner and a full bathroom with a generous shower cabin. Large windows open directly onto the surrounding forest, so every morning greets you with green canopies and birdsong.",
       "beds": "Double bed",
+      "size": "42 m²",
+      "guests": "2–4 guests",
       "badges": ["Double Bed", "Bathroom", "Living Area", "Forest View"],
+      "highlights": ["Direct forest panorama", "Separate living area", "Full bathroom with shower cabin", "AC and Smart TV"],
       "price": "120"
     },
     "room2": {
       "name": "Lower Floor",
       "tagline": "Three single beds",
       "desc": "Three-bed room with its own bathroom and shower cabin. Garden access directly from the room.",
+      "long": "The lower floor is ideal for friends or families: three comfortable single beds, a private bathroom and direct garden access. Through the garden door, the sauna, pool and bonfire terrace are just a few steps away.",
       "beds": "3 × Single beds",
+      "size": "34 m²",
+      "guests": "2–3 guests",
       "badges": ["3 Single Beds", "Bathroom", "Garden Access"],
+      "highlights": ["Direct garden access", "Private bathroom with shower cabin", "Steps from the sauna", "AC and Smart TV"],
       "price": "100"
+    }
+  },
+  "experiences": {
+    "label": "Experiences",
+    "title": "Experiences at Vityilló",
+    "subtitle": "The art of relaxation — for every sense",
+    "heroSubtitle": "Private sauna, outdoor pool, bonfire evenings and untouched forest — every form of recharging in one place.",
+    "intro": "Vityilló is not just accommodation, but an experience. Discover the details that turn an ordinary break into an unforgettable one.",
+    "discover": "Discover",
+    "items": {
+      "sauna": {
+        "name": "Private Finnish Sauna",
+        "desc": "A Finnish sauna reserved exclusively for you.",
+        "long": "At the end of the day, there is nothing better than the warmth of your own private Finnish sauna. The scent of wood, the hot stones and complete silence offer perfect regeneration — no crowds, no queues, anytime."
+      },
+      "pool": {
+        "name": "Outdoor Pool & Jacuzzi",
+        "desc": "An outdoor pool with a built-in jacuzzi.",
+        "long": "Immerse yourself in the outdoor pool while gazing at the forest canopy. The built-in jacuzzi function pampers you with bubbling water, even under a starlit sky."
+      },
+      "grill": {
+        "name": "Bonfire Evenings",
+        "desc": "Traditional kettle grill and fire pit on the terrace.",
+        "long": "The heart of Hungarian hospitality is the bogrács kettle. Gather around the outdoor fire pit and grill to prepare your favourite stew or goulash as the evening slowly settles over the forest."
+      },
+      "forest": {
+        "name": "Private Forest & Trails",
+        "desc": "Your own forest and the Gerecse trails on your doorstep.",
+        "long": "A private forest and the marked hiking trails of the Gerecse hills await in the immediate surroundings of the house. Walk, cycle or simply breathe — nature is right at hand here."
+      }
     }
   },
   "gallery": {
     "label": "Gallery",
     "title": "Explore Vityilló",
     "subtitle": "Where nature and luxury meet",
+    "heroSubtitle": "Snapshots of the house, the rooms and the untouched forest surroundings.",
     "close": "Close",
     "prev": "Previous",
     "next": "Next",
@@ -82,6 +144,7 @@
     "label": "Booking",
     "title": "Reserve Your Stay",
     "subtitle": "Fill in your details and we will be in touch shortly",
+    "heroSubtitle": "A few steps and your retreat in the heart of the Gerecse is booked.",
     "name": "Full Name",
     "email": "Email Address",
     "phone": "Phone Number",
@@ -103,7 +166,7 @@
     "genderOther": "Other",
     "room1Label": "Upper Floor",
     "room2Label": "Lower Floor",
-    "bothLabel": "Both",
+    "bothLabel": "The whole house",
     "channelDirect": "Direct",
     "channelAirbnb": "Airbnb",
     "channelBooking": "Booking.com",
@@ -116,12 +179,47 @@
     "requiredField": "This field is required",
     "invalidEmail": "Please enter a valid email address",
     "invalidYear": "Please enter a valid birth year (1900–2010)",
+    "invalidPhone": "Please enter a valid phone number",
     "minAdults": "At least 1 adult is required",
     "submit": "Send Booking Request",
     "submitting": "Sending...",
     "successTitle": "Thank you for your booking!",
-    "successMsg": "We will be in touch shortly. We look forward to welcoming you at Vityilló!",
-    "ntak": "Data is processed in compliance with NTAK (Nemzeti Turisztikai Adatszolgáltató Központ) requirements."
+    "successMsg": "We will be in touch shortly at the details you provided. We look forward to welcoming you at Vityilló!",
+    "errorTitle": "Something went wrong",
+    "errorMsg": "We couldn't send your request right now. Please try again, or call us directly.",
+    "newBooking": "New booking",
+    "ntak": "Data is processed in compliance with NTAK (Nemzeti Turisztikai Adatszolgáltató Központ) requirements.",
+    "stepStay": "Stay",
+    "stepGuest": "Guest details",
+    "stepReview": "Review",
+    "stepLabel": "step",
+    "next": "Continue",
+    "back": "Back",
+    "confirm": "Confirm booking",
+    "nights": "nights",
+    "nightLabelShort": "night",
+    "estimatedTotal": "Estimated total",
+    "pricePerNightLabel": "Accommodation",
+    "cleaningFee": "Cleaning fee",
+    "taxNote": "Tourist tax (IFA) is payable on site, HUF 500 / person / night.",
+    "summaryTitle": "Booking summary",
+    "summaryStay": "Stay",
+    "summaryGuests": "Guests",
+    "summaryRoom": "Accommodation",
+    "summaryContact": "Contact",
+    "datesError": "The check-out date must be after check-in",
+    "pastDateError": "The date cannot be in the past",
+    "agree": "I have read and accept the Terms & Conditions and the Privacy Policy.",
+    "agreeError": "You must accept the terms to continue",
+    "guestsValue": "{adults} adults, {children} children",
+    "selectDatesFirst": "Please select your arrival and departure dates first."
+  },
+  "bookingCta": {
+    "label": "Availability",
+    "title": "Ready to recharge?",
+    "text": "Book Vityilló Guest House and enjoy the untouched calm of the Gerecse with a private forest, sauna and pool.",
+    "button": "Start booking",
+    "secondary": "Get in touch"
   },
   "location": {
     "label": "Location",
@@ -137,9 +235,33 @@
     "esztergom": "Esztergom",
     "esztergomDesc": "30 km — Basilica & Danube riverside"
   },
+  "contact": {
+    "label": "Contact",
+    "title": "Get in touch with us",
+    "subtitle": "Have a question? Write to us and we'll be glad to help.",
+    "heroSubtitle": "For bookings, group enquiries or any question, feel free to reach out to us.",
+    "formTitle": "Send a message",
+    "infoTitle": "Contact details",
+    "name": "Your name",
+    "email": "Your email",
+    "phone": "Phone (optional)",
+    "subject": "Subject",
+    "message": "Your message",
+    "send": "Send message",
+    "sending": "Sending...",
+    "successTitle": "Thank you for your message!",
+    "successMsg": "We will reply shortly at the details you provided.",
+    "checkInTitle": "Check-in & check-out",
+    "checkInTime": "Check-in: from 3:00 PM",
+    "checkOutTime": "Check-out: until 10:00 AM",
+    "directions": "Get directions"
+  },
   "testimonials": {
     "label": "What our guests say",
-    "title": "Reviews"
+    "title": "Reviews",
+    "avgLabel": "Average rating",
+    "satisfiedLabel": "Satisfied guests",
+    "starsLabel": "5 stars"
   },
   "footer": {
     "tagline": "Luxury retreat in the heart of the Gerecse",
@@ -148,10 +270,57 @@
     "email": "info@vityillo.hu",
     "address": "Szomód, Hungary",
     "navTitle": "Navigation",
+    "legal": "Legal",
     "social": "Follow us",
     "rights": "All rights reserved",
     "ntak": "NTAK Certified Accommodation",
+    "imprint": "Imprint",
     "privacy": "Privacy Policy",
     "terms": "Terms & Conditions"
+  },
+  "cookie": {
+    "title": "We use cookies",
+    "text": "Our website uses cookies to operate and to improve your experience.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "more": "Privacy Policy"
+  },
+  "legal": {
+    "updated": "Last updated",
+    "updatedDate": "1 June 2026",
+    "imprint": {
+      "title": "Imprint",
+      "intro": "Statutory details of the operator of Vityilló Guest House.",
+      "sections": [
+        { "heading": "Service provider", "body": "Vityilló Guest House\nOperator: Vityilló Kft.\nRegistered seat: 2896 Szomód, Fő utca 1., Hungary" },
+        { "heading": "Registration data", "body": "Company registration number: 11-09-000000\nVAT number: 00000000-2-11\nNTAK registration number: MA00000000" },
+        { "heading": "Contact", "body": "Phone: +36 30 123 4567\nEmail: info@vityillo.hu" },
+        { "heading": "Hosting provider", "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA" }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "Information on the processing of personal data under EU Regulation 2016/679 (GDPR).",
+      "sections": [
+        { "heading": "1. Data controller", "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Contact: info@vityillo.hu, +36 30 123 4567." },
+        { "heading": "2. Scope of data processed", "body": "Data provided in the booking and contact forms: name, email address, phone number, arrival and departure dates, number of guests, and the guest data required by law (citizenship, address, year of birth, document data)." },
+        { "heading": "3. Purpose and legal basis", "body": "Fulfilling the booking and keeping in contact (performance of a contract), and meeting the legal obligations applicable to accommodation services, including NTAK reporting and the VIZA system (legal obligation)." },
+        { "heading": "4. Data retention", "body": "Accounting documents are kept for 8 years as required by law; booking data is retained until the purpose ceases." },
+        { "heading": "5. Data transfers", "body": "Your data is transferred only on the basis of a legal obligation (e.g. NTAK, authorities). It is not shared with third parties for marketing purposes." },
+        { "heading": "6. Your rights", "body": "You may request access to, rectification or erasure of your data, and restriction of processing. You may lodge a complaint with the Hungarian NAIH (naih.hu)." }
+      ]
+    },
+    "terms": {
+      "title": "Terms & Conditions",
+      "intro": "Terms governing the use of Vityilló Guest House services.",
+      "sections": [
+        { "heading": "1. Subject of the contract", "body": "Vityilló Guest House (Operator: Vityilló Kft.) provides accommodation services under these terms." },
+        { "heading": "2. Booking and confirmation", "body": "A booking starts with the submission of the form and becomes final upon the Operator's written confirmation. The prices shown are indicative; the final price is stated in the confirmation." },
+        { "heading": "3. Payment terms", "body": "A deposit may be required to finalise the booking. The remaining amount is payable on site upon arrival. The tourist tax is payable on site." },
+        { "heading": "4. Cancellation", "body": "For cancellations made 14 days before arrival, the deposit is fully refundable. For cancellations within 14 days, the deposit is non-refundable." },
+        { "heading": "5. House rules", "body": "Check-in from 3:00 PM, check-out until 10:00 AM. Smoking is prohibited inside the house. The pool and sauna are used at the guests' own risk." },
+        { "heading": "6. Liability", "body": "The Operator accepts no liability for guests' valuables or for damage resulting from improper use of the services." }
+      ]
+    }
   }
 }

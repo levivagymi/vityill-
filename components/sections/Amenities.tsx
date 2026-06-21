@@ -4,8 +4,9 @@ import {
   Flame, Waves, Trees, Lightbulb, Mountain, Wind,
   Tv, ChefHat, UtensilsCrossed,
 } from 'lucide-react'
-import gsap, { ScrollTrigger } from '@/lib/gsap'
+import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
+import SectionHeading from '@/components/ui/SectionHeading'
 
 type AmenityKey = 'sauna' | 'pool' | 'forest' | 'lighting' | 'view' | 'ac' | 'tv' | 'kitchen' | 'grill'
 
@@ -40,14 +41,8 @@ export default function Amenities() {
       <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.03] via-transparent to-foreground/[0.05]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="amenities-header text-center mb-16 lg:mb-20" style={{ opacity: 0 }}>
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-10 bg-foreground/30" />
-            <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.3em]">{dict.amenities.label}</span>
-            <div className="h-px w-10 bg-foreground/30" />
-          </div>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl mb-4">{dict.amenities.title}</h2>
-          <p className="font-sans text-base max-w-xl mx-auto">{dict.amenities.subtitle}</p>
+        <div className="amenities-header mb-16 lg:mb-20" style={{ opacity: 0 }}>
+          <SectionHeading label={dict.amenities.label} title={dict.amenities.title} subtitle={dict.amenities.subtitle} />
         </div>
 
         <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">

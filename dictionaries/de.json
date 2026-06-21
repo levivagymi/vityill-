@@ -7,10 +7,21 @@
     "about": "Über uns",
     "amenities": "Ausstattung",
     "rooms": "Zimmer",
+    "experiences": "Erlebnisse",
     "gallery": "Galerie",
     "book": "Buchung",
     "location": "Lage",
+    "contact": "Kontakt",
     "bookNow": "Jetzt buchen"
+  },
+  "common": {
+    "home": "Startseite",
+    "viewAll": "Alle ansehen",
+    "learnMore": "Mehr erfahren",
+    "backHome": "Zurück zur Startseite",
+    "from": "Ab",
+    "perNight": "/ Nacht",
+    "explore": "Entdecken"
   },
   "hero": {
     "eyebrow": "Szomód, Gerecse-Gebirge",
@@ -47,32 +58,83 @@
     "label": "Unsere Zimmer",
     "title": "Wählen Sie Ihr Zimmer",
     "subtitle": "Komfort und Eleganz auf jeder Ebene",
+    "heroSubtitle": "Zwei durchdacht eingerichtete Etagen für insgesamt bis zu 10 Gäste — mit direktem Waldblick.",
     "from": "Ab",
     "night": "Nacht",
+    "perNight": "/ Nacht",
     "capacity": "Kapazität",
     "maxGuests": "Max. 10 Gäste insgesamt",
     "book": "Reservieren",
+    "allRooms": "Alle Zimmer",
+    "viewDetails": "Details ansehen",
+    "bookThis": "Dieses Zimmer reservieren",
+    "overviewTitle": "Überblick",
+    "featuresTitle": "Ausstattung",
+    "galleryTitle": "Fotos",
+    "sizeLabel": "Wohnfläche",
+    "guestsLabel": "Kapazität",
+    "bedsLabel": "Betten",
+    "priceNote": "Richtpreis für zwei Gäste, pro Nacht.",
     "room1": {
       "name": "Obergeschoss",
       "tagline": "Hauptschlafzimmer & Wohnbereich",
       "desc": "Geräumiges Hauptschlafzimmer mit Doppelbett, elegantem Wohnbereich und vollständigem Bad mit Duschkabine. Direkter Waldpanorama-Blick.",
+      "long": "Das Obergeschoss ist die geräumigste Einheit von Vityilló: ein bequemes Doppelbett, eine separate Wohnecke und ein vollständiges Bad mit großzügiger Duschkabine. Große Fenster öffnen sich direkt zum umliegenden Wald, sodass jeder Morgen Sie mit grünen Baumkronen und Vogelgesang begrüßt.",
       "beds": "Doppelbett",
+      "size": "42 m²",
+      "guests": "2–4 Gäste",
       "badges": ["Doppelbett", "Badezimmer", "Wohnbereich", "Waldblick"],
+      "highlights": ["Direkter Waldpanorama-Blick", "Separater Wohnbereich", "Vollständiges Bad mit Duschkabine", "Klimaanlage und Smart TV"],
       "price": "120"
     },
     "room2": {
       "name": "Untergeschoss",
       "tagline": "Drei Einzelbetten",
       "desc": "Dreibettzimmer mit eigenem Bad und Duschkabine. Direkter Gartenzugang vom Zimmer aus.",
+      "long": "Das Untergeschoss ist ideal für Freunde oder Familien: drei bequeme Einzelbetten, ein eigenes Bad und direkter Gartenzugang. Durch die Gartentür sind Sauna, Pool und Lagerfeuerterrasse nur wenige Schritte entfernt.",
       "beds": "3 × Einzelbetten",
+      "size": "34 m²",
+      "guests": "2–3 Gäste",
       "badges": ["3 Einzelbetten", "Badezimmer", "Gartenzugang"],
+      "highlights": ["Direkter Gartenzugang", "Eigenes Bad mit Duschkabine", "Wenige Schritte zur Sauna", "Klimaanlage und Smart TV"],
       "price": "100"
+    }
+  },
+  "experiences": {
+    "label": "Erlebnisse",
+    "title": "Erlebnisse im Vityilló",
+    "subtitle": "Die Kunst der Entspannung — für alle Sinne",
+    "heroSubtitle": "Private Sauna, Außenpool, Lagerfeuerabende und unberührter Wald — jede Form der Erholung an einem Ort.",
+    "intro": "Vityilló ist nicht nur eine Unterkunft, sondern ein Erlebnis. Entdecken Sie die Details, die eine gewöhnliche Auszeit unvergesslich machen.",
+    "discover": "Entdecken",
+    "items": {
+      "sauna": {
+        "name": "Private finnische Sauna",
+        "desc": "Eine finnische Sauna, exklusiv für Sie reserviert.",
+        "long": "Am Ende des Tages gibt es nichts Besseres als die Wärme der eigenen privaten finnischen Sauna. Der Duft des Holzes, die heißen Steine und die völlige Stille bieten perfekte Regeneration — ohne Menschenmengen, ohne Warteschlangen, jederzeit."
+      },
+      "pool": {
+        "name": "Außenpool & Whirlpool",
+        "desc": "Ein Außenpool mit integriertem Whirlpool.",
+        "long": "Tauchen Sie in den Außenpool ein, während Sie auf die Baumkronen des Waldes blicken. Die integrierte Whirlpool-Funktion verwöhnt Sie mit sprudelndem Wasser, sogar unter einem Sternenhimmel."
+      },
+      "grill": {
+        "name": "Lagerfeuerabende",
+        "desc": "Traditioneller Kesselgrill und Feuerstelle auf der Terrasse.",
+        "long": "Das Herz der ungarischen Gastfreundschaft ist der Bogrács-Kessel. Versammeln Sie sich um die Feuerstelle und den Grill im Freien, um Ihren Lieblingseintopf oder Gulasch zuzubereiten, während sich der Abend langsam über den Wald legt."
+      },
+      "forest": {
+        "name": "Privatwald & Wanderwege",
+        "desc": "Ihr eigener Wald und die Gerecse-Wege direkt vor der Tür.",
+        "long": "Ein Privatwald und die markierten Wanderwege des Gerecse-Gebirges erwarten Sie in der unmittelbaren Umgebung des Hauses. Wandern, radeln oder einfach durchatmen — die Natur ist hier zum Greifen nah."
+      }
     }
   },
   "gallery": {
     "label": "Galerie",
     "title": "Entdecken Sie Vityilló",
     "subtitle": "Wo Natur auf Luxus trifft",
+    "heroSubtitle": "Momentaufnahmen vom Haus, den Zimmern und der unberührten Waldumgebung.",
     "close": "Schließen",
     "prev": "Zurück",
     "next": "Weiter",
@@ -82,6 +144,7 @@
     "label": "Buchung",
     "title": "Reservieren Sie Ihren Aufenthalt",
     "subtitle": "Füllen Sie das Formular aus und wir melden uns kurzfristig bei Ihnen",
+    "heroSubtitle": "Wenige Schritte und Ihr Rückzugsort im Herzen des Gerecse ist gebucht.",
     "name": "Vollständiger Name",
     "email": "E-Mail-Adresse",
     "phone": "Telefonnummer",
@@ -103,7 +166,7 @@
     "genderOther": "Divers",
     "room1Label": "Obergeschoss",
     "room2Label": "Untergeschoss",
-    "bothLabel": "Beide",
+    "bothLabel": "Das ganze Haus",
     "channelDirect": "Direkt",
     "channelAirbnb": "Airbnb",
     "channelBooking": "Booking.com",
@@ -116,12 +179,47 @@
     "requiredField": "Dieses Feld ist erforderlich",
     "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "invalidYear": "Bitte geben Sie ein gültiges Geburtsjahr ein (1900–2010)",
+    "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
     "minAdults": "Mindestens 1 Erwachsener ist erforderlich",
     "submit": "Buchungsanfrage senden",
     "submitting": "Wird gesendet...",
     "successTitle": "Vielen Dank für Ihre Buchung!",
-    "successMsg": "Wir melden uns in Kürze bei Ihnen. Wir freuen uns, Sie in Vityilló begrüßen zu dürfen!",
-    "ntak": "Die Daten werden gemäß den NTAK-Anforderungen (Nemzeti Turisztikai Adatszolgáltató Központ) verarbeitet."
+    "successMsg": "Wir melden uns in Kürze unter den angegebenen Kontaktdaten. Wir freuen uns, Sie in Vityilló begrüßen zu dürfen!",
+    "errorTitle": "Ein Fehler ist aufgetreten",
+    "errorMsg": "Ihre Anfrage konnte gerade nicht gesendet werden. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.",
+    "newBooking": "Neue Buchung",
+    "ntak": "Die Daten werden gemäß den NTAK-Anforderungen (Nemzeti Turisztikai Adatszolgáltató Központ) verarbeitet.",
+    "stepStay": "Aufenthalt",
+    "stepGuest": "Gästedaten",
+    "stepReview": "Überblick",
+    "stepLabel": "Schritt",
+    "next": "Weiter",
+    "back": "Zurück",
+    "confirm": "Buchung bestätigen",
+    "nights": "Nächte",
+    "nightLabelShort": "Nacht",
+    "estimatedTotal": "Geschätzter Gesamtbetrag",
+    "pricePerNightLabel": "Unterkunft",
+    "cleaningFee": "Reinigungsgebühr",
+    "taxNote": "Die Kurtaxe (IFA) ist vor Ort zu zahlen, 500 HUF / Person / Nacht.",
+    "summaryTitle": "Buchungsübersicht",
+    "summaryStay": "Aufenthalt",
+    "summaryGuests": "Gäste",
+    "summaryRoom": "Unterkunft",
+    "summaryContact": "Kontakt",
+    "datesError": "Das Abreisedatum muss nach der Anreise liegen",
+    "pastDateError": "Das Datum darf nicht in der Vergangenheit liegen",
+    "agree": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
+    "agreeError": "Sie müssen die Bedingungen akzeptieren, um fortzufahren",
+    "guestsValue": "{adults} Erwachsene, {children} Kinder",
+    "selectDatesFirst": "Bitte wählen Sie zuerst Ihr An- und Abreisedatum."
+  },
+  "bookingCta": {
+    "label": "Verfügbarkeit",
+    "title": "Bereit zum Auftanken?",
+    "text": "Buchen Sie das Vityilló Gästehaus und genießen Sie die unberührte Ruhe des Gerecse mit Privatwald, Sauna und Pool.",
+    "button": "Buchung starten",
+    "secondary": "Kontakt aufnehmen"
   },
   "location": {
     "label": "Lage",
@@ -137,9 +235,33 @@
     "esztergom": "Esztergom",
     "esztergomDesc": "30 km — Basilika & Donauufer"
   },
+  "contact": {
+    "label": "Kontakt",
+    "title": "Nehmen Sie Kontakt mit uns auf",
+    "subtitle": "Haben Sie eine Frage? Schreiben Sie uns, wir helfen gerne.",
+    "heroSubtitle": "Für Buchungen, Gruppenanfragen oder jede Frage erreichen Sie uns jederzeit.",
+    "formTitle": "Nachricht senden",
+    "infoTitle": "Kontaktdaten",
+    "name": "Ihr Name",
+    "email": "Ihre E-Mail",
+    "phone": "Telefon (optional)",
+    "subject": "Betreff",
+    "message": "Ihre Nachricht",
+    "send": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "successTitle": "Vielen Dank für Ihre Nachricht!",
+    "successMsg": "Wir antworten Ihnen in Kürze unter den angegebenen Kontaktdaten.",
+    "checkInTitle": "An- & Abreise",
+    "checkInTime": "Anreise: ab 15:00 Uhr",
+    "checkOutTime": "Abreise: bis 10:00 Uhr",
+    "directions": "Route planen"
+  },
   "testimonials": {
     "label": "Was unsere Gäste sagen",
-    "title": "Bewertungen"
+    "title": "Bewertungen",
+    "avgLabel": "Durchschnittliche Bewertung",
+    "satisfiedLabel": "Zufriedene Gäste",
+    "starsLabel": "5 Sterne"
   },
   "footer": {
     "tagline": "Luxus-Rückzugsort im Herzen des Gerecse",
@@ -148,10 +270,57 @@
     "email": "info@vityillo.hu",
     "address": "Szomód, Ungarn",
     "navTitle": "Navigation",
+    "legal": "Rechtliches",
     "social": "Folgen Sie uns",
     "rights": "Alle Rechte vorbehalten",
     "ntak": "NTAK-zertifizierte Unterkunft",
+    "imprint": "Impressum",
     "privacy": "Datenschutz",
     "terms": "AGB"
+  },
+  "cookie": {
+    "title": "Wir verwenden Cookies",
+    "text": "Unsere Website verwendet Cookies für den Betrieb und zur Verbesserung Ihres Erlebnisses.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen",
+    "more": "Datenschutzerklärung"
+  },
+  "legal": {
+    "updated": "Zuletzt aktualisiert",
+    "updatedDate": "1. Juni 2026",
+    "imprint": {
+      "title": "Impressum",
+      "intro": "Gesetzlich vorgeschriebene Angaben des Betreibers des Vityilló Gästehauses.",
+      "sections": [
+        { "heading": "Dienstanbieter", "body": "Vityilló Gästehaus\nBetreiber: Vityilló Kft.\nSitz: 2896 Szomód, Fő utca 1., Ungarn" },
+        { "heading": "Registrierungsdaten", "body": "Handelsregisternummer: 11-09-000000\nUSt-IdNr.: 00000000-2-11\nNTAK-Registrierungsnummer: MA00000000" },
+        { "heading": "Kontakt", "body": "Telefon: +36 30 123 4567\nE-Mail: info@vityillo.hu" },
+        { "heading": "Hosting-Anbieter", "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA" }
+      ]
+    },
+    "privacy": {
+      "title": "Datenschutzerklärung",
+      "intro": "Informationen zur Verarbeitung personenbezogener Daten gemäß der EU-Verordnung 2016/679 (DSGVO).",
+      "sections": [
+        { "heading": "1. Verantwortlicher", "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Kontakt: info@vityillo.hu, +36 30 123 4567." },
+        { "heading": "2. Umfang der verarbeiteten Daten", "body": "In den Buchungs- und Kontaktformularen angegebene Daten: Name, E-Mail-Adresse, Telefonnummer, An- und Abreisedatum, Anzahl der Gäste sowie die gesetzlich vorgeschriebenen Gästedaten (Staatsangehörigkeit, Anschrift, Geburtsjahr, Ausweisdaten)." },
+        { "heading": "3. Zweck und Rechtsgrundlage", "body": "Erfüllung der Buchung und Kontaktpflege (Vertragserfüllung) sowie Erfüllung der für Beherbergungsdienstleistungen geltenden gesetzlichen Pflichten, einschließlich der NTAK-Meldung und des VIZA-Systems (rechtliche Verpflichtung)." },
+        { "heading": "4. Speicherdauer", "body": "Buchhaltungsbelege werden gesetzlich vorgeschrieben 8 Jahre lang aufbewahrt; Buchungsdaten werden bis zum Wegfall des Zwecks gespeichert." },
+        { "heading": "5. Datenübermittlung", "body": "Ihre Daten werden nur aufgrund einer gesetzlichen Verpflichtung (z. B. NTAK, Behörden) übermittelt. Zu Marketingzwecken werden sie nicht an Dritte weitergegeben." },
+        { "heading": "6. Ihre Rechte", "body": "Sie können Auskunft, Berichtigung oder Löschung Ihrer Daten sowie die Einschränkung der Verarbeitung verlangen. Beschwerden können Sie bei der ungarischen NAIH (naih.hu) einreichen." }
+      ]
+    },
+    "terms": {
+      "title": "Allgemeine Geschäftsbedingungen",
+      "intro": "Bedingungen für die Inanspruchnahme der Dienstleistungen des Vityilló Gästehauses.",
+      "sections": [
+        { "heading": "1. Vertragsgegenstand", "body": "Das Vityilló Gästehaus (Betreiber: Vityilló Kft.) erbringt Beherbergungsdienstleistungen gemäß diesen Bedingungen." },
+        { "heading": "2. Buchung und Bestätigung", "body": "Eine Buchung beginnt mit dem Absenden des Formulars und wird mit der schriftlichen Bestätigung des Betreibers endgültig. Die angezeigten Preise sind Richtwerte; der endgültige Preis ist in der Bestätigung angegeben." },
+        { "heading": "3. Zahlungsbedingungen", "body": "Zur Finalisierung der Buchung kann eine Anzahlung erforderlich sein. Der Restbetrag ist vor Ort bei der Anreise zu zahlen. Die Kurtaxe ist vor Ort zu zahlen." },
+        { "heading": "4. Stornierung", "body": "Bei Stornierungen 14 Tage vor Anreise wird die Anzahlung vollständig erstattet. Bei Stornierungen innerhalb von 14 Tagen ist die Anzahlung nicht erstattungsfähig." },
+        { "heading": "5. Hausordnung", "body": "Anreise ab 15:00 Uhr, Abreise bis 10:00 Uhr. Das Rauchen im Haus ist verboten. Pool und Sauna werden auf eigene Gefahr der Gäste genutzt." },
+        { "heading": "6. Haftung", "body": "Der Betreiber übernimmt keine Haftung für Wertgegenstände der Gäste oder für Schäden, die durch unsachgemäßen Gebrauch der Dienstleistungen entstehen." }
+      ]
+    }
   }
 }

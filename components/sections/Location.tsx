@@ -1,9 +1,14 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import { MapPin, Mountain, Castle, Building2, Church } from 'lucide-react'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import gsap from '@/lib/gsap'
 import { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
+import SectionHeading from '@/components/ui/SectionHeading'
+import { href } from '@/lib/nav'
+import type { Locale } from '@/lib/types'
 
 const HIGHLIGHTS = [
   { key: 'gerecse', icon: Mountain, color: '#c9a84c', dist: null },
@@ -14,6 +19,8 @@ const HIGHLIGHTS = [
 
 export default function Location() {
   const dict = useDict()
+  const params = useParams()
+  const lang = (params?.lang as Locale) ?? 'hu'
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -57,14 +64,9 @@ export default function Location() {
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="gsap-fade-up text-center mb-14 lg:mb-16">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-10 bg-foreground/55" />
-            <span className="text-foreground/55 text-xs font-sans uppercase tracking-[0.3em]">{dict.location.label}</span>
-            <div className="h-px w-10 bg-foreground/55" />
-          </div>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl mb-4">{dict.location.title}</h2>
-          <div className="flex items-center justify-center gap-2 text-foreground/50 font-sans text-sm">
+        <div className="gsap-fade-up mb-14 lg:mb-16">
+          <SectionHeading label={dict.location.label} title={dict.location.title} />
+          <div className="flex items-center justify-center gap-2 text-foreground/50 font-sans text-sm mt-3">
             <MapPin size={14} className="text-foreground/55" />
             <span>{dict.location.address}</span>
           </div>
@@ -134,6 +136,13 @@ export default function Location() {
             <p className="mt-6 text-xs font-sans text-foreground/30 leading-relaxed">
               * Autóval számított megközelítési idők / Driving distances
             </p>
+            <Link
+              href={href(lang, 'contact')}
+              className="mt-6 inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/55 text-foreground/80 hover:text-foreground font-sans font-semibold text-sm px-5 py-2.5 rounded-full transition-all cursor-pointer"
+              data-cursor="view"
+            >
+              {dict.nav.contact}
+            </Link>
           </div>
         </div>
       </div>

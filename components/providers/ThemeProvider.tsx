@@ -18,6 +18,8 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
   useEffect(() => {
     const saved = localStorage.getItem('vityillo-theme') as Theme | null
     const t: Theme = saved === 'light' ? 'light' : 'dark'
+    // One-time hydration of theme from a browser-only API (localStorage) after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(t)
     document.documentElement.classList.toggle('dark', t === 'dark')
   }, [])

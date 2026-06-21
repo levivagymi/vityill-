@@ -1,9 +1,15 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
-import { BedDouble, BedSingle, Bath, Sofa, TreePine, DoorOpen } from 'lucide-react'
-import gsap, { ScrollTrigger } from '@/lib/gsap'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { BedDouble, BedSingle, Bath, Sofa, TreePine, DoorOpen, ArrowRight } from 'lucide-react'
+import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
+import SectionHeading from '@/components/ui/SectionHeading'
+import { ROOM_MEDIA, type RoomKey } from '@/lib/content'
+import { href, roomHref } from '@/lib/nav'
+import type { Locale } from '@/lib/types'
 
 const BADGE_ICONS: Record<string, React.ElementType> = {
   'Franciaágy': BedDouble, 'Double Bed': BedDouble, 'Doppelbett': BedDouble,
@@ -15,42 +21,49 @@ const BADGE_ICONS: Record<string, React.ElementType> = {
 }
 
 function RoomCard({
-  imageSrc, imageAlt, name, tagline, desc, beds, badges, price, nightLabel, bookLabel, reversed,
+  roomKey, lang, dict, reversed,
 }: {
-  imageSrc: string; imageAlt: string; name: string; tagline: string; desc: string;
-  beds: string; badges: string[]; price: string; nightLabel: string; bookLabel: string; reversed?: boolean
+  roomKey: RoomKey; lang: Locale; dict: ReturnType<typeof useDict>; reversed?: boolean
 }) {
+  const r = dict.rooms[roomKey]
+  const media = ROOM_MEDIA[roomKey]
+  const detailHref = roomHref(lang, media.slug as 'felso-szint' | 'also-szint')
+
   return (
-    <div
-      className="room-card grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-foreground/[0.08] bg-foreground/[0.03]"
-      style={{ opacity: 0 }}
-    >
-      <div className={`relative aspect-[4/3] lg:aspect-auto lg:min-h-[420px] overflow-hidden ${reversed ? 'lg:order-2' : ''}`}>
-        <div className="w-full h-full transition-transform duration-700 hover:scale-[1.04]">
-          <Image src={imageSrc} alt={imageAlt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+    <div className="room-card grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-foreground/[0.08] bg-foreground/[0.03]" style={{ opacity: 0 }}>
+      <Link
+        href={detailHref}
+        data-cursor="view"
+        className={`relative aspect-[4/3] lg:aspect-auto lg:min-h-[440px] overflow-hidden group ${reversed ? 'lg:order-2' : ''}`}
+      >
+        <div className="w-full h-full transition-transform duration-700 group-hover:scale-[1.04]">
+          <Image src={media.hero} alt={r.tagline} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
         </div>
         <div className="absolute top-4 left-4 bg-background/85 backdrop-blur border border-foreground/15 rounded-xl px-4 py-2">
           <div className="flex items-baseline gap-1">
-            <span className="text-foreground font-heading text-2xl font-semibold">{price}€</span>
-            <span className="text-foreground/45 text-xs font-sans">/{nightLabel}</span>
+            <span className="text-foreground font-heading text-2xl font-semibold">{r.price}€</span>
+            <span className="text-foreground/45 text-xs font-sans">{dict.rooms.perNight}</span>
           </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
-      </div>
+      </Link>
 
       <div className={`flex flex-col p-8 lg:p-10 ${reversed ? 'lg:order-1' : ''}`}>
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px w-8 bg-foreground/30" />
-          <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.25em]">{name}</span>
+          <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.25em]">{r.name}</span>
         </div>
-        <h3 className="font-heading text-2xl sm:text-3xl mb-3 leading-tight">{tagline}</h3>
-        <p className="font-sans text-sm leading-relaxed mb-6 flex-1">{desc}</p>
-        <div className="flex items-center gap-2 mb-5">
-          <BedDouble size={16} className="text-foreground/70" />
-          <span className="text-sm font-sans text-foreground/65">{beds}</span>
+        <h3 className="font-heading text-2xl sm:text-3xl mb-3 leading-tight">{r.tagline}</h3>
+        <p className="font-sans text-sm leading-relaxed mb-6 flex-1 text-foreground/55">{r.desc}</p>
+        <div className="flex flex-wrap items-center gap-4 mb-5 text-sm font-sans text-foreground/65">
+          <span className="flex items-center gap-1.5"><BedDouble size={15} className="text-foreground/55" /> {r.beds}</span>
+          <span className="text-foreground/30">·</span>
+          <span>{r.size}</span>
+          <span className="text-foreground/30">·</span>
+          <span>{r.guests}</span>
         </div>
         <div className="flex flex-wrap gap-2 mb-8">
-          {badges.map((badge) => {
+          {r.badges.map((badge) => {
             const Icon = BADGE_ICONS[badge]
             return (
               <span key={badge} className="flex items-center gap-1.5 text-xs font-sans text-foreground/60 bg-foreground/[0.04] border border-foreground/[0.08] rounded-full px-3 py-1.5">
@@ -60,22 +73,31 @@ function RoomCard({
             )
           })}
         </div>
-        <button
-          onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-          className="w-full border border-foreground/25 hover:border-foreground/60 hover:bg-foreground
-                     text-foreground/80 hover:text-background font-sans font-semibold text-sm py-3.5 rounded-xl
-                     transition-all duration-300 cursor-pointer"
-          data-cursor="view"
-        >
-          {bookLabel}
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link
+            href={detailHref}
+            className="flex-1 inline-flex items-center justify-center gap-2 border border-foreground/25 hover:border-foreground/60 text-foreground/80 hover:text-foreground font-sans font-semibold text-sm py-3.5 rounded-xl transition-all duration-300 cursor-pointer"
+            data-cursor="view"
+          >
+            {dict.rooms.viewDetails} <ArrowRight size={15} />
+          </Link>
+          <Link
+            href={href(lang, 'booking')}
+            className="flex-1 inline-flex items-center justify-center bg-foreground hover:bg-foreground/90 text-background font-sans font-semibold text-sm py-3.5 rounded-xl transition-all duration-300 hover:scale-[1.01] cursor-pointer"
+            data-cursor="view"
+          >
+            {dict.rooms.book}
+          </Link>
+        </div>
       </div>
     </div>
   )
 }
 
-export default function Rooms() {
+export default function Rooms({ withHeading = true }: { withHeading?: boolean }) {
   const dict = useDict()
+  const params = useParams()
+  const lang = (params?.lang as Locale) ?? 'hu'
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -87,45 +109,27 @@ export default function Rooms() {
       gsap.utils.toArray<HTMLElement>('.room-card', sectionRef.current!).forEach((el, i) => {
         gsap.fromTo(el, { opacity: 0, y: 80 }, {
           opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', delay: i * 0.15,
-          scrollTrigger: { trigger: el, start: 'top 82%' },
+          scrollTrigger: { trigger: el, start: 'top 85%' },
         })
       })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
-  const room1 = dict.rooms.room1
-  const room2 = dict.rooms.room2
-
   return (
     <section id="rooms" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/[0.04] via-transparent to-foreground/[0.04]" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rooms-header text-center mb-16 lg:mb-20" style={{ opacity: 0 }}>
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-10 bg-foreground/30" />
-            <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.3em]">{dict.rooms.label}</span>
-            <div className="h-px w-10 bg-foreground/30" />
+        {withHeading && (
+          <div className="rooms-header mb-16 lg:mb-20" style={{ opacity: 0 }}>
+            <SectionHeading label={dict.rooms.label} title={dict.rooms.title} subtitle={dict.rooms.subtitle} />
+            <p className="font-sans text-xs uppercase tracking-widest text-center text-foreground/40 mt-3">{dict.rooms.maxGuests}</p>
           </div>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl mb-4">{dict.rooms.title}</h2>
-          <p className="font-sans text-base max-w-xl mx-auto mb-3">{dict.rooms.subtitle}</p>
-          <p className="font-sans text-xs uppercase tracking-widest">{dict.rooms.maxGuests}</p>
-        </div>
+        )}
 
         <div className="flex flex-col gap-6 lg:gap-8">
-          <RoomCard
-            imageSrc="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80&fit=crop"
-            imageAlt="Upper floor master bedroom"
-            name={room1.name} tagline={room1.tagline} desc={room1.desc} beds={room1.beds}
-            badges={room1.badges} price={room1.price} nightLabel={dict.rooms.night} bookLabel={dict.rooms.book}
-          />
-          <RoomCard
-            imageSrc="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80&fit=crop"
-            imageAlt="Lower floor three-bed room"
-            name={room2.name} tagline={room2.tagline} desc={room2.desc} beds={room2.beds}
-            badges={room2.badges} price={room2.price} nightLabel={dict.rooms.night} bookLabel={dict.rooms.book}
-            reversed
-          />
+          <RoomCard roomKey="room1" lang={lang} dict={dict} />
+          <RoomCard roomKey="room2" lang={lang} dict={dict} reversed />
         </div>
       </div>
     </section>

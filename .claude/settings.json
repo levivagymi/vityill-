@@ -25,11 +25,36 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/hu)",
       "Bash(curl -s http://localhost:3000/ -o /dev/null -w \"%{http_code} → %{redirect_url}\")",
       "Bash(curl -s http://localhost:3000/en -o /dev/null -w \"%{http_code}\")",
-      "Bash(curl -s http://localhost:3000/de -o /dev/null -w \"%{http_code}\")"
+      "Bash(curl -s http://localhost:3000/de -o /dev/null -w \"%{http_code}\")",
+      "Bash(magick -version)",
+      "Bash(python -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
+      "Bash(python3 -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
+      "Bash(mkdir -p public/brand)",
+      "Bash(cp \"/c/Users/narin/Desktop/ChatGPT Image 2026. jún. 2. 20_50_41bgr.png\" public/brand/logo-source.png)",
+      "Bash(cp \"/c/Users/narin/Desktop/ChatGPT Image 2026. jún. 2. 20_50_41.png\" public/brand/logo-source-alt.png)",
+      "Bash(cd 'c:\\\\Users\\\\narin\\\\Desktop\\\\vityilló' && cp public/brand/icon-512.png app/icon.png && cp public/brand/apple-icon.png app/apple-icon.png && rm -f app/favicon.ico && rm -f public/brand/_preview-*.png scripts-gen-logo.cjs scripts-gen-emblem.cjs && echo \"=== app icons ===\" && ls app/*.png && echo \"=== brand assets ===\" && ls public/brand/)",
+      "Bash(grep -E \"set-state-in-effect|\\\\.tsx:[0-9]+:[0-9]+$\")",
+      "Bash(git worktree *)",
+      "mcp__plugin_ecc_playwright__browser_resize",
+      "Bash(curl -s http://localhost:3000/hu)",
+      "Bash(curl -s -X POST http://localhost:3000/api/booking -H 'Content-Type: application/json' -d '{\"name\":\"Teszt Elek\",\"email\":\"teszt@pelda.hu\",\"phone\":\"+36301234567\",\"checkIn\":\"2026-07-01\",\"checkOut\":\"2026-07-04\",\"adults\":2,\"children\":0,\"nationality\":\"Magyarország\",\"residence\":\"Magyarország\",\"postalCode\":\"1234\",\"gender\":\"male\",\"birthYear\":1985,\"room\":\"room1\",\"channel\":\"direct\",\"requests\":\"\",\"locale\":\"hu\"}' -w '\\\\nHTTP %{http_code}\\\\n')",
+      "Bash(curl -s -X POST http://localhost:3000/api/booking -H 'Content-Type: application/json' -d '{\"name\":\"X\",\"email\":\"bad\",\"phone\":\"1\",\"checkIn\":\"2026-07-04\",\"checkOut\":\"2026-07-01\",\"adults\":0,\"children\":0,\"nationality\":\"x\",\"residence\":\"x\",\"postalCode\":\"1\",\"gender\":\"male\",\"birthYear\":1985,\"room\":\"room1\",\"channel\":\"direct\"}' -w '\\\\nHTTP %{http_code}\\\\n')",
+      "Bash(curl -s -X POST http://localhost:3000/api/contact -H 'Content-Type: application/json' -d '{\"name\":\"Teszt\",\"email\":\"a@b.hu\",\"message\":\"Érdeklődnék a szabad időpontokról.\",\"locale\":\"hu\"}' -w '\\\\nHTTP %{http_code}\\\\n')",
+      "Bash(curl -s -L -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/xx/szobak\")",
+      "Bash(curl -s http://localhost:3000/hu/foglalas)",
+      "Bash(curl -s http://localhost:3000/hu/impresszum)",
+      "Bash(curl -s http://localhost:3000/hu/szobak/felso-szint)",
+      "Bash(curl -s http://localhost:3000/en)",
+      "Read(//c/Users/narin/AppData/Local/Temp/claude/c--Users-narin-Desktop-vityill-/03412f46-10f0-4eb0-a2d8-f5eac1b79afb/tasks/**)",
+      "Bash(rm -f public/brand/logo-black.png public/brand/logo-white.png public/brand/logo-source.png public/brand/logo-source-alt.png)",
+      "Bash(rm -rf data)",
+      "PowerShell($c = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { $c.OwningProcess | Select-Object -Unique | ForEach-Object { try { Stop-Process -Id $_ -Force -ErrorAction Stop; Write-Host \"stopped PID $_\" } catch {} } } else { Write-Host \"no listener on 3000\" })",
+      "PowerShell($c = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { $c.OwningProcess | Select-Object -Unique | ForEach-Object { try { Stop-Process -Id $_ -Force -ErrorAction Stop; Write-Host \"stopped PID $_\" } catch {} } } else { Write-Host \"no listener\" })"
     ],
     "additionalDirectories": [
       "c:\\Users\\narin\\Desktop\\vityillo-temp",
-      "c:\\Users\\narin\\.claude\\projects\\c--Users-narin-Desktop-vityill-\\memory"
+      "c:\\Users\\narin\\.claude\\projects\\c--Users-narin-Desktop-vityill-\\memory",
+      "C:\\Users\\narin\\Desktop\\vityilló\\public\\brand"
     ]
   }
 }

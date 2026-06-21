@@ -7,10 +7,21 @@
     "about": "Rólunk",
     "amenities": "Felszereltség",
     "rooms": "Szobák",
+    "experiences": "Élmények",
     "gallery": "Galéria",
     "book": "Foglalás",
     "location": "Helyszín",
+    "contact": "Kapcsolat",
     "bookNow": "Foglaljon most"
+  },
+  "common": {
+    "home": "Főoldal",
+    "viewAll": "Összes megtekintése",
+    "learnMore": "Tudjon meg többet",
+    "backHome": "Vissza a főoldalra",
+    "from": "Tól",
+    "perNight": "/ éj",
+    "explore": "Felfedezés"
   },
   "hero": {
     "eyebrow": "Szomód, Gerecse-hegység",
@@ -47,32 +58,83 @@
     "label": "Szobáink",
     "title": "Válasszon szobát",
     "subtitle": "Kényelem és elegancia minden szinten",
+    "heroSubtitle": "Két gondosan berendezett szint, összesen akár 10 vendég számára — közvetlen erdei panorámával.",
     "from": "Tól",
     "night": "éj",
+    "perNight": "/ éj",
     "capacity": "Kapacitás",
     "maxGuests": "Max. 10 vendég összesen",
     "book": "Foglalja le",
+    "allRooms": "Összes szoba",
+    "viewDetails": "Részletek",
+    "bookThis": "Foglalja le ezt a szobát",
+    "overviewTitle": "Áttekintés",
+    "featuresTitle": "Felszereltség",
+    "galleryTitle": "Képek",
+    "sizeLabel": "Alapterület",
+    "guestsLabel": "Férőhely",
+    "bedsLabel": "Ágyak",
+    "priceNote": "Az ár tájékoztató jellegű, két fő részére, éjszakánként.",
     "room1": {
       "name": "Felső szint",
       "tagline": "Mester hálószoba & nappali",
       "desc": "Tágas franciaágyas mester hálószoba, elegáns nappali területtel és teli fürdőszobával zuhanykabinnal. Közvetlen erdei panorámával.",
+      "long": "A felső szint a Vityilló legtágasabb egysége: kényelmes franciaággyal, külön nappali sarokkal és egy teljes fürdőszobával, amelyhez tágas zuhanykabin tartozik. A nagy ablakokon át közvetlen rálátás nyílik a környező erdőre, így minden reggelt a fák zöldje és a madárcsicsergés köszönt.",
       "beds": "Franciaágy",
+      "size": "42 m²",
+      "guests": "2–4 fő",
       "badges": ["Franciaágy", "Fürdőszoba", "Nappali", "Erdei panoráma"],
+      "highlights": ["Közvetlen erdei panoráma", "Külön nappali terület", "Teli fürdőszoba zuhanykabinnal", "Klíma és Smart TV"],
       "price": "120"
     },
     "room2": {
       "name": "Alsó szint",
       "tagline": "Háromágyas szoba",
       "desc": "Három egységes ágyas szoba, saját fürdőszobával és zuhanykabinnal. Közvetlenül a kertbe nyíló bejárattal.",
+      "long": "Az alsó szint ideális barátok társaságának vagy családoknak: három kényelmes egyszemélyes ággyal, saját fürdőszobával és közvetlen kertkapcsolattal. A kertbe nyíló ajtón át pár lépésre a szauna, a medence és a bográcsozó terasz.",
       "beds": "3 × egységes ágy",
+      "size": "34 m²",
+      "guests": "2–3 fő",
       "badges": ["3 egységes ágy", "Fürdőszoba", "Kertkapcsolatos"],
+      "highlights": ["Közvetlen kertkapcsolat", "Saját fürdőszoba zuhanykabinnal", "Pár lépésre a szaunától", "Klíma és Smart TV"],
       "price": "100"
+    }
+  },
+  "experiences": {
+    "label": "Élmények",
+    "title": "Élmények a Vityillóban",
+    "subtitle": "A pihenés művészete — minden érzékszervre",
+    "heroSubtitle": "Privát szauna, kültéri medence, bográcsos esték és érintetlen erdő — a feltöltődés minden formája egy helyen.",
+    "intro": "A Vityilló nem csupán szállás, hanem élmény. Fedezze fel azokat a részleteket, amelyek a hétköznapi pihenést felejthetetlenné teszik.",
+    "discover": "Fedezze fel",
+    "items": {
+      "sauna": {
+        "name": "Privát finn szauna",
+        "desc": "Kizárólag az Ön számára fenntartott finn szauna.",
+        "long": "A nap végén nincs jobb, mint a saját, privát finn szauna melege. A fa illata, a forró kövek és a teljes csend tökéletes regenerációt kínál — társaság és sorban állás nélkül, bármikor."
+      },
+      "pool": {
+        "name": "Kültéri medence & jacuzzi",
+        "desc": "Pezsgőfürdővel felszerelt kültéri medence.",
+        "long": "Merüljön el a kültéri medencében, miközben az erdő lombkoronáját nézi. A beépített jacuzzi-funkció pezsgő vízzel kényezteti, akár csillagos ég alatt is."
+      },
+      "grill": {
+        "name": "Bográcsos esték",
+        "desc": "Hagyományos bográcsos és grillezőhely a teraszon.",
+        "long": "A magyar vendéglátás szíve a bogrács. A kültéri tűzrakó és grillhely körül összegyűlve készítheti el kedvenc pörköltjét vagy gulyását, miközben az este lassan az erdőre borul."
+      },
+      "forest": {
+        "name": "Privát erdő & túraútvonalak",
+        "desc": "Saját erdő és a Gerecse túraösvényei a küszöbön.",
+        "long": "A ház közvetlen környezetében privát erdő és a Gerecse-hegység jelzett túraútvonalai várják. Sétáljon, kerékpározzon vagy egyszerűen csak lélegezzen — a természet itt kéznél van."
+      }
     }
   },
   "gallery": {
     "label": "Galéria",
     "title": "Fedezze fel a Vityillót",
     "subtitle": "Képek a természet és luxus találkozásáról",
+    "heroSubtitle": "Pillanatképek a házról, a szobákról és az érintetlen erdei környezetről.",
     "close": "Bezárás",
     "prev": "Előző",
     "next": "Következő",
@@ -82,6 +144,7 @@
     "label": "Foglalás",
     "title": "Foglalja le szállását",
     "subtitle": "Töltse ki az adatokat és hamarosan felvesszük Önnel a kapcsolatot",
+    "heroSubtitle": "Néhány lépés, és máris foglalt az Ön pihenése a Gerecse szívében.",
     "name": "Teljes neve",
     "email": "Email cím",
     "phone": "Telefonszám",
@@ -103,7 +166,7 @@
     "genderOther": "Egyéb",
     "room1Label": "Felső szint",
     "room2Label": "Alsó szint",
-    "bothLabel": "Mindkettő",
+    "bothLabel": "Az egész ház",
     "channelDirect": "Közvetlen",
     "channelAirbnb": "Airbnb",
     "channelBooking": "Booking.com",
@@ -116,12 +179,47 @@
     "requiredField": "Ez a mező kötelező",
     "invalidEmail": "Érvényes email cím szükséges",
     "invalidYear": "Érvényes születési évet adjon meg (1900–2010)",
+    "invalidPhone": "Érvényes telefonszámot adjon meg",
     "minAdults": "Legalább 1 felnőtt szükséges",
     "submit": "Foglalás küldése",
     "submitting": "Küldés...",
     "successTitle": "Köszönjük foglalását!",
-    "successMsg": "Hamarosan felvesszük Önnel a kapcsolatot. Várjuk a Vityillóban!",
-    "ntak": "Az adatokat az NTAK (Nemzeti Turisztikai Adatszolgáltató Központ) előírásainak megfelelően kezeljük."
+    "successMsg": "Hamarosan felvesszük Önnel a kapcsolatot a megadott elérhetőségen. Várjuk a Vityillóban!",
+    "errorTitle": "Hiba történt",
+    "errorMsg": "A foglalást most nem sikerült elküldeni. Kérjük, próbálja újra, vagy keressen minket telefonon.",
+    "newBooking": "Új foglalás",
+    "ntak": "Az adatokat az NTAK (Nemzeti Turisztikai Adatszolgáltató Központ) előírásainak megfelelően kezeljük.",
+    "stepStay": "Tartózkodás",
+    "stepGuest": "Vendégadatok",
+    "stepReview": "Áttekintés",
+    "stepLabel": "lépés",
+    "next": "Tovább",
+    "back": "Vissza",
+    "confirm": "Foglalás megerősítése",
+    "nights": "éjszaka",
+    "nightLabelShort": "éj",
+    "estimatedTotal": "Becsült végösszeg",
+    "pricePerNightLabel": "Szállás",
+    "cleaningFee": "Takarítási díj",
+    "taxNote": "Az idegenforgalmi adó (IFA) a helyszínen fizetendő, 500 Ft / fő / éj.",
+    "summaryTitle": "Foglalás áttekintése",
+    "summaryStay": "Tartózkodás",
+    "summaryGuests": "Vendégek",
+    "summaryRoom": "Szállás",
+    "summaryContact": "Kapcsolattartó",
+    "datesError": "A távozás dátuma legyen későbbi az érkezésnél",
+    "pastDateError": "A dátum nem lehet a múltban",
+    "agree": "Elolvastam és elfogadom az ÁSZF-et és az adatkezelési tájékoztatót.",
+    "agreeError": "A folytatáshoz el kell fogadnia a feltételeket",
+    "guestsValue": "{adults} felnőtt, {children} gyermek",
+    "selectDatesFirst": "Kérjük, először válasszon érkezési és távozási dátumot."
+  },
+  "bookingCta": {
+    "label": "Szabad időpontok",
+    "title": "Készen áll a feltöltődésre?",
+    "text": "Foglalja le a Vityilló Vendégházat, és élvezze a Gerecse érintetlen nyugalmát privát erdővel, szaunával és medencével.",
+    "button": "Foglalás indítása",
+    "secondary": "Kapcsolatfelvétel"
   },
   "location": {
     "label": "Helyszín",
@@ -137,9 +235,33 @@
     "esztergom": "Esztergom",
     "esztergomDesc": "30 km — Bazilika és Duna-part"
   },
+  "contact": {
+    "label": "Kapcsolat",
+    "title": "Lépjen kapcsolatba velünk",
+    "subtitle": "Kérdése van? Írjon nekünk, és örömmel segítünk.",
+    "heroSubtitle": "Foglalással, csoportos ajánlatkéréssel vagy bármilyen kérdéssel forduljon hozzánk bizalommal.",
+    "formTitle": "Írjon üzenetet",
+    "infoTitle": "Elérhetőségek",
+    "name": "Neve",
+    "email": "Email címe",
+    "phone": "Telefonszám (opcionális)",
+    "subject": "Tárgy",
+    "message": "Üzenete",
+    "send": "Üzenet küldése",
+    "sending": "Küldés...",
+    "successTitle": "Köszönjük üzenetét!",
+    "successMsg": "Hamarosan válaszolunk a megadott elérhetőségen.",
+    "checkInTitle": "Érkezés és távozás",
+    "checkInTime": "Érkezés: 15:00-tól",
+    "checkOutTime": "Távozás: 10:00-ig",
+    "directions": "Útvonalterv"
+  },
   "testimonials": {
     "label": "Vendégeink mondják",
-    "title": "Értékelések"
+    "title": "Értékelések",
+    "avgLabel": "Átlagos értékelés",
+    "satisfiedLabel": "Elégedett vendég",
+    "starsLabel": "5 csillag"
   },
   "footer": {
     "tagline": "Luxus menedék a Gerecse szívében",
@@ -148,10 +270,57 @@
     "email": "info@vityillo.hu",
     "address": "Szomód, Magyarország",
     "navTitle": "Navigáció",
+    "legal": "Jogi információk",
     "social": "Kövessen minket",
     "rights": "Minden jog fenntartva",
     "ntak": "NTAK Hitelesített Szálláshely",
+    "imprint": "Impresszum",
     "privacy": "Adatvédelem",
     "terms": "ÁSZF"
+  },
+  "cookie": {
+    "title": "Sütiket használunk",
+    "text": "Weboldalunk a működéshez és az élmény javításához sütiket használ.",
+    "accept": "Elfogadom",
+    "decline": "Elutasítom",
+    "more": "Adatkezelési tájékoztató"
+  },
+  "legal": {
+    "updated": "Utolsó frissítés",
+    "updatedDate": "2026. június 1.",
+    "imprint": {
+      "title": "Impresszum",
+      "intro": "A Vityilló Vendégház üzemeltetőjének jogszabály szerinti adatai.",
+      "sections": [
+        { "heading": "Szolgáltató", "body": "Vityilló Vendégház\nÜzemeltető: Vityilló Kft.\nSzékhely: 2896 Szomód, Fő utca 1., Magyarország" },
+        { "heading": "Nyilvántartási adatok", "body": "Cégjegyzékszám: 11-09-000000\nAdószám: 00000000-2-11\nNTAK regisztrációs szám: MA00000000" },
+        { "heading": "Kapcsolat", "body": "Telefon: +36 30 123 4567\nE-mail: info@vityillo.hu" },
+        { "heading": "Tárhelyszolgáltató", "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA" }
+      ]
+    },
+    "privacy": {
+      "title": "Adatkezelési tájékoztató",
+      "intro": "Tájékoztatás a személyes adatok kezeléséről az EU 2016/679 (GDPR) rendelet alapján.",
+      "sections": [
+        { "heading": "1. Adatkezelő", "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Kapcsolat: info@vityillo.hu, +36 30 123 4567." },
+        { "heading": "2. Kezelt adatok köre", "body": "A foglalási és kapcsolatfelvételi űrlapon megadott adatok: név, e-mail cím, telefonszám, érkezési és távozási dátum, vendégek száma, valamint a jogszabály által előírt vendégadatok (állampolgárság, lakcím, születési év, okmányadatok)." },
+        { "heading": "3. Az adatkezelés célja és jogalapja", "body": "A foglalás teljesítése és kapcsolattartás (szerződés teljesítése), valamint a szálláshely-szolgáltatásra vonatkozó jogszabályi kötelezettségek teljesítése, ideértve az NTAK adatszolgáltatást és a VIZA rendszert (jogi kötelezettség)." },
+        { "heading": "4. Adatmegőrzés", "body": "A számviteli bizonylatokat a jogszabály szerint 8 évig, a foglalási adatokat a cél megszűnéséig őrizzük meg." },
+        { "heading": "5. Adattovábbítás", "body": "Adatait kizárólag jogszabályi kötelezettség alapján (pl. NTAK, hatóságok) továbbítjuk. Marketing célból harmadik félnek nem adjuk át." },
+        { "heading": "6. Az Ön jogai", "body": "Ön kérheti adatai hozzáférését, helyesbítését, törlését, valamint az adatkezelés korlátozását. Panaszával a NAIH-hoz (naih.hu) fordulhat." }
+      ]
+    },
+    "terms": {
+      "title": "Általános Szerződési Feltételek",
+      "intro": "A Vityilló Vendégház szolgáltatásainak igénybevételére vonatkozó feltételek.",
+      "sections": [
+        { "heading": "1. A szerződés tárgya", "body": "A Vityilló Vendégház (Üzemeltető: Vityilló Kft.) szálláshely-szolgáltatást nyújt a jelen feltételek szerint." },
+        { "heading": "2. Foglalás és visszaigazolás", "body": "A foglalás az űrlap elküldésével indul, és az Üzemeltető írásos visszaigazolásával válik véglegessé. A megadott árak tájékoztató jellegűek, a végleges árat a visszaigazolás tartalmazza." },
+        { "heading": "3. Fizetési feltételek", "body": "A foglalás véglegesítéséhez előleg fizetése szükséges lehet. A fennmaradó összeg a helyszínen, érkezéskor fizetendő. Az idegenforgalmi adó a helyszínen fizetendő." },
+        { "heading": "4. Lemondási feltételek", "body": "Érkezés előtt 14 nappal történő lemondás esetén az előleg teljes egészében visszajár. 14 napon belüli lemondás esetén az előleg nem téríthető vissza." },
+        { "heading": "5. Házirend", "body": "Érkezés 15:00-tól, távozás 10:00-ig. A házban a dohányzás tilos. A medencét és szaunát a vendégek saját felelősségükre használják." },
+        { "heading": "6. Felelősség", "body": "Az Üzemeltető nem vállal felelősséget a vendégek értéktárgyaiért, valamint a szolgáltatások rendeltetésellenes használatából eredő károkért." }
+      ]
+    }
   }
 }

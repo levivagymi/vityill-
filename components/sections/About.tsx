@@ -2,8 +2,9 @@
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { Trees, Users, MapPin } from 'lucide-react'
-import gsap, { ScrollTrigger } from '@/lib/gsap'
+import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
+import { EmblemMark } from '@/components/brand/Logo'
 
 export default function About() {
   const dict = useDict()
@@ -36,7 +37,7 @@ export default function About() {
   ]
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="rolunk" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.04] via-transparent to-foreground/[0.06]" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -64,6 +65,7 @@ export default function About() {
           </div>
 
           <div className="lg:pl-6">
+            <EmblemMark height={30} className="about-right-el mb-4 opacity-90" />
             <div className="about-right-el flex items-center gap-3 mb-5" style={{ opacity: 0 }}>
               <div className="h-px w-10 bg-foreground/30" />
               <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.3em]">{dict.about.label}</span>

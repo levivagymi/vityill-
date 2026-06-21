@@ -4,6 +4,7 @@ import { Star, Quote } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
+import SectionHeading from '@/components/ui/SectionHeading'
 
 const REVIEWS = [
   {
@@ -130,13 +131,8 @@ export default function Testimonials() {
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="gsap-fade-up text-center mb-14 lg:mb-16">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-10 bg-foreground/55" />
-            <span className="text-foreground/55 text-xs font-sans uppercase tracking-[0.3em]">{dict.testimonials.label}</span>
-            <div className="h-px w-10 bg-foreground/55" />
-          </div>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl">{dict.testimonials.title}</h2>
+        <div className="gsap-fade-up mb-14 lg:mb-16">
+          <SectionHeading label={dict.testimonials.label} title={dict.testimonials.title} />
         </div>
 
         <div ref={carouselRef} className="overflow-hidden">
@@ -171,17 +167,17 @@ export default function Testimonials() {
             <div className="flex justify-center mt-1">
               <Star5 count={5} />
             </div>
-            <div className="text-xs font-sans text-foreground/30 mt-1 uppercase tracking-wider">Átlagos értékelés</div>
+            <div className="text-xs font-sans text-foreground/30 mt-1 uppercase tracking-wider">{dict.testimonials.avgLabel}</div>
           </div>
           <div className="w-px h-12 bg-foreground/[0.08]" />
           <div className="text-center">
             <div className="font-heading text-3xl text-foreground font-semibold">100%</div>
-            <div className="text-xs font-sans text-foreground/30 mt-2 uppercase tracking-wider">Elégedett vendég</div>
+            <div className="text-xs font-sans text-foreground/30 mt-2 uppercase tracking-wider">{dict.testimonials.satisfiedLabel}</div>
           </div>
           <div className="w-px h-12 bg-foreground/[0.08]" />
           <div className="text-center">
             <div className="font-heading text-3xl text-foreground font-semibold">★★★★★</div>
-            <div className="text-xs font-sans text-foreground/30 mt-2 uppercase tracking-wider">5 csillag</div>
+            <div className="text-xs font-sans text-foreground/30 mt-2 uppercase tracking-wider">{dict.testimonials.starsLabel}</div>
           </div>
         </div>
       </div>

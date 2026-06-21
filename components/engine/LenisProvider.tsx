@@ -25,6 +25,9 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     gsap.ticker.add(tickerFn)
     gsap.ticker.lagSmoothing(0)
 
+    // Exposing the freshly-created Lenis instance via context is an external-system
+    // subscription — the canonical, allowed use of setState inside an effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLenis(instance)
 
     return () => {

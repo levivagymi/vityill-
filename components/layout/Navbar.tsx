@@ -6,9 +6,9 @@ import { Menu, X, Sun, Moon } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { useTheme } from '@/components/providers/ThemeProvider'
+import Logo from '@/components/brand/Logo'
+import { MAIN_NAV, href } from '@/lib/nav'
 import type { Locale } from '@/lib/types'
-
-const NAV_LINKS = ['about', 'amenities', 'rooms', 'gallery', 'book', 'location'] as const
 
 export default function Navbar() {
   const dict = useDict()
@@ -35,6 +35,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -44,6 +45,12 @@ export default function Navbar() {
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
+
+  // Lock body scroll while the mobile drawer is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
 
   useEffect(() => {
     const drawer = drawerRef.current
@@ -66,11 +73,14 @@ export default function Navbar() {
     }
   }, [menuOpen])
 
-  const scrollTo = (id: string) => {
-    setMenuOpen(false)
-    const el = document.getElementById(id === 'book' ? 'booking' : id)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  }
+  // At the very top the navbar floats over a dark hero → light tone.
+  // Once scrolled it sits on a solid theme surface → theme-aware tone.
+  const linkColor = scrolled
+    ? 'text-foreground/70 hover:text-foreground'
+    : 'text-[rgba(255,244,204,0.8)] hover:text-[#FFF4CC]'
+  const iconBtn = scrolled
+    ? 'bg-foreground/[0.06] border-foreground/10 text-foreground/70 hover:text-foreground hover:bg-foreground/[0.12]'
+    : 'bg-white/[0.08] border-white/15 text-[rgba(255,244,204,0.8)] hover:text-[#FFF4CC] hover:bg-white/[0.15]'
 
   return (
     <>
@@ -85,38 +95,33 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            <Link href={`/${lang}`} className="flex flex-col group" data-cursor="view">
-              <span className="font-heading text-lg lg:text-xl font-semibold text-foreground tracking-wide">
-                Vityilló
-              </span>
-              <span className="text-[10px] lg:text-xs uppercase tracking-[0.2em] text-foreground/40 font-sans leading-none">
-                Vendégház
-              </span>
-            </Link>
+            <Logo variant="lockup" height={scrolled ? 34 : 38} tone={scrolled ? 'auto' : 'light'} priority />
 
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-              {NAV_LINKS.map((key) => (
-                <button
-                  key={key}
-                  onClick={() => scrollTo(key)}
-                  className="text-sm font-sans text-foreground/70 hover:text-foreground transition-colors duration-200 tracking-wide cursor-pointer"
+              {MAIN_NAV.map(({ dictKey, key, hash }) => (
+                <Link
+                  key={dictKey}
+                  href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)}
+                  className={`text-sm font-sans transition-colors duration-200 tracking-wide cursor-pointer ${linkColor}`}
                   data-cursor="view"
                 >
-                  {dict.nav[key]}
-                </button>
+                  {dict.nav[dictKey]}
+                </Link>
               ))}
             </nav>
 
             <div className="flex items-center gap-2 lg:gap-3">
-              <div className="hidden sm:flex items-center gap-1 bg-foreground/[0.06] rounded-full px-2 py-1 border border-foreground/10">
+              <div className={`hidden sm:flex items-center gap-1 rounded-full px-2 py-1 border transition-colors duration-500 ${
+                scrolled ? 'bg-foreground/[0.06] border-foreground/10' : 'bg-white/[0.08] border-white/15'
+              }`}>
                 {(['hu', 'en', 'de'] as Locale[]).map((l) => (
                   <Link
                     key={l}
                     href={`/${l}`}
                     className={`text-[11px] font-sans px-2 py-0.5 rounded-full uppercase tracking-wider transition-all duration-200 ${
                       lang === l
-                        ? 'bg-foreground text-background font-semibold'
-                        : 'text-foreground/50 hover:text-foreground/80'
+                        ? scrolled ? 'bg-foreground text-background font-semibold' : 'bg-[#FFF4CC] text-[#1A4731] font-semibold'
+                        : scrolled ? 'text-foreground/50 hover:text-foreground/80' : 'text-[rgba(255,244,204,0.6)] hover:text-[#FFF4CC]'
                     }`}
                   >
                     {l}
@@ -126,25 +131,28 @@ export default function Navbar() {
 
               <button
                 onClick={toggle}
-                aria-label="Toggle theme"
-                className="p-2 rounded-full bg-foreground/[0.06] border border-foreground/10 text-foreground/70 hover:text-foreground hover:bg-foreground/[0.12] transition-all duration-200 cursor-pointer"
+                aria-label={theme === 'dark' ? 'Világos mód' : 'Sötét mód'}
+                className={`p-2 rounded-full border transition-all duration-200 cursor-pointer ${iconBtn}`}
                 data-cursor="view"
               >
                 {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
               </button>
 
-              <button
-                onClick={() => scrollTo('book')}
-                className="hidden md:block text-sm font-sans bg-foreground hover:bg-foreground/90 text-background font-semibold px-4 py-2 rounded-full transition-all duration-200 hover:shadow-lg cursor-pointer"
+              <Link
+                href={href(lang, 'booking')}
+                className={`hidden md:block text-sm font-sans font-semibold px-4 py-2 rounded-full transition-all duration-200 hover:shadow-lg cursor-pointer ${
+                  scrolled ? 'bg-foreground hover:bg-foreground/90 text-background' : 'bg-[#FFF4CC] hover:bg-[rgba(255,244,204,0.9)] text-[#1A4731]'
+                }`}
                 data-cursor="view"
               >
                 {dict.nav.bookNow}
-              </button>
+              </Link>
 
               <button
                 onClick={() => setMenuOpen((o) => !o)}
-                className="md:hidden p-2 text-foreground/70 hover:text-foreground transition-colors cursor-pointer"
-                aria-label="Toggle menu"
+                className={`md:hidden p-2 transition-colors cursor-pointer ${scrolled ? 'text-foreground/70 hover:text-foreground' : 'text-[rgba(255,244,204,0.85)] hover:text-[#FFF4CC]'}`}
+                aria-label="Menü"
+                aria-expanded={menuOpen}
               >
                 {menuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
@@ -166,25 +174,26 @@ export default function Navbar() {
         style={{ display: 'none' }}
       >
         <div className="flex items-center justify-between p-5 border-b border-foreground/[0.08]">
-          <span className="font-heading text-foreground text-lg">Vityilló</span>
+          <Logo variant="lockup" height={30} tone="auto" />
           <button
             onClick={() => setMenuOpen(false)}
             className="p-1.5 text-foreground/50 hover:text-foreground transition-colors cursor-pointer"
-            aria-label="Close menu"
+            aria-label="Bezárás"
           >
             <X size={20} />
           </button>
         </div>
 
         <nav className="flex flex-col p-5 gap-1 flex-1">
-          {NAV_LINKS.map((key) => (
-            <button
-              key={key}
-              onClick={() => scrollTo(key)}
+          {MAIN_NAV.map(({ dictKey, key, hash }) => (
+            <Link
+              key={dictKey}
+              href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)}
+              onClick={() => setMenuOpen(false)}
               className="drawer-item text-left py-3 px-3 text-foreground/70 hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer"
             >
-              {dict.nav[key]}
-            </button>
+              {dict.nav[dictKey]}
+            </Link>
           ))}
         </nav>
 
@@ -214,12 +223,13 @@ export default function Navbar() {
             {theme === 'dark' ? 'Világos mód' : 'Sötét mód'}
           </button>
 
-          <button
-            onClick={() => scrollTo('book')}
-            className="drawer-item w-full bg-foreground hover:bg-foreground/90 text-background font-semibold py-3 rounded-full font-sans transition-colors cursor-pointer"
+          <Link
+            href={href(lang, 'booking')}
+            onClick={() => setMenuOpen(false)}
+            className="drawer-item block text-center w-full bg-foreground hover:bg-foreground/90 text-background font-semibold py-3 rounded-full font-sans transition-colors cursor-pointer"
           >
             {dict.nav.bookNow}
-          </button>
+          </Link>
         </div>
       </div>
     </>
