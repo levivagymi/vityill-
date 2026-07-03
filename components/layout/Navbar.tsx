@@ -1,18 +1,19 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { Menu, X, Sun, Moon } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import Logo from '@/components/brand/Logo'
-import { MAIN_NAV, href } from '@/lib/nav'
+import { MAIN_NAV, href, switchLocalePath } from '@/lib/nav'
 import type { Locale } from '@/lib/types'
 
 export default function Navbar() {
   const dict = useDict()
   const params = useParams()
+  const pathname = usePathname()
   const lang = (params?.lang as Locale) ?? 'hu'
   const { theme, toggle } = useTheme()
 
@@ -22,6 +23,8 @@ export default function Navbar() {
   const headerRef = useRef<HTMLElement>(null)
   const drawerRef = useRef<HTMLDivElement>(null)
   const backdropRef = useRef<HTMLDivElement>(null)
+  const closeBtnRef = useRef<HTMLButtonElement>(null)
+  const menuBtnRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -50,6 +53,20 @@ export default function Navbar() {
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
+  // Close the drawer with Escape and move focus into it when it opens
+  useEffect(() => {
+    if (!menuOpen) return
+    closeBtnRef.current?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false)
+        menuBtnRef.current?.focus()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [menuOpen])
 
   useEffect(() => {
@@ -117,7 +134,8 @@ export default function Navbar() {
                 {(['hu', 'en', 'de'] as Locale[]).map((l) => (
                   <Link
                     key={l}
-                    href={`/${l}`}
+                    href={switchLocalePath(pathname, l)}
+                    aria-current={lang === l ? 'true' : undefined}
                     className={`text-[11px] font-sans px-2 py-0.5 rounded-full uppercase tracking-wider transition-all duration-200 ${
                       lang === l
                         ? scrolled ? 'bg-foreground text-background font-semibold' : 'bg-[#FFF4CC] text-[#1A4731] font-semibold'
@@ -131,7 +149,7 @@ export default function Navbar() {
 
               <button
                 onClick={toggle}
-                aria-label={theme === 'dark' ? 'Világos mód' : 'Sötét mód'}
+                aria-label={theme === 'dark' ? dict.nav.themeLight : dict.nav.themeDark}
                 className={`p-2 rounded-full border transition-all duration-200 cursor-pointer ${iconBtn}`}
                 data-cursor="view"
               >
@@ -149,10 +167,12 @@ export default function Navbar() {
               </Link>
 
               <button
+                ref={menuBtnRef}
                 onClick={() => setMenuOpen((o) => !o)}
                 className={`md:hidden p-2 transition-colors cursor-pointer ${scrolled ? 'text-foreground/70 hover:text-foreground' : 'text-[rgba(255,244,204,0.85)] hover:text-[#FFF4CC]'}`}
-                aria-label="Menü"
+                aria-label={menuOpen ? dict.nav.menuClose : dict.nav.menuOpen}
                 aria-expanded={menuOpen}
+                aria-controls="mobile-drawer"
               >
                 {menuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
@@ -170,15 +190,20 @@ export default function Navbar() {
 
       <div
         ref={drawerRef}
+        id="mobile-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label={dict.nav.menuOpen}
         className="fixed top-0 right-0 bottom-0 z-50 w-72 bg-background border-l border-foreground/[0.08] flex-col"
         style={{ display: 'none' }}
       >
         <div className="flex items-center justify-between p-5 border-b border-foreground/[0.08]">
           <Logo variant="lockup" height={30} tone="auto" />
           <button
+            ref={closeBtnRef}
             onClick={() => setMenuOpen(false)}
             className="p-1.5 text-foreground/50 hover:text-foreground transition-colors cursor-pointer"
-            aria-label="Bezárás"
+            aria-label={dict.nav.menuClose}
           >
             <X size={20} />
           </button>
@@ -202,8 +227,9 @@ export default function Navbar() {
             {(['hu', 'en', 'de'] as Locale[]).map((l) => (
               <Link
                 key={l}
-                href={`/${l}`}
+                href={switchLocalePath(pathname, l)}
                 onClick={() => setMenuOpen(false)}
+                aria-current={lang === l ? 'true' : undefined}
                 className={`drawer-item flex-1 text-center text-sm py-2 rounded-lg uppercase tracking-wider font-sans transition-all ${
                   lang === l
                     ? 'bg-foreground text-background font-bold'
@@ -220,7 +246,7 @@ export default function Navbar() {
             className="drawer-item w-full flex items-center justify-center gap-2 bg-foreground/[0.06] border border-foreground/10 text-foreground/70 hover:text-foreground py-2.5 rounded-full font-sans text-sm transition-all mb-3 cursor-pointer"
           >
             {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
-            {theme === 'dark' ? 'Világos mód' : 'Sötét mód'}
+            {theme === 'dark' ? dict.nav.themeLight : dict.nav.themeDark}
           </button>
 
           <Link

@@ -118,7 +118,7 @@ export default function Location() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="font-sans font-semibold text-sm text-foreground/85 group-hover:text-foreground transition-colors">
-                      {dict.location[key as keyof typeof dict.location]}
+                      {dict.location[key]}
                       {dist && (
                         <span className="ml-2 text-xs font-normal bg-foreground/[0.08] text-foreground/70 px-2 py-0.5 rounded-full">
                           {dist}
@@ -126,7 +126,7 @@ export default function Location() {
                       )}
                     </div>
                     <div className="font-sans text-xs text-foreground/40 mt-0.5">
-                      {dict.location[`${key}desc` as keyof typeof dict.location] || dict.location[`${key}Desc` as keyof typeof dict.location]}
+                      {dict.location[`${key}desc`]}
                     </div>
                   </div>
                 </div>
@@ -134,7 +134,7 @@ export default function Location() {
             </div>
 
             <p className="mt-6 text-xs font-sans text-foreground/30 leading-relaxed">
-              * Autóval számított megközelítési idők / Driving distances
+              * {dict.location.note}
             </p>
             <Link
               href={href(lang, 'contact')}

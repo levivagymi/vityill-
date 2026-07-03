@@ -11,13 +11,11 @@ import { ROOM_MEDIA, type RoomKey } from '@/lib/content'
 import { href, roomHref } from '@/lib/nav'
 import type { Locale } from '@/lib/types'
 
-const BADGE_ICONS: Record<string, React.ElementType> = {
-  'Franciaágy': BedDouble, 'Double Bed': BedDouble, 'Doppelbett': BedDouble,
-  'Fürdőszoba': Bath, 'Bathroom': Bath, 'Badezimmer': Bath,
-  'Nappali': Sofa, 'Living Area': Sofa, 'Wohnbereich': Sofa,
-  'Erdei panoráma': TreePine, 'Forest View': TreePine, 'Waldblick': TreePine,
-  '3 egységes ágy': BedSingle, '3 Single Beds': BedSingle, '3 Einzelbetten': BedSingle,
-  'Kertkapcsolatos': DoorOpen, 'Garden Access': DoorOpen, 'Gartenzugang': DoorOpen,
+/** Icons correspond positionally to dict.rooms.<room>.badges — the badge
+ *  order is identical across locales, so no per-language mapping is needed. */
+const BADGE_ICONS: Record<RoomKey, React.ElementType[]> = {
+  room1: [BedDouble, Bath, Sofa, TreePine],
+  room2: [BedSingle, Bath, DoorOpen],
 }
 
 function RoomCard({
@@ -63,8 +61,8 @@ function RoomCard({
           <span>{r.guests}</span>
         </div>
         <div className="flex flex-wrap gap-2 mb-8">
-          {r.badges.map((badge) => {
-            const Icon = BADGE_ICONS[badge]
+          {r.badges.map((badge, i) => {
+            const Icon = BADGE_ICONS[roomKey][i]
             return (
               <span key={badge} className="flex items-center gap-1.5 text-xs font-sans text-foreground/60 bg-foreground/[0.04] border border-foreground/[0.08] rounded-full px-3 py-1.5">
                 {Icon && <Icon size={11} className="text-foreground/55" />}

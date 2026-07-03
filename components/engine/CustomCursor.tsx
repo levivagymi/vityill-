@@ -4,6 +4,9 @@ import gsap from '@/lib/gsap'
 
 type CursorState = 'default' | 'view' | 'pluck' | 'ripple'
 
+/** Elements over which the native cursor is restored (see globals.css). */
+const NATIVE_CURSOR_SELECTOR = 'input, textarea, select, iframe'
+
 export default function CustomCursor() {
   const outerRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
@@ -26,13 +29,21 @@ export default function CustomCursor() {
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 
+    const show = () => {
+      if (visible) return
+      visible = true
+      gsap.to([outer, inner], { autoAlpha: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' })
+    }
+    const hide = () => {
+      if (!visible) return
+      visible = false
+      gsap.to([outer, inner], { autoAlpha: 0, duration: 0.3, ease: 'power2.out', overwrite: 'auto' })
+    }
+
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX
       mouseY = e.clientY
-      if (!visible) {
-        visible = true
-        gsap.to([outer, inner], { opacity: 1, duration: 0.4, ease: 'power2.out' })
-      }
+      show()
     }
 
     const applyState = (state: CursorState) => {
@@ -53,23 +64,24 @@ export default function CustomCursor() {
       }
     }
 
-    const onEnter = (e: Event) => {
-      const el = e.currentTarget as HTMLElement
-      applyState((el.dataset.cursor || 'default') as CursorState)
+    // Event delegation: one listener pair handles every current and future
+    // [data-cursor] element — no MutationObserver rescans needed.
+    const onOver = (e: MouseEvent) => {
+      const target = e.target as Element | null
+      if (!target) return
+      if (target.closest(NATIVE_CURSOR_SELECTOR)) {
+        hide()
+        return
+      }
+      show()
+      const el = target.closest<HTMLElement>('[data-cursor]')
+      applyState((el?.dataset.cursor || 'default') as CursorState)
     }
-    const onLeave = () => applyState('default')
 
-    const scanTargets = () => {
-      document.querySelectorAll('[data-cursor]').forEach((el) => {
-        el.addEventListener('mouseenter', onEnter)
-        el.addEventListener('mouseleave', onLeave)
-      })
+    // Hide the rings when the pointer leaves the window entirely.
+    const onDocLeave = (e: MouseEvent) => {
+      if (!e.relatedTarget) hide()
     }
-
-    scanTargets()
-
-    const observer = new MutationObserver(scanTargets)
-    observer.observe(document.body, { childList: true, subtree: true })
 
     const tickerFn = () => {
       outerX = lerp(outerX, mouseX, 0.08)
@@ -81,12 +93,15 @@ export default function CustomCursor() {
     }
 
     gsap.ticker.add(tickerFn)
-    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mousemove', onMouseMove, { passive: true })
+    document.addEventListener('mouseover', onOver, { passive: true })
+    document.addEventListener('mouseout', onDocLeave, { passive: true })
 
     return () => {
       gsap.ticker.remove(tickerFn)
       window.removeEventListener('mousemove', onMouseMove)
-      observer.disconnect()
+      document.removeEventListener('mouseover', onOver)
+      document.removeEventListener('mouseout', onDocLeave)
     }
   }, [])
 

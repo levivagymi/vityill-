@@ -12,7 +12,11 @@
     "book": "Foglalás",
     "location": "Helyszín",
     "contact": "Kapcsolat",
-    "bookNow": "Foglaljon most"
+    "bookNow": "Foglaljon most",
+    "themeLight": "Világos mód",
+    "themeDark": "Sötét mód",
+    "menuOpen": "Menü megnyitása",
+    "menuClose": "Menü bezárása"
   },
   "common": {
     "home": "Főoldal",
@@ -44,15 +48,42 @@
     "label": "Felszereltség",
     "title": "Minden, amire szüksége van",
     "subtitle": "Gondosan kialakítva a tökéletes pihenéshez",
-    "sauna": { "name": "Privát szauna", "desc": "Finn szauna kizárólag az Ön számára" },
-    "pool": { "name": "Kültéri medence", "desc": "Jacuzzival felszerelt kültéri medence" },
-    "forest": { "name": "Privát erdő", "desc": "Kizárólagos természetélmény" },
-    "lighting": { "name": "Hangulatos világítás", "desc": "Légkörteremtő ambient megvilágítás" },
-    "view": { "name": "Panorámás kilátás", "desc": "Lélegzetelállító természeti panoráma" },
-    "ac": { "name": "Klímaberendezés", "desc": "Modern split klíma minden helyiségben" },
-    "tv": { "name": "Smart TV", "desc": "Netflix, HBO Max és egyéb streaming" },
-    "kitchen": { "name": "Teljes konyha", "desc": "Teljesen felszerelt modern konyha" },
-    "grill": { "name": "Bográcsos grill", "desc": "Kültéri bográcsos grillhely" }
+    "sauna": {
+      "name": "Privát szauna",
+      "desc": "Finn szauna kizárólag az Ön számára"
+    },
+    "pool": {
+      "name": "Kültéri medence",
+      "desc": "Jacuzzival felszerelt kültéri medence"
+    },
+    "forest": {
+      "name": "Privát erdő",
+      "desc": "Kizárólagos természetélmény"
+    },
+    "lighting": {
+      "name": "Hangulatos világítás",
+      "desc": "Légkörteremtő ambient megvilágítás"
+    },
+    "view": {
+      "name": "Panorámás kilátás",
+      "desc": "Lélegzetelállító természeti panoráma"
+    },
+    "ac": {
+      "name": "Klímaberendezés",
+      "desc": "Modern split klíma minden helyiségben"
+    },
+    "tv": {
+      "name": "Smart TV",
+      "desc": "Netflix, HBO Max és egyéb streaming"
+    },
+    "kitchen": {
+      "name": "Teljes konyha",
+      "desc": "Teljesen felszerelt modern konyha"
+    },
+    "grill": {
+      "name": "Bográcsos grill",
+      "desc": "Kültéri bográcsos grillhely"
+    }
   },
   "rooms": {
     "label": "Szobáink",
@@ -83,8 +114,18 @@
       "beds": "Franciaágy",
       "size": "42 m²",
       "guests": "2–4 fő",
-      "badges": ["Franciaágy", "Fürdőszoba", "Nappali", "Erdei panoráma"],
-      "highlights": ["Közvetlen erdei panoráma", "Külön nappali terület", "Teli fürdőszoba zuhanykabinnal", "Klíma és Smart TV"],
+      "badges": [
+        "Franciaágy",
+        "Fürdőszoba",
+        "Nappali",
+        "Erdei panoráma"
+      ],
+      "highlights": [
+        "Közvetlen erdei panoráma",
+        "Külön nappali terület",
+        "Teli fürdőszoba zuhanykabinnal",
+        "Klíma és Smart TV"
+      ],
       "price": "120"
     },
     "room2": {
@@ -95,8 +136,17 @@
       "beds": "3 × egységes ágy",
       "size": "34 m²",
       "guests": "2–3 fő",
-      "badges": ["3 egységes ágy", "Fürdőszoba", "Kertkapcsolatos"],
-      "highlights": ["Közvetlen kertkapcsolat", "Saját fürdőszoba zuhanykabinnal", "Pár lépésre a szaunától", "Klíma és Smart TV"],
+      "badges": [
+        "3 egységes ágy",
+        "Fürdőszoba",
+        "Kertkapcsolatos"
+      ],
+      "highlights": [
+        "Közvetlen kertkapcsolat",
+        "Saját fürdőszoba zuhanykabinnal",
+        "Pár lépésre a szaunától",
+        "Klíma és Smart TV"
+      ],
       "price": "100"
     }
   },
@@ -234,7 +284,8 @@
     "budapest": "Budapest",
     "budapestdesc": "60 km — Főváros",
     "esztergom": "Esztergom",
-    "esztergomDesc": "30 km — Bazilika és Duna-part"
+    "esztergomdesc": "30 km — Bazilika és Duna-part",
+    "note": "Autóval számított megközelítési idők"
   },
   "contact": {
     "label": "Kapcsolat",
@@ -255,14 +306,16 @@
     "checkInTitle": "Érkezés és távozás",
     "checkInTime": "Érkezés: 15:00-tól",
     "checkOutTime": "Távozás: 10:00-ig",
-    "directions": "Útvonalterv"
+    "directions": "Útvonalterv",
+    "newMessage": "Új üzenet írása"
   },
   "testimonials": {
     "label": "Vendégeink mondják",
     "title": "Értékelések",
     "avgLabel": "Átlagos értékelés",
     "satisfiedLabel": "Elégedett vendég",
-    "starsLabel": "5 csillag"
+    "starsLabel": "5 csillag",
+    "goTo": "Vélemény"
   },
   "footer": {
     "tagline": "Luxus menedék a Gerecse szívében",
@@ -293,35 +346,111 @@
       "title": "Impresszum",
       "intro": "A Vityilló Vendégház üzemeltetőjének jogszabály szerinti adatai.",
       "sections": [
-        { "heading": "Szolgáltató", "body": "Vityilló Vendégház\nÜzemeltető: Vityilló Kft.\nSzékhely: 2896 Szomód, Fő utca 1., Magyarország" },
-        { "heading": "Nyilvántartási adatok", "body": "Cégjegyzékszám: 11-09-000000\nAdószám: 00000000-2-11\nNTAK regisztrációs szám: MA00000000" },
-        { "heading": "Kapcsolat", "body": "Telefon: +36 30 123 4567\nE-mail: info@vityillo.hu" },
-        { "heading": "Tárhelyszolgáltató", "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA" }
+        {
+          "heading": "Szolgáltató",
+          "body": "Vityilló Vendégház\nÜzemeltető: Vityilló Kft.\nSzékhely: 2896 Szomód, Fő utca 1., Magyarország"
+        },
+        {
+          "heading": "Nyilvántartási adatok",
+          "body": "Cégjegyzékszám: 11-09-000000\nAdószám: 00000000-2-11\nNTAK regisztrációs szám: MA00000000"
+        },
+        {
+          "heading": "Kapcsolat",
+          "body": "Telefon: +36 30 123 4567\nE-mail: info@vityillo.hu"
+        },
+        {
+          "heading": "Tárhelyszolgáltató",
+          "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA"
+        }
       ]
     },
     "privacy": {
       "title": "Adatkezelési tájékoztató",
       "intro": "Tájékoztatás a személyes adatok kezeléséről az EU 2016/679 (GDPR) rendelet alapján.",
       "sections": [
-        { "heading": "1. Adatkezelő", "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Kapcsolat: info@vityillo.hu, +36 30 123 4567." },
-        { "heading": "2. Kezelt adatok köre", "body": "A foglalási és kapcsolatfelvételi űrlapon megadott adatok: név, e-mail cím, telefonszám, érkezési és távozási dátum, vendégek száma, valamint a jogszabály által előírt vendégadatok (állampolgárság, lakcím, születési év, okmányadatok)." },
-        { "heading": "3. Az adatkezelés célja és jogalapja", "body": "A foglalás teljesítése és kapcsolattartás (szerződés teljesítése), valamint a szálláshely-szolgáltatásra vonatkozó jogszabályi kötelezettségek teljesítése, ideértve az NTAK adatszolgáltatást és a VIZA rendszert (jogi kötelezettség)." },
-        { "heading": "4. Adatmegőrzés", "body": "A számviteli bizonylatokat a jogszabály szerint 8 évig, a foglalási adatokat a cél megszűnéséig őrizzük meg." },
-        { "heading": "5. Adattovábbítás", "body": "Adatait kizárólag jogszabályi kötelezettség alapján (pl. NTAK, hatóságok) továbbítjuk. Marketing célból harmadik félnek nem adjuk át." },
-        { "heading": "6. Az Ön jogai", "body": "Ön kérheti adatai hozzáférését, helyesbítését, törlését, valamint az adatkezelés korlátozását. Panaszával a NAIH-hoz (naih.hu) fordulhat." }
+        {
+          "heading": "1. Adatkezelő",
+          "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Kapcsolat: info@vityillo.hu, +36 30 123 4567."
+        },
+        {
+          "heading": "2. Kezelt adatok köre",
+          "body": "A foglalási és kapcsolatfelvételi űrlapon megadott adatok: név, e-mail cím, telefonszám, érkezési és távozási dátum, vendégek száma, valamint a jogszabály által előírt vendégadatok (állampolgárság, lakcím, születési év, okmányadatok)."
+        },
+        {
+          "heading": "3. Az adatkezelés célja és jogalapja",
+          "body": "A foglalás teljesítése és kapcsolattartás (szerződés teljesítése), valamint a szálláshely-szolgáltatásra vonatkozó jogszabályi kötelezettségek teljesítése, ideértve az NTAK adatszolgáltatást és a VIZA rendszert (jogi kötelezettség)."
+        },
+        {
+          "heading": "4. Adatmegőrzés",
+          "body": "A számviteli bizonylatokat a jogszabály szerint 8 évig, a foglalási adatokat a cél megszűnéséig őrizzük meg."
+        },
+        {
+          "heading": "5. Adattovábbítás",
+          "body": "Adatait kizárólag jogszabályi kötelezettség alapján (pl. NTAK, hatóságok) továbbítjuk. Marketing célból harmadik félnek nem adjuk át."
+        },
+        {
+          "heading": "6. Az Ön jogai",
+          "body": "Ön kérheti adatai hozzáférését, helyesbítését, törlését, valamint az adatkezelés korlátozását. Panaszával a NAIH-hoz (naih.hu) fordulhat."
+        }
       ]
     },
     "terms": {
       "title": "Általános Szerződési Feltételek",
       "intro": "A Vityilló Vendégház szolgáltatásainak igénybevételére vonatkozó feltételek.",
       "sections": [
-        { "heading": "1. A szerződés tárgya", "body": "A Vityilló Vendégház (Üzemeltető: Vityilló Kft.) szálláshely-szolgáltatást nyújt a jelen feltételek szerint." },
-        { "heading": "2. Foglalás és visszaigazolás", "body": "A foglalás az űrlap elküldésével indul, és az Üzemeltető írásos visszaigazolásával válik véglegessé. A megadott árak tájékoztató jellegűek, a végleges árat a visszaigazolás tartalmazza." },
-        { "heading": "3. Fizetési feltételek", "body": "A foglalás véglegesítéséhez előleg fizetése szükséges lehet. A fennmaradó összeg a helyszínen, érkezéskor fizetendő. Az idegenforgalmi adó a helyszínen fizetendő." },
-        { "heading": "4. Lemondási feltételek", "body": "Érkezés előtt 14 nappal történő lemondás esetén az előleg teljes egészében visszajár. 14 napon belüli lemondás esetén az előleg nem téríthető vissza." },
-        { "heading": "5. Házirend", "body": "Érkezés 15:00-tól, távozás 10:00-ig. A házban a dohányzás tilos. A medencét és szaunát a vendégek saját felelősségükre használják." },
-        { "heading": "6. Felelősség", "body": "Az Üzemeltető nem vállal felelősséget a vendégek értéktárgyaiért, valamint a szolgáltatások rendeltetésellenes használatából eredő károkért." }
+        {
+          "heading": "1. A szerződés tárgya",
+          "body": "A Vityilló Vendégház (Üzemeltető: Vityilló Kft.) szálláshely-szolgáltatást nyújt a jelen feltételek szerint."
+        },
+        {
+          "heading": "2. Foglalás és visszaigazolás",
+          "body": "A foglalás az űrlap elküldésével indul, és az Üzemeltető írásos visszaigazolásával válik véglegessé. A megadott árak tájékoztató jellegűek, a végleges árat a visszaigazolás tartalmazza."
+        },
+        {
+          "heading": "3. Fizetési feltételek",
+          "body": "A foglalás véglegesítéséhez előleg fizetése szükséges lehet. A fennmaradó összeg a helyszínen, érkezéskor fizetendő. Az idegenforgalmi adó a helyszínen fizetendő."
+        },
+        {
+          "heading": "4. Lemondási feltételek",
+          "body": "Érkezés előtt 14 nappal történő lemondás esetén az előleg teljes egészében visszajár. 14 napon belüli lemondás esetén az előleg nem téríthető vissza."
+        },
+        {
+          "heading": "5. Házirend",
+          "body": "Érkezés 15:00-tól, távozás 10:00-ig. A házban a dohányzás tilos. A medencét és szaunát a vendégek saját felelősségükre használják."
+        },
+        {
+          "heading": "6. Felelősség",
+          "body": "Az Üzemeltető nem vállal felelősséget a vendégek értéktárgyaiért, valamint a szolgáltatások rendeltetésellenes használatából eredő károkért."
+        }
       ]
     }
+  },
+  "cinematic": {
+    "srTitle": "Vityilló Vendégház – Luxus vendégház a Gerecse szívében, Szomódon",
+    "skipTitle": "Egy filmszerű élmény vár rád",
+    "skipText": "Görgetéssel irányítod a történetet — vagy átugorhatod.",
+    "skipBtn": "Átugrás",
+    "watchBtn": "Nézem →",
+    "tagline": "Természet ölén, civilizáció közelében",
+    "explore": "Fedezd fel",
+    "jacuzzi": "Jacuzzi",
+    "jacuzziDesc": "Relaxáció & felfrissülés",
+    "sauna": "Szauna",
+    "saunaDesc": "Finn élmény, erdei csendben",
+    "materialsLabel": "Prémium anyagok",
+    "materialsTitle": "Természetes\ntölgy. Kő.\nTextil.",
+    "gastroLabel": "Gasztronómia",
+    "gastroTitle": "Bogrács & Grill",
+    "nightLabel": "Éjszakai csend",
+    "floors": "2 SZINT",
+    "guests": "MAX 6 VENDÉG",
+    "words": [
+      "Természet",
+      "Wellness",
+      "Tér",
+      "Anyag",
+      "Tűz",
+      "Csend"
+    ]
   }
 }

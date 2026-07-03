@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
+import { prefersReducedMotion } from '@/lib/utils'
 import { useLenis } from './LenisProvider'
 
 export default function PageTransitionOverlay() {
@@ -14,8 +15,13 @@ export default function PageTransitionOverlay() {
     const overlay = overlayRef.current
     if (!overlay) return
 
-    ScrollTrigger.getAll().forEach((t) => t.kill())
     lenis?.scrollTo(0, { immediate: true })
+
+    if (prefersReducedMotion()) {
+      gsap.set(overlay, { clipPath: 'inset(0 0 100% 0)' })
+      ScrollTrigger.refresh()
+      return
+    }
 
     if (tweenRef.current) tweenRef.current.kill()
 
@@ -28,6 +34,8 @@ export default function PageTransitionOverlay() {
       delay: 0.05,
       onComplete: () => {
         gsap.set(overlay, { clipPath: 'inset(0 0 100% 0)' })
+        // Layout may have shifted while the overlay covered the page.
+        ScrollTrigger.refresh()
       },
     })
 

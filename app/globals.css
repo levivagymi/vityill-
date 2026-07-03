@@ -166,9 +166,14 @@
   scroll-margin-top: 80px;
 }
 
+/* Custom cursor replaces the native one on precise pointers; form controls
+   and embedded frames keep their native cursor for usability. */
 @media (pointer: fine) {
   * {
     cursor: none !important;
+  }
+  input, textarea, select, iframe {
+    cursor: auto !important;
   }
 }
 
@@ -180,29 +185,24 @@
   transition: opacity 0.25s ease;
 }
 
-/* Theme-responsive section and surface backgrounds.
-   Unlayered rules have higher cascade priority than @layer utilities,
-   so these override hardcoded Tailwind bg classes without !important. */
-/* Unlayered — higher cascade priority than @layer utilities.
-   Overrides hardcoded Tailwind bg/text classes in sections for both themes. */
-section {
-  background-color: var(--background);
-}
-footer {
-  background-color: var(--card);
+/* Visible keyboard focus — essential because the native cursor is hidden. */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
 }
 
-/* Headings and body text adapt to the active theme palette */
-section h1, section h2, section h3, section h4 {
-  color: var(--foreground);
-}
-section p, section span {
-  color: var(--muted-foreground);
-}
-
-/* CTA buttons always invert: fg bg with bg text */
-section button[class*="bg-foreground"],
-section a[class*="bg-foreground"] {
+::selection {
   background-color: var(--foreground);
   color: var(--background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

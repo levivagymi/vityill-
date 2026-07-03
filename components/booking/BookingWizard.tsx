@@ -7,12 +7,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import {
   CalendarDays, Users, ClipboardCheck, ArrowLeft, ArrowRight,
-  CheckCircle, AlertCircle, Check, RotateCcw,
+  CheckCircle, AlertCircle, Check, RotateCcw, Loader2,
 } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { href } from '@/lib/nav'
-import { BOOKING_ENABLED, COUNTRIES, ROOM_PRICES, CLEANING_FEE, nightsBetween, estimateTotal, type RoomChoice } from '@/lib/booking'
+import {
+  BOOKING_ENABLED, COUNTRIES, ROOM_PRICES, CLEANING_FEE,
+  MIN_BIRTH_YEAR, MAX_BIRTH_YEAR, todayISO,
+  nightsBetween, estimateTotal, type RoomChoice,
+} from '@/lib/booking'
 import type { Locale } from '@/lib/types'
 
 type FormData = {
@@ -32,18 +36,19 @@ const labelClass = 'block text-xs font-sans text-foreground/50 uppercase trackin
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className={labelClass}>{label}</label>
-      {children}
+      {/* Wrapping label gives the control an accessible name without id plumbing */}
+      <label className="block">
+        <span className={labelClass}>{label}</span>
+        {children}
+      </label>
       {error && (
-        <p className="mt-1 text-xs font-sans text-red-400 flex items-center gap-1">
+        <p role="alert" className="mt-1 text-xs font-sans text-red-400 flex items-center gap-1">
           <AlertCircle size={11} /> {error}
         </p>
       )}
     </div>
   )
 }
-
-const todayISO = () => new Date().toISOString().split('T')[0]
 
 export default function BookingWizard() {
   const dict = useDict()
@@ -64,10 +69,10 @@ export default function BookingWizard() {
       children: z.number().min(0).max(10),
       childrenAges: z.string().optional(),
       name: z.string().min(1, d.requiredField),
-      email: z.string().min(1, d.requiredField).email(d.invalidEmail),
+      email: z.string().min(1, d.requiredField).pipe(z.email(d.invalidEmail)),
       phone: z.string().min(3, d.invalidPhone),
       gender: z.enum(['male', 'female', 'other'], { error: d.requiredField }),
-      birthYear: z.number({ error: d.invalidYear }).min(1900, d.invalidYear).max(2010, d.invalidYear),
+      birthYear: z.number({ error: d.invalidYear }).min(MIN_BIRTH_YEAR, d.invalidYear).max(MAX_BIRTH_YEAR, d.invalidYear),
       nationality: z.string().min(1, d.requiredField),
       residence: z.string().min(1, d.requiredField),
       postalCode: z.string().min(1, d.requiredField),
@@ -164,7 +169,7 @@ export default function BookingWizard() {
             const active = i === step
             const done = i < step
             return (
-              <li key={i} className="flex items-center flex-1 last:flex-none">
+              <li key={i} aria-current={active ? 'step' : undefined} className="flex items-center flex-1 last:flex-none">
                 <div className="flex flex-col items-center gap-1.5">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all duration-300 ${
                     active ? 'bg-foreground text-background border-foreground'
@@ -235,7 +240,7 @@ export default function BookingWizard() {
                     <input {...register('phone')} type="tel" placeholder="+36 30 123 4567" className={inputClass} autoComplete="tel" />
                   </Field>
                   <Field label={d.birthYear} error={errors.birthYear?.message}>
-                    <input {...register('birthYear', { valueAsNumber: true })} type="number" min={1900} max={2010} placeholder="1985" className={inputClass} />
+                    <input {...register('birthYear', { valueAsNumber: true })} type="number" min={MIN_BIRTH_YEAR} max={MAX_BIRTH_YEAR} placeholder="1985" className={inputClass} />
                   </Field>
                   <Field label={d.gender} error={errors.gender?.message}>
                     <select {...register('gender')} className={inputClass} defaultValue="">
@@ -305,14 +310,14 @@ export default function BookingWizard() {
                   <label className="flex items-start gap-3 cursor-pointer group">
                     <input {...register('agree')} type="checkbox" className="mt-0.5 w-4 h-4 accent-[color:var(--foreground)] cursor-pointer" />
                     <span className="text-sm font-sans text-foreground/65 leading-snug">
-                      {d.agree.split('ÁSZF')[0]}
+                      {d.agree}{' '}
                       <Link href={href(lang, 'terms')} target="_blank" className="underline underline-offset-2 hover:text-foreground">{dict.footer.terms}</Link>
                       {' · '}
                       <Link href={href(lang, 'privacy')} target="_blank" className="underline underline-offset-2 hover:text-foreground">{dict.footer.privacy}</Link>
                     </span>
                   </label>
                   {errors.agree && (
-                    <p className="mt-1 text-xs font-sans text-red-400 flex items-center gap-1">
+                    <p role="alert" className="mt-1 text-xs font-sans text-red-400 flex items-center gap-1">
                       <AlertCircle size={11} /> {errors.agree.message as string}
                     </p>
                   )}
@@ -327,7 +332,7 @@ export default function BookingWizard() {
                 )}
 
                 {status === 'error' && (
-                  <div className="rounded-xl border border-red-400/30 bg-red-400/10 p-4">
+                  <div role="alert" className="rounded-xl border border-red-400/30 bg-red-400/10 p-4">
                     <p className="text-sm font-sans text-red-300 font-semibold mb-1 flex items-center gap-2">
                       <AlertCircle size={14} /> {d.errorTitle}
                     </p>
@@ -364,6 +369,7 @@ export default function BookingWizard() {
                 title={!BOOKING_ENABLED ? (d.disabledNotice ?? 'Foglalás jelenleg nem aktív – bemutató verzió') : undefined}
                 className="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 disabled:opacity-40 disabled:cursor-not-allowed text-background font-sans font-semibold text-sm px-6 py-3 rounded-full transition-all hover:scale-[1.02] cursor-pointer"
               >
+                {status === 'submitting' && <Loader2 size={15} className="animate-spin" aria-hidden />}
                 {status === 'submitting' ? d.submitting : d.confirm}
               </button>
             )}

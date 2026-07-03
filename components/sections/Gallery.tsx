@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import { X, ChevronLeft, ChevronRight, ZoomIn, ArrowRight } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { ScrollTrigger } from '@/lib/gsap'
+import { useLenis } from '@/components/engine/LenisProvider'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { GALLERY_IMAGES } from '@/lib/content'
@@ -17,11 +18,13 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
   const params = useParams()
   const lang = (params?.lang as Locale) ?? 'hu'
   const images = limit ? GALLERY_IMAGES.slice(0, limit) : GALLERY_IMAGES
+  const lenis = useLenis()
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null)
   const [lightboxVisible, setLightboxVisible] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
   const lightboxImgRef = useRef<HTMLDivElement>(null)
+  const closeBtnRef = useRef<HTMLButtonElement>(null)
 
   const openLightbox = useCallback((i: number) => { setLightboxIdx(i); setLightboxVisible(true) }, [])
   const closeLightbox = useCallback(() => { setLightboxVisible(false); setTimeout(() => setLightboxIdx(null), 200) }, [])
@@ -49,6 +52,21 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
     }
   }, [lightboxIdx])
 
+  // Lock page scroll and move focus into the dialog while the lightbox is open
+  useEffect(() => {
+    if (lightboxIdx === null) return
+    lenis?.stop()
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    closeBtnRef.current?.focus()
+    return () => {
+      document.body.style.overflow = prevOverflow
+      lenis?.start()
+    }
+    // Only the open/closed transition matters here, not every index change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lightboxIdx === null])
+
   useEffect(() => {
     if (lightboxIdx === null) return
     const handler = (e: KeyboardEvent) => {
@@ -72,12 +90,12 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
         <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 auto-rows-[200px]">
           {images.map((img, i) => (
             <button
-              key={i}
+              key={img.src}
               type="button"
               onClick={() => openLightbox(i)}
               data-cursor="view"
               aria-label={img.alt}
-              className={`gallery-item relative overflow-hidden rounded-xl cursor-pointer group ${
+              className={`gallery-item relative overflow-hidden rounded-xl cursor-pointer group bg-foreground/[0.05] ${
                 img.aspect === 'portrait' ? 'row-span-2 aspect-[3/4]' : 'aspect-[4/3]'
               }`}
             >
@@ -126,7 +144,7 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
             <span className="text-sm font-sans text-white/50">{lightboxIdx + 1} {dict.gallery.of} {images.length}</span>
           </div>
 
-          <button onClick={closeLightbox} className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-white/80 hover:text-white transition-all cursor-pointer" aria-label={dict.gallery.close}>
+          <button ref={closeBtnRef} onClick={closeLightbox} className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-white/80 hover:text-white transition-all cursor-pointer" aria-label={dict.gallery.close}>
             <X size={18} />
           </button>
           <button onClick={(e) => { e.stopPropagation(); prevImage() }} className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-white/80 hover:text-white transition-all cursor-pointer" aria-label={dict.gallery.prev}>

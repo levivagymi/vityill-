@@ -45,7 +45,7 @@ export default function PageHero({
   return (
     <section
       ref={ref}
-      className="relative min-h-[58vh] sm:min-h-[64vh] flex items-end overflow-hidden"
+      className="relative min-h-[58svh] sm:min-h-[64svh] flex items-end overflow-hidden"
       aria-label={title}
     >
       <div className="ph-img absolute inset-0">
