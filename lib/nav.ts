@@ -21,6 +21,14 @@ export const href = (lang: Locale, key: RouteKey): string => {
   return slug ? `/${lang}/${slug}` : `/${lang}`
 }
 
+/** Rewrite the locale segment of the current pathname, keeping the rest of the URL. */
+export const switchLocalePath = (pathname: string | null, next: Locale): string => {
+  if (!pathname) return `/${next}`
+  const segments = pathname.split('/')
+  segments[1] = next
+  return segments.join('/') || `/${next}`
+}
+
 /** Room detail slugs. */
 export const ROOM_SLUGS = ['felso-szint', 'also-szint'] as const
 export type RoomSlug = (typeof ROOM_SLUGS)[number]

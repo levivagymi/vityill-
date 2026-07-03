@@ -2,6 +2,7 @@
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
+import { useDict } from '@/components/providers/DictProvider'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type Particle = {
@@ -21,8 +22,6 @@ const HERO_SCATTER = [
   { x:  860, y: -340, rotate:  22 },
 ]
 
-const TYPO1 = '2 FLOORS'.split('')
-const TYPO2 = 'MAX 6 GUESTS'.split('')
 
 // Inline SVG floor plan — ground floor + first floor + details
 const BLUEPRINT_PATHS = [
@@ -63,7 +62,6 @@ const PH8_IMGS = [
   { id: 'photo-1501854140801-50d01698950b', top: '19%', left: '42%', w:  98 },
   { id: 'photo-1555396273-367ea4eb4db5',    top: '67%', left: '43%', w: 108 },
 ]
-const PH8_WORDS = ['Természet', 'Wellness', 'Tér', 'Anyag', 'Tűz', 'Csend']
 
 // ── Canvas helpers ────────────────────────────────────────────────────────────
 function makeSteam(w: number, h: number): Particle[] {
@@ -137,11 +135,14 @@ function drawEmbers(ctx: CanvasRenderingContext2D, w: number, h: number, ps: Par
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function CinematicStory() {
+  const dict           = useDict()
   const sectionRef     = useRef<HTMLElement>(null)
   const steamCanvasRef = useRef<HTMLCanvasElement>(null)
   const emberCanvasRef = useRef<HTMLCanvasElement>(null)
   const steamRaf       = useRef(0)
   const emberRaf       = useRef(0)
+  const steamOn        = useRef(false)
+  const emberOn        = useRef(false)
   const steamPs        = useRef<Particle[]>([])
   const emberPs        = useRef<Particle[]>([])
 
@@ -155,27 +156,40 @@ export default function CinematicStory() {
         : document.documentElement.removeAttribute('data-cinematic')
 
     // ── Canvas loops ─────────────────────────────────────────────────────────
+    // start/stop are idempotent: scrubbing back and forth re-fires the
+    // timeline's onStart/onReverseComplete callbacks, and a second start
+    // would otherwise spawn a parallel RAF loop that can never be cancelled.
     const startSteam = () => {
+      if (steamOn.current) return
       const canvas = steamCanvasRef.current; if (!canvas) return
       const ctx = canvas.getContext('2d');   if (!ctx)    return
       const w = (canvas.width  = canvas.offsetWidth)
       const h = (canvas.height = canvas.offsetHeight)
       steamPs.current = makeSteam(w, h)
+      steamOn.current = true
       const tick = (t: number) => { drawSteam(ctx, w, h, steamPs.current, t); steamRaf.current = requestAnimationFrame(tick) }
       steamRaf.current = requestAnimationFrame(tick)
     }
-    const stopSteam = () => cancelAnimationFrame(steamRaf.current)
+    const stopSteam = () => {
+      steamOn.current = false
+      cancelAnimationFrame(steamRaf.current)
+    }
 
     const startEmbers = () => {
+      if (emberOn.current) return
       const canvas = emberCanvasRef.current; if (!canvas) return
       const ctx = canvas.getContext('2d');   if (!ctx)    return
       const w = (canvas.width  = canvas.offsetWidth)
       const h = (canvas.height = canvas.offsetHeight)
       emberPs.current = makeEmbers(w, h)
+      emberOn.current = true
       const tick = (t: number) => { drawEmbers(ctx, w, h, emberPs.current, t); emberRaf.current = requestAnimationFrame(tick) }
       emberRaf.current = requestAnimationFrame(tick)
     }
-    const stopEmbers = () => cancelAnimationFrame(emberRaf.current)
+    const stopEmbers = () => {
+      emberOn.current = false
+      cancelAnimationFrame(emberRaf.current)
+    }
 
     // ── Init SVG stroke-dash ─────────────────────────────────────────────────
     section.querySelectorAll<SVGPathElement>('.ph4-path').forEach(path => {
@@ -469,10 +483,13 @@ export default function CinematicStory() {
     }
   }, [])
 
+  const typo1 = dict.cinematic.floors.split('')
+  const typo2 = dict.cinematic.guests.split('')
+
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen overflow-hidden"
+      className="relative h-dvh overflow-hidden"
       style={{ pointerEvents: 'none', cursor: 'none', userSelect: 'none', backgroundColor: '#0a1a10' }}
       aria-hidden="true"
     >
@@ -503,11 +520,11 @@ export default function CinematicStory() {
           </p>
           <p className="ce-hero-el font-sans text-sm sm:text-base text-[rgba(255,244,204,.52)] max-w-md leading-relaxed mb-10"
             style={{ willChange: 'transform' }}>
-            Természet ölén, civilizáció közelében
+            {dict.cinematic.tagline}
           </p>
           <div className="ce-hero-el w-44 h-12 rounded-full border border-[rgba(255,244,204,.28)] flex items-center justify-center"
             style={{ willChange: 'transform' }}>
-            <span className="font-sans text-sm text-[rgba(255,244,204,.55)] tracking-wide">Fedezd fel</span>
+            <span className="font-sans text-sm text-[rgba(255,244,204,.55)] tracking-wide">{dict.cinematic.explore}</span>
           </div>
         </div>
       </div>
@@ -579,8 +596,8 @@ export default function CinematicStory() {
               alt="" fill className="object-cover" sizes="430px" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#060f08]/88 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4">
-              <p className="font-heading text-[#FFF4CC] text-xl sm:text-2xl">Jacuzzi</p>
-              <p className="font-sans text-[rgba(255,244,204,.48)] text-xs mt-1">Relaxáció &amp; felfrissülés</p>
+              <p className="font-heading text-[#FFF4CC] text-xl sm:text-2xl">{dict.cinematic.jacuzzi}</p>
+              <p className="font-sans text-[rgba(255,244,204,.48)] text-xs mt-1">{dict.cinematic.jacuzziDesc}</p>
             </div>
           </div>
           <div className="ph3-sauna relative flex-1 rounded-2xl overflow-hidden"
@@ -589,8 +606,8 @@ export default function CinematicStory() {
               alt="" fill className="object-cover" sizes="430px" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#060f08]/88 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4">
-              <p className="font-heading text-[#FFF4CC] text-xl sm:text-2xl">Szauna</p>
-              <p className="font-sans text-[rgba(255,244,204,.48)] text-xs mt-1">Finn élmény, erdei csendben</p>
+              <p className="font-heading text-[#FFF4CC] text-xl sm:text-2xl">{dict.cinematic.sauna}</p>
+              <p className="font-sans text-[rgba(255,244,204,.48)] text-xs mt-1">{dict.cinematic.saunaDesc}</p>
             </div>
           </div>
         </div>
@@ -617,16 +634,16 @@ export default function CinematicStory() {
         </div>
         <div className="ph4-letters-wrap absolute inset-0 flex flex-col items-center justify-end pb-20 gap-4"
           style={{ willChange: 'opacity' }}>
-          <div className="ph4-l1 flex items-baseline overflow-hidden" aria-label="2 FLOORS">
-            {TYPO1.map((ch, i) => (
+          <div className="ph4-l1 flex items-baseline overflow-hidden" aria-label={dict.cinematic.floors}>
+            {typo1.map((ch, i) => (
               <span key={i} className="ph4-letter font-heading text-[#FFF4CC] inline-block"
                 style={{ fontSize: 'clamp(44px,8vw,88px)', lineHeight: 1, letterSpacing: '-0.02em', willChange: 'transform,opacity' }}>
                 {ch === ' ' ? ' ' : ch}
               </span>
             ))}
           </div>
-          <div className="ph4-l2 flex items-baseline overflow-hidden" aria-label="MAX 6 GUESTS">
-            {TYPO2.map((ch, i) => (
+          <div className="ph4-l2 flex items-baseline overflow-hidden" aria-label={dict.cinematic.guests}>
+            {typo2.map((ch, i) => (
               <span key={i} className="ph4-letter font-sans text-[rgba(255,244,204,.38)] inline-block uppercase tracking-[.22em]"
                 style={{ fontSize: 'clamp(13px,2.1vw,22px)', willChange: 'transform,opacity' }}>
                 {ch === ' ' ? ' ' : ch}
@@ -659,10 +676,10 @@ export default function CinematicStory() {
           style={{ willChange: 'transform,opacity' }}>
           <p className="font-sans text-[rgba(255,244,204,.36)] uppercase tracking-[.35em] mb-3"
             style={{ fontSize: 10 }}>
-            Prémium anyagok
+            {dict.cinematic.materialsLabel}
           </p>
-          <h2 className="font-heading text-[#FFF4CC] leading-tight" style={{ fontSize: 'clamp(24px,3.8vw,50px)' }}>
-            Természetes<br />tölgy. Kő.<br />Textil.
+          <h2 className="font-heading text-[#FFF4CC] leading-tight whitespace-pre-line" style={{ fontSize: 'clamp(24px,3.8vw,50px)' }}>
+            {dict.cinematic.materialsTitle}
           </h2>
         </div>
       </div>
@@ -684,10 +701,10 @@ export default function CinematicStory() {
         }} />
         <div className="absolute top-[22%] left-0 right-0 text-center" style={{ zIndex: 4 }}>
           <p className="font-sans text-[rgba(255,244,204,.3)] uppercase tracking-[.4em] mb-3" style={{ fontSize: 10 }}>
-            Gasztronómia
+            {dict.cinematic.gastroLabel}
           </p>
           <h2 className="font-heading text-[#FFF4CC]" style={{ fontSize: 'clamp(28px,5vw,60px)' }}>
-            Bogrács &amp; Grill
+            {dict.cinematic.gastroTitle}
           </h2>
         </div>
       </div>
@@ -719,7 +736,7 @@ export default function CinematicStory() {
         }} />
         <div className="absolute bottom-14 left-1/2 -translate-x-1/2 text-center" style={{ zIndex: 10 }}>
           <p className="font-sans text-[rgba(255,244,204,.26)] uppercase tracking-[.45em]" style={{ fontSize: 10 }}>
-            Éjszakai csend
+            {dict.cinematic.nightLabel}
           </p>
         </div>
       </div>
@@ -733,7 +750,7 @@ export default function CinematicStory() {
               alt="" fill className="object-cover" sizes={`${a.w}px`} />
           </div>
         ))}
-        {PH8_WORDS.map((word, i) => (
+        {dict.cinematic.words.map((word, i) => (
           <div key={i} className="ph8-asset absolute font-heading text-[#FFF4CC] pointer-events-none select-none"
             style={{
               top:  `${12 + i * 13}%`,

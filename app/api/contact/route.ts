@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 const contactSchema = z.object({
   name: z.string().trim().min(1).max(120),
-  email: z.string().trim().email(),
+  email: z.string().trim().pipe(z.email()),
   phone: z.string().trim().max(40).optional().default(''),
   subject: z.string().trim().max(160).optional().default(''),
   message: z.string().trim().min(1).max(4000),

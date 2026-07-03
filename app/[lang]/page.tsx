@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { hasLocale } from './dictionaries'
+import { getDictionary, hasLocale } from './dictionaries'
 import CinematicStory from '@/components/sections/CinematicStory'
 import About from '@/components/sections/About'
 import Amenities from '@/components/sections/Amenities'
@@ -13,11 +13,14 @@ import CinematicSkipPrompt from '@/components/engine/CinematicSkipPrompt'
 export default async function LangPage({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params
   if (!hasLocale(lang)) notFound()
+  const dict = await getDictionary(lang)
 
   return (
     <>
       <CinematicSkipPrompt />
       <main>
+        {/* The cinematic hero is aria-hidden, so the page heading lives here. */}
+        <h1 className="sr-only">{dict.cinematic.srTitle}</h1>
         <CinematicStory />
         <About />
         <Amenities />

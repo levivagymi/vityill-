@@ -7,6 +7,19 @@ import type { Locale } from '@/lib/types'
 
 const STORAGE_KEY = 'vityillo-dev-notice-seen'
 
+/** Fired on window once the notice is dismissed, so queued overlays
+ *  (e.g. CinematicSkipPrompt) know they may appear. */
+export const DEV_NOTICE_DISMISSED_EVENT = 'vityillo:dev-notice-dismissed'
+
+/** True when the visitor has already acknowledged the notice this session. */
+export const devNoticeSeen = (): boolean => {
+  try {
+    return !!sessionStorage.getItem(STORAGE_KEY)
+  } catch {
+    return true
+  }
+}
+
 const COPY: Record<Locale, { badge: string; title: string; body: string; sub: string; btn: string }> = {
   hu: {
     badge: 'Fejlesztői verzió',
@@ -38,9 +51,12 @@ export default function DevNoticeModal() {
   const [open, setOpen] = useState(false)
   const overlayRef = useRef<HTMLDivElement>(null)
   const cardRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     try {
+      // Reading visibility from a browser-only API after mount.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (!sessionStorage.getItem(STORAGE_KEY)) setOpen(true)
     } catch {
       setOpen(true)
@@ -51,14 +67,38 @@ export default function DevNoticeModal() {
     if (!open || !overlayRef.current || !cardRef.current) return
     gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
     gsap.fromTo(cardRef.current, { opacity: 0, y: 24, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: 'power3.out', delay: 0.05 })
+    buttonRef.current?.focus()
+
+    // Block page scroll behind the modal.
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prevOverflow
+    }
   }, [open])
 
   const dismiss = () => {
     try { sessionStorage.setItem(STORAGE_KEY, '1') } catch { /* ignore */ }
-    const tl = gsap.timeline({ onComplete: () => setOpen(false) })
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setOpen(false)
+        window.dispatchEvent(new Event(DEV_NOTICE_DISMISSED_EVENT))
+      },
+    })
     tl.to(cardRef.current, { opacity: 0, y: 16, scale: 0.97, duration: 0.3, ease: 'power2.in' })
     tl.to(overlayRef.current, { opacity: 0, duration: 0.25 }, '-=0.1')
   }
+
+  // The notice is a blocking legal disclaimer: Escape acknowledges it,
+  // matching the single available action.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
 
   if (!open) return null
 
@@ -97,6 +137,7 @@ export default function DevNoticeModal() {
           </p>
 
           <button
+            ref={buttonRef}
             onClick={dismiss}
             className="w-full bg-foreground hover:bg-foreground/90 text-background font-sans font-semibold text-sm py-3 rounded-xl transition-colors cursor-pointer"
           >

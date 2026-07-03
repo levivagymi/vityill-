@@ -8,8 +8,12 @@ const defaultLocale: Locale = 'hu'
 function getLocale(request: NextRequest): Locale {
   const acceptLang = request.headers.get('accept-language')
   if (!acceptLang) return defaultLocale
-  const preferred = acceptLang.split(',')[0]?.split('-')[0]?.toLowerCase()
-  if (preferred && locales.includes(preferred as Locale)) return preferred as Locale
+  // Walk the whole preference list ("fr, de;q=0.9, en;q=0.8"), not just the
+  // first entry, so any supported language wins before the default applies.
+  for (const part of acceptLang.split(',')) {
+    const code = part.split(';')[0]?.trim().split('-')[0]?.toLowerCase()
+    if (code && locales.includes(code as Locale)) return code as Locale
+  }
   return defaultLocale
 }
 

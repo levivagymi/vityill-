@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
+import { prefersReducedMotion } from '@/lib/utils'
 
 const LenisContext = createContext<Lenis | null>(null)
 
@@ -17,6 +18,9 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       touchMultiplier: 2,
+      // Keep the instance (stop/start/scrollTo API stays available) but skip
+      // wheel smoothing for users who asked the OS to minimize motion.
+      smoothWheel: !prefersReducedMotion(),
     })
 
     const tickerFn = (time: number) => instance.raf(time * 1000)

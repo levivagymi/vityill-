@@ -65,7 +65,9 @@ export default function About() {
           </div>
 
           <div className="lg:pl-6">
-            <EmblemMark height={30} className="about-right-el mb-4 opacity-90" />
+            <div className="about-right-el mb-4" style={{ opacity: 0 }}>
+              <EmblemMark height={30} className="opacity-90" />
+            </div>
             <div className="about-right-el flex items-center gap-3 mb-5" style={{ opacity: 0 }}>
               <div className="h-px w-10 bg-foreground/30" />
               <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.3em]">{dict.about.label}</span>
@@ -73,10 +75,10 @@ export default function About() {
             <h2 className="about-right-el font-heading text-3xl sm:text-4xl lg:text-5xl leading-tight mb-6" style={{ opacity: 0 }}>
               {dict.about.title}
             </h2>
-            <p className="about-right-el font-sans leading-[1.85] text-base mb-5" style={{ opacity: 0 }}>
+            <p className="about-right-el font-sans text-foreground/70 leading-[1.85] text-base mb-5" style={{ opacity: 0 }}>
               {dict.about.p1}
             </p>
-            <p className="about-right-el font-sans leading-[1.85] text-base mb-8" style={{ opacity: 0 }}>
+            <p className="about-right-el font-sans text-foreground/70 leading-[1.85] text-base mb-8" style={{ opacity: 0 }}>
               {dict.about.p2}
             </p>
             <div className="about-right-el flex flex-wrap gap-3" style={{ opacity: 0 }}>

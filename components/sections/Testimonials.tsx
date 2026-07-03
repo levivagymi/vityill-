@@ -1,10 +1,11 @@
 'use client'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { Star, Quote } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
+import { prefersReducedMotion } from '@/lib/utils'
 
 const REVIEWS = [
   {
@@ -90,15 +91,39 @@ function ReviewCard({ review, isActive }: { review: typeof REVIEWS[0]; isActive:
 export default function Testimonials() {
   const dict = useDict()
   const [active, setActive] = useState(0)
+  const [offset, setOffset] = useState(0)
+  const [paused, setPaused] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  // Center the active card by measurement instead of assuming a card width,
+  // so the math holds on every breakpoint (cards are w-full on mobile).
+  const measure = useCallback(() => {
+    const track = trackRef.current
+    const viewport = carouselRef.current
+    if (!track || !viewport) return
+    const card = track.children[active] as HTMLElement | undefined
+    if (!card) return
+    setOffset(card.offsetLeft + card.offsetWidth / 2 - viewport.offsetWidth / 2)
+  }, [active])
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActive((a) => (a + 1) % REVIEWS.length)
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [measure])
+
+  // Autoplay: one step 5s after the last change; pauses on hover and in
+  // background tabs, and stays off for reduced-motion users. Restarting the
+  // timeout on `active` means a manual dot click also resets the window.
+  useEffect(() => {
+    if (paused || prefersReducedMotion()) return
+    const timer = setTimeout(() => {
+      if (!document.hidden) setActive((a) => (a + 1) % REVIEWS.length)
     }, 5000)
-    return () => clearInterval(timer)
-  }, [])
+    return () => clearTimeout(timer)
+  }, [active, paused])
 
   useEffect(() => {
     void ScrollTrigger
@@ -135,28 +160,40 @@ export default function Testimonials() {
           <SectionHeading label={dict.testimonials.label} title={dict.testimonials.title} />
         </div>
 
-        <div ref={carouselRef} className="overflow-hidden">
+        <div
+          ref={carouselRef}
+          className="overflow-hidden"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label={dict.testimonials.title}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={() => setPaused(false)}
+        >
           <div
+            ref={trackRef}
             className="flex gap-4 lg:gap-5 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            style={{ transform: `translateX(calc(-${active * (100 / REVIEWS.length)}% - ${active * 16}px + 50% - 210px))` }}
+            style={{ transform: `translateX(${-offset}px)` }}
           >
             {REVIEWS.map((review, i) => (
-              <ReviewCard key={i} review={review} isActive={i === active} />
+              <ReviewCard key={review.name} review={review} isActive={i === active} />
             ))}
           </div>
         </div>
 
         <div className="flex justify-center gap-2 mt-8">
-          {REVIEWS.map((_, i) => (
+          {REVIEWS.map((review, i) => (
             <button
-              key={i}
+              key={review.name}
               onClick={() => setActive(i)}
               className={`transition-all duration-300 rounded-full cursor-pointer ${
                 i === active
                   ? 'w-8 h-2 bg-foreground'
                   : 'w-2 h-2 bg-foreground/15 hover:bg-foreground/35'
               }`}
-              aria-label={`Review ${i + 1}`}
+              aria-label={`${dict.testimonials.goTo} ${i + 1}`}
+              aria-current={i === active ? 'true' : undefined}
             />
           ))}
         </div>

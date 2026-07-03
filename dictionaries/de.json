@@ -12,7 +12,11 @@
     "book": "Buchung",
     "location": "Lage",
     "contact": "Kontakt",
-    "bookNow": "Jetzt buchen"
+    "bookNow": "Jetzt buchen",
+    "themeLight": "Heller Modus",
+    "themeDark": "Dunkler Modus",
+    "menuOpen": "Menü öffnen",
+    "menuClose": "Menü schließen"
   },
   "common": {
     "home": "Startseite",
@@ -44,15 +48,42 @@
     "label": "Ausstattung",
     "title": "Alles, was Sie brauchen",
     "subtitle": "Durchdacht gestaltet für den perfekten Aufenthalt",
-    "sauna": { "name": "Private Sauna", "desc": "Finnische Sauna exklusiv für Sie" },
-    "pool": { "name": "Außenpool", "desc": "Außenpool mit Whirlpool" },
-    "forest": { "name": "Privatwald", "desc": "Exklusives Naturerlebnis" },
-    "lighting": { "name": "Stimmungsbeleuchtung", "desc": "Atmosphärische Ambiente-Beleuchtung" },
-    "view": { "name": "Panoramablick", "desc": "Atemberaubendes Naturpanorama" },
-    "ac": { "name": "Klimaanlage", "desc": "Moderne Split-Klimaanlage in jedem Zimmer" },
-    "tv": { "name": "Smart TV", "desc": "Netflix, HBO Max und mehr" },
-    "kitchen": { "name": "Vollküche", "desc": "Voll ausgestattete moderne Küche" },
-    "grill": { "name": "Kessel-Grill", "desc": "Ungarischer Bogrács-Grill im Freien" }
+    "sauna": {
+      "name": "Private Sauna",
+      "desc": "Finnische Sauna exklusiv für Sie"
+    },
+    "pool": {
+      "name": "Außenpool",
+      "desc": "Außenpool mit Whirlpool"
+    },
+    "forest": {
+      "name": "Privatwald",
+      "desc": "Exklusives Naturerlebnis"
+    },
+    "lighting": {
+      "name": "Stimmungsbeleuchtung",
+      "desc": "Atmosphärische Ambiente-Beleuchtung"
+    },
+    "view": {
+      "name": "Panoramablick",
+      "desc": "Atemberaubendes Naturpanorama"
+    },
+    "ac": {
+      "name": "Klimaanlage",
+      "desc": "Moderne Split-Klimaanlage in jedem Zimmer"
+    },
+    "tv": {
+      "name": "Smart TV",
+      "desc": "Netflix, HBO Max und mehr"
+    },
+    "kitchen": {
+      "name": "Vollküche",
+      "desc": "Voll ausgestattete moderne Küche"
+    },
+    "grill": {
+      "name": "Kessel-Grill",
+      "desc": "Ungarischer Bogrács-Grill im Freien"
+    }
   },
   "rooms": {
     "label": "Unsere Zimmer",
@@ -83,8 +114,18 @@
       "beds": "Doppelbett",
       "size": "42 m²",
       "guests": "2–4 Gäste",
-      "badges": ["Doppelbett", "Badezimmer", "Wohnbereich", "Waldblick"],
-      "highlights": ["Direkter Waldpanorama-Blick", "Separater Wohnbereich", "Vollständiges Bad mit Duschkabine", "Klimaanlage und Smart TV"],
+      "badges": [
+        "Doppelbett",
+        "Badezimmer",
+        "Wohnbereich",
+        "Waldblick"
+      ],
+      "highlights": [
+        "Direkter Waldpanorama-Blick",
+        "Separater Wohnbereich",
+        "Vollständiges Bad mit Duschkabine",
+        "Klimaanlage und Smart TV"
+      ],
       "price": "120"
     },
     "room2": {
@@ -95,8 +136,17 @@
       "beds": "3 × Einzelbetten",
       "size": "34 m²",
       "guests": "2–3 Gäste",
-      "badges": ["3 Einzelbetten", "Badezimmer", "Gartenzugang"],
-      "highlights": ["Direkter Gartenzugang", "Eigenes Bad mit Duschkabine", "Wenige Schritte zur Sauna", "Klimaanlage und Smart TV"],
+      "badges": [
+        "3 Einzelbetten",
+        "Badezimmer",
+        "Gartenzugang"
+      ],
+      "highlights": [
+        "Direkter Gartenzugang",
+        "Eigenes Bad mit Duschkabine",
+        "Wenige Schritte zur Sauna",
+        "Klimaanlage und Smart TV"
+      ],
       "price": "100"
     }
   },
@@ -234,7 +284,8 @@
     "budapest": "Budapest",
     "budapestdesc": "60 km — Hauptstadt",
     "esztergom": "Esztergom",
-    "esztergomDesc": "30 km — Basilika & Donauufer"
+    "esztergomdesc": "30 km — Basilika & Donauufer",
+    "note": "Entfernungen mit dem Auto berechnet"
   },
   "contact": {
     "label": "Kontakt",
@@ -255,14 +306,16 @@
     "checkInTitle": "An- & Abreise",
     "checkInTime": "Anreise: ab 15:00 Uhr",
     "checkOutTime": "Abreise: bis 10:00 Uhr",
-    "directions": "Route planen"
+    "directions": "Route planen",
+    "newMessage": "Weitere Nachricht senden"
   },
   "testimonials": {
     "label": "Was unsere Gäste sagen",
     "title": "Bewertungen",
     "avgLabel": "Durchschnittliche Bewertung",
     "satisfiedLabel": "Zufriedene Gäste",
-    "starsLabel": "5 Sterne"
+    "starsLabel": "5 Sterne",
+    "goTo": "Bewertung"
   },
   "footer": {
     "tagline": "Luxus-Rückzugsort im Herzen des Gerecse",
@@ -293,35 +346,111 @@
       "title": "Impressum",
       "intro": "Gesetzlich vorgeschriebene Angaben des Betreibers des Vityilló Gästehauses.",
       "sections": [
-        { "heading": "Dienstanbieter", "body": "Vityilló Gästehaus\nBetreiber: Vityilló Kft.\nSitz: 2896 Szomód, Fő utca 1., Ungarn" },
-        { "heading": "Registrierungsdaten", "body": "Handelsregisternummer: 11-09-000000\nUSt-IdNr.: 00000000-2-11\nNTAK-Registrierungsnummer: MA00000000" },
-        { "heading": "Kontakt", "body": "Telefon: +36 30 123 4567\nE-Mail: info@vityillo.hu" },
-        { "heading": "Hosting-Anbieter", "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA" }
+        {
+          "heading": "Dienstanbieter",
+          "body": "Vityilló Gästehaus\nBetreiber: Vityilló Kft.\nSitz: 2896 Szomód, Fő utca 1., Ungarn"
+        },
+        {
+          "heading": "Registrierungsdaten",
+          "body": "Handelsregisternummer: 11-09-000000\nUSt-IdNr.: 00000000-2-11\nNTAK-Registrierungsnummer: MA00000000"
+        },
+        {
+          "heading": "Kontakt",
+          "body": "Telefon: +36 30 123 4567\nE-Mail: info@vityillo.hu"
+        },
+        {
+          "heading": "Hosting-Anbieter",
+          "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA"
+        }
       ]
     },
     "privacy": {
       "title": "Datenschutzerklärung",
       "intro": "Informationen zur Verarbeitung personenbezogener Daten gemäß der EU-Verordnung 2016/679 (DSGVO).",
       "sections": [
-        { "heading": "1. Verantwortlicher", "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Kontakt: info@vityillo.hu, +36 30 123 4567." },
-        { "heading": "2. Umfang der verarbeiteten Daten", "body": "In den Buchungs- und Kontaktformularen angegebene Daten: Name, E-Mail-Adresse, Telefonnummer, An- und Abreisedatum, Anzahl der Gäste sowie die gesetzlich vorgeschriebenen Gästedaten (Staatsangehörigkeit, Anschrift, Geburtsjahr, Ausweisdaten)." },
-        { "heading": "3. Zweck und Rechtsgrundlage", "body": "Erfüllung der Buchung und Kontaktpflege (Vertragserfüllung) sowie Erfüllung der für Beherbergungsdienstleistungen geltenden gesetzlichen Pflichten, einschließlich der NTAK-Meldung und des VIZA-Systems (rechtliche Verpflichtung)." },
-        { "heading": "4. Speicherdauer", "body": "Buchhaltungsbelege werden gesetzlich vorgeschrieben 8 Jahre lang aufbewahrt; Buchungsdaten werden bis zum Wegfall des Zwecks gespeichert." },
-        { "heading": "5. Datenübermittlung", "body": "Ihre Daten werden nur aufgrund einer gesetzlichen Verpflichtung (z. B. NTAK, Behörden) übermittelt. Zu Marketingzwecken werden sie nicht an Dritte weitergegeben." },
-        { "heading": "6. Ihre Rechte", "body": "Sie können Auskunft, Berichtigung oder Löschung Ihrer Daten sowie die Einschränkung der Verarbeitung verlangen. Beschwerden können Sie bei der ungarischen NAIH (naih.hu) einreichen." }
+        {
+          "heading": "1. Verantwortlicher",
+          "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Kontakt: info@vityillo.hu, +36 30 123 4567."
+        },
+        {
+          "heading": "2. Umfang der verarbeiteten Daten",
+          "body": "In den Buchungs- und Kontaktformularen angegebene Daten: Name, E-Mail-Adresse, Telefonnummer, An- und Abreisedatum, Anzahl der Gäste sowie die gesetzlich vorgeschriebenen Gästedaten (Staatsangehörigkeit, Anschrift, Geburtsjahr, Ausweisdaten)."
+        },
+        {
+          "heading": "3. Zweck und Rechtsgrundlage",
+          "body": "Erfüllung der Buchung und Kontaktpflege (Vertragserfüllung) sowie Erfüllung der für Beherbergungsdienstleistungen geltenden gesetzlichen Pflichten, einschließlich der NTAK-Meldung und des VIZA-Systems (rechtliche Verpflichtung)."
+        },
+        {
+          "heading": "4. Speicherdauer",
+          "body": "Buchhaltungsbelege werden gesetzlich vorgeschrieben 8 Jahre lang aufbewahrt; Buchungsdaten werden bis zum Wegfall des Zwecks gespeichert."
+        },
+        {
+          "heading": "5. Datenübermittlung",
+          "body": "Ihre Daten werden nur aufgrund einer gesetzlichen Verpflichtung (z. B. NTAK, Behörden) übermittelt. Zu Marketingzwecken werden sie nicht an Dritte weitergegeben."
+        },
+        {
+          "heading": "6. Ihre Rechte",
+          "body": "Sie können Auskunft, Berichtigung oder Löschung Ihrer Daten sowie die Einschränkung der Verarbeitung verlangen. Beschwerden können Sie bei der ungarischen NAIH (naih.hu) einreichen."
+        }
       ]
     },
     "terms": {
       "title": "Allgemeine Geschäftsbedingungen",
       "intro": "Bedingungen für die Inanspruchnahme der Dienstleistungen des Vityilló Gästehauses.",
       "sections": [
-        { "heading": "1. Vertragsgegenstand", "body": "Das Vityilló Gästehaus (Betreiber: Vityilló Kft.) erbringt Beherbergungsdienstleistungen gemäß diesen Bedingungen." },
-        { "heading": "2. Buchung und Bestätigung", "body": "Eine Buchung beginnt mit dem Absenden des Formulars und wird mit der schriftlichen Bestätigung des Betreibers endgültig. Die angezeigten Preise sind Richtwerte; der endgültige Preis ist in der Bestätigung angegeben." },
-        { "heading": "3. Zahlungsbedingungen", "body": "Zur Finalisierung der Buchung kann eine Anzahlung erforderlich sein. Der Restbetrag ist vor Ort bei der Anreise zu zahlen. Die Kurtaxe ist vor Ort zu zahlen." },
-        { "heading": "4. Stornierung", "body": "Bei Stornierungen 14 Tage vor Anreise wird die Anzahlung vollständig erstattet. Bei Stornierungen innerhalb von 14 Tagen ist die Anzahlung nicht erstattungsfähig." },
-        { "heading": "5. Hausordnung", "body": "Anreise ab 15:00 Uhr, Abreise bis 10:00 Uhr. Das Rauchen im Haus ist verboten. Pool und Sauna werden auf eigene Gefahr der Gäste genutzt." },
-        { "heading": "6. Haftung", "body": "Der Betreiber übernimmt keine Haftung für Wertgegenstände der Gäste oder für Schäden, die durch unsachgemäßen Gebrauch der Dienstleistungen entstehen." }
+        {
+          "heading": "1. Vertragsgegenstand",
+          "body": "Das Vityilló Gästehaus (Betreiber: Vityilló Kft.) erbringt Beherbergungsdienstleistungen gemäß diesen Bedingungen."
+        },
+        {
+          "heading": "2. Buchung und Bestätigung",
+          "body": "Eine Buchung beginnt mit dem Absenden des Formulars und wird mit der schriftlichen Bestätigung des Betreibers endgültig. Die angezeigten Preise sind Richtwerte; der endgültige Preis ist in der Bestätigung angegeben."
+        },
+        {
+          "heading": "3. Zahlungsbedingungen",
+          "body": "Zur Finalisierung der Buchung kann eine Anzahlung erforderlich sein. Der Restbetrag ist vor Ort bei der Anreise zu zahlen. Die Kurtaxe ist vor Ort zu zahlen."
+        },
+        {
+          "heading": "4. Stornierung",
+          "body": "Bei Stornierungen 14 Tage vor Anreise wird die Anzahlung vollständig erstattet. Bei Stornierungen innerhalb von 14 Tagen ist die Anzahlung nicht erstattungsfähig."
+        },
+        {
+          "heading": "5. Hausordnung",
+          "body": "Anreise ab 15:00 Uhr, Abreise bis 10:00 Uhr. Das Rauchen im Haus ist verboten. Pool und Sauna werden auf eigene Gefahr der Gäste genutzt."
+        },
+        {
+          "heading": "6. Haftung",
+          "body": "Der Betreiber übernimmt keine Haftung für Wertgegenstände der Gäste oder für Schäden, die durch unsachgemäßen Gebrauch der Dienstleistungen entstehen."
+        }
       ]
     }
+  },
+  "cinematic": {
+    "srTitle": "Vityilló Gästehaus – Luxus-Gästehaus im Herzen des Gerecse-Gebirges, Szomód",
+    "skipTitle": "Ein filmisches Erlebnis erwartet dich",
+    "skipText": "Du steuerst die Geschichte durch Scrollen — oder überspringst sie.",
+    "skipBtn": "Überspringen",
+    "watchBtn": "Ansehen →",
+    "tagline": "Im Schoß der Natur, nahe der Zivilisation",
+    "explore": "Entdecken",
+    "jacuzzi": "Whirlpool",
+    "jacuzziDesc": "Entspannung & Erfrischung",
+    "sauna": "Sauna",
+    "saunaDesc": "Finnisches Ritual in Waldesstille",
+    "materialsLabel": "Edle Materialien",
+    "materialsTitle": "Natürliche\nEiche. Stein.\nTextil.",
+    "gastroLabel": "Gastronomie",
+    "gastroTitle": "Kessel & Grill",
+    "nightLabel": "Nächtliche Stille",
+    "floors": "2 ETAGEN",
+    "guests": "MAX 6 GÄSTE",
+    "words": [
+      "Natur",
+      "Wellness",
+      "Raum",
+      "Material",
+      "Feuer",
+      "Stille"
+    ]
   }
 }
