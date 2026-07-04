@@ -51,6 +51,16 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Fluid display scale (text-step-*) — shared editorial rhythm across pages */
+  --text-step-xs: var(--step--1);
+  --text-step-0: var(--step-0);
+  --text-step-1: var(--step-1);
+  --text-step-2: var(--step-2);
+  --text-step-3: var(--step-3);
+  --text-step-4: var(--step-4);
+  --text-step-5: var(--step-5);
+  --text-step-6: var(--step-6);
 }
 
 /* Light mode */
@@ -127,6 +137,29 @@
   --sidebar-ring: #FFF4CC;
 }
 
+/* ── Adaptive glow + motion + fluid type tokens ─────────────────────────────
+   Declared on :root so color-mix re-resolves against the themed --foreground:
+   cream-leaning aurora in dark mode, forest-leaning in light mode. Glow is
+   reserved for focus/hover/active states — never used as a surface fill. */
+:root {
+  --glow: color-mix(in oklch, var(--foreground) 82%, #7CF0B4);
+  --glow-soft: color-mix(in oklch, var(--glow) 18%, transparent);
+  --glow-ring: color-mix(in oklch, var(--glow) 55%, transparent);
+
+  --ease-cinematic: cubic-bezier(0.7, 0, 0.2, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Fluid display scale — 1.25 ratio at 360px viewport, 1.333 at 1440px */
+  --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.94rem);
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.13rem);
+  --step-1: clamp(1.25rem, 1.16rem + 0.45vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.41rem + 0.76vw, 2rem);
+  --step-3: clamp(1.95rem, 1.71rem + 1.19vw, 2.66rem);
+  --step-4: clamp(2.44rem, 2.07rem + 1.86vw, 3.55rem);
+  --step-5: clamp(3.05rem, 2.49rem + 2.82vw, 4.74rem);
+  --step-6: clamp(3.81rem, 2.98rem + 4.19vw, 6.31rem);
+}
+
 [data-theme="light"] {
   --background: #FFF4CC;
   --foreground: #1A4731;
@@ -185,10 +218,54 @@
   transition: opacity 0.25s ease;
 }
 
-/* Visible keyboard focus — essential because the native cursor is hidden. */
+/* Visible keyboard focus — essential because the native cursor is hidden.
+   The aurora glow-ring elevates focus without resorting to hard neon. */
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 3px;
+  box-shadow: 0 0 0 1px var(--glow-ring), 0 0 24px -6px var(--glow-soft);
+}
+
+/* Pointer intent glow on interactive cards/links flagged for the custom cursor. */
+a[data-cursor='view']:hover,
+button[data-cursor='view']:hover {
+  box-shadow: 0 0 0 1px var(--glow-ring), 0 0 24px -6px var(--glow-soft);
+}
+
+/* Editorial rhythm shared by subpages: 12-col grid + readable measure. */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+.editorial-measure {
+  max-width: 72ch;
+}
+
+/* Ambient cursor glow — a single fixed radial that lerp-follows the pointer.
+   Kept nearly invisible; soft-light lets it read as light, not paint. */
+.ambient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 68%);
+  will-change: transform;
+}
+
+/* Ambient/nav chrome yields to the cinematic section, same as the cursor rings. */
+[data-cinematic='true'] .ambient-glow,
+[data-cinematic='true'] .scroll-progress,
+[data-cinematic='true'] .chapter-rail {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
 }
 
 ::selection {

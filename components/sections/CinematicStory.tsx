@@ -3,14 +3,7 @@ import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
-
-// ── Types ─────────────────────────────────────────────────────────────────────
-type Particle = {
-  x: number; y: number; r: number
-  vx: number; vy: number
-  opacity: number; maxOpacity: number
-  phase: number; wobble: number
-}
+import { makeSteam, drawSteam, makeEmbers, drawEmbers, rafLoop, type Particle } from '@/lib/canvas-fx'
 
 // ── Static data ───────────────────────────────────────────────────────────────
 const HERO_SCATTER = [
@@ -63,86 +56,12 @@ const PH8_IMGS = [
   { id: 'photo-1555396273-367ea4eb4db5',    top: '67%', left: '43%', w: 108 },
 ]
 
-// ── Canvas helpers ────────────────────────────────────────────────────────────
-function makeSteam(w: number, h: number): Particle[] {
-  return Array.from({ length: 60 }, () => ({
-    x: Math.random() * w,
-    y: h - Math.random() * h * 0.3,
-    r: 3 + Math.random() * 8,
-    vx: (Math.random() - 0.5) * 0.6,
-    vy: -(0.5 + Math.random() * 1.5),
-    opacity: 0.05 + Math.random() * 0.35,
-    maxOpacity: 0.1 + Math.random() * 0.4,
-    phase: Math.random() * Math.PI * 2,
-    wobble: 0.4 + Math.random() * 0.8,
-  }))
-}
-
-function drawSteam(ctx: CanvasRenderingContext2D, w: number, h: number, ps: Particle[], t: number) {
-  ctx.clearRect(0, 0, w, h)
-  for (const p of ps) {
-    p.x += p.vx + Math.sin(t * 0.0007 + p.phase) * p.wobble
-    p.y += p.vy
-    p.opacity -= 0.0012
-    if (p.y < -30 || p.opacity < 0) {
-      p.x = Math.random() * w; p.y = h + 10; p.opacity = p.maxOpacity
-    }
-    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r)
-    g.addColorStop(0, `rgba(210,235,255,${p.opacity})`)
-    g.addColorStop(1, `rgba(210,235,255,0)`)
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-    ctx.fillStyle = g; ctx.fill()
-  }
-}
-
-const EC: [number, number, number][] = [[255,160,0],[255,100,0],[255,210,50],[220,80,10],[255,170,0]]
-
-function makeEmbers(w: number, h: number): Particle[] {
-  return Array.from({ length: 80 }, () => ({
-    x: w * 0.3 + Math.random() * w * 0.4,
-    y: h * 0.55 + Math.random() * h * 0.45,
-    r: 1.5 + Math.random() * 4,
-    vx: (Math.random() - 0.5) * 1.8,
-    vy: -(1.2 + Math.random() * 3.5),
-    opacity: 0.4 + Math.random() * 0.6,
-    maxOpacity: 0.5 + Math.random() * 0.5,
-    phase: Math.random() * Math.PI * 2,
-    wobble: 1 + Math.random() * 2.5,
-  }))
-}
-
-function drawEmbers(ctx: CanvasRenderingContext2D, w: number, h: number, ps: Particle[], t: number) {
-  ctx.clearRect(0, 0, w, h)
-  ps.forEach((p, i) => {
-    p.x  += p.vx + Math.sin(t * 0.001 + p.phase) * p.wobble
-    p.y  += p.vy
-    p.opacity = Math.max(0.05, Math.min(p.maxOpacity, p.opacity + (Math.random() - 0.5) * 0.1))
-    if (p.y < -15) {
-      p.x = w * 0.3 + Math.random() * w * 0.4
-      p.y = h * 0.6 + Math.random() * h * 0.35
-      p.opacity = p.maxOpacity
-    }
-    const [r, g, b] = EC[i % EC.length]
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(${r},${g},${b},${p.opacity})`; ctx.fill()
-    const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4)
-    glow.addColorStop(0, `rgba(${r},${g},${b},${p.opacity * 0.25})`)
-    glow.addColorStop(1, `rgba(${r},${g},${b},0)`)
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2)
-    ctx.fillStyle = glow; ctx.fill()
-  })
-}
-
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function CinematicStory() {
   const dict           = useDict()
   const sectionRef     = useRef<HTMLElement>(null)
   const steamCanvasRef = useRef<HTMLCanvasElement>(null)
   const emberCanvasRef = useRef<HTMLCanvasElement>(null)
-  const steamRaf       = useRef(0)
-  const emberRaf       = useRef(0)
-  const steamOn        = useRef(false)
-  const emberOn        = useRef(false)
   const steamPs        = useRef<Particle[]>([])
   const emberPs        = useRef<Particle[]>([])
 
@@ -156,40 +75,40 @@ export default function CinematicStory() {
         : document.documentElement.removeAttribute('data-cinematic')
 
     // ── Canvas loops ─────────────────────────────────────────────────────────
-    // start/stop are idempotent: scrubbing back and forth re-fires the
-    // timeline's onStart/onReverseComplete callbacks, and a second start
+    // rafLoop start/stop are idempotent: scrubbing back and forth re-fires the
+    // timeline's onStart/onReverseComplete callbacks, and a second naive start
     // would otherwise spawn a parallel RAF loop that can never be cancelled.
+    let steamCtx: CanvasRenderingContext2D | null = null
+    let steamW = 0, steamH = 0
+    const steamLoop = rafLoop((t) => {
+      if (steamCtx) drawSteam(steamCtx, steamW, steamH, steamPs.current, t)
+    })
     const startSteam = () => {
-      if (steamOn.current) return
+      if (steamLoop.running()) return
       const canvas = steamCanvasRef.current; if (!canvas) return
-      const ctx = canvas.getContext('2d');   if (!ctx)    return
-      const w = (canvas.width  = canvas.offsetWidth)
-      const h = (canvas.height = canvas.offsetHeight)
-      steamPs.current = makeSteam(w, h)
-      steamOn.current = true
-      const tick = (t: number) => { drawSteam(ctx, w, h, steamPs.current, t); steamRaf.current = requestAnimationFrame(tick) }
-      steamRaf.current = requestAnimationFrame(tick)
+      steamCtx = canvas.getContext('2d');    if (!steamCtx) return
+      steamW = canvas.width  = canvas.offsetWidth
+      steamH = canvas.height = canvas.offsetHeight
+      steamPs.current = makeSteam(steamW, steamH)
+      steamLoop.start()
     }
-    const stopSteam = () => {
-      steamOn.current = false
-      cancelAnimationFrame(steamRaf.current)
-    }
+    const stopSteam = steamLoop.stop
 
+    let emberCtx: CanvasRenderingContext2D | null = null
+    let emberW = 0, emberH = 0
+    const emberLoop = rafLoop((t) => {
+      if (emberCtx) drawEmbers(emberCtx, emberW, emberH, emberPs.current, t)
+    })
     const startEmbers = () => {
-      if (emberOn.current) return
+      if (emberLoop.running()) return
       const canvas = emberCanvasRef.current; if (!canvas) return
-      const ctx = canvas.getContext('2d');   if (!ctx)    return
-      const w = (canvas.width  = canvas.offsetWidth)
-      const h = (canvas.height = canvas.offsetHeight)
-      emberPs.current = makeEmbers(w, h)
-      emberOn.current = true
-      const tick = (t: number) => { drawEmbers(ctx, w, h, emberPs.current, t); emberRaf.current = requestAnimationFrame(tick) }
-      emberRaf.current = requestAnimationFrame(tick)
+      emberCtx = canvas.getContext('2d');    if (!emberCtx) return
+      emberW = canvas.width  = canvas.offsetWidth
+      emberH = canvas.height = canvas.offsetHeight
+      emberPs.current = makeEmbers(emberW, emberH)
+      emberLoop.start()
     }
-    const stopEmbers = () => {
-      emberOn.current = false
-      cancelAnimationFrame(emberRaf.current)
-    }
+    const stopEmbers = emberLoop.stop
 
     // ── Init SVG stroke-dash ─────────────────────────────────────────────────
     section.querySelectorAll<SVGPathElement>('.ph4-path').forEach(path => {

@@ -42,6 +42,13 @@ export const ROOM_KEY_BY_SLUG: Record<RoomSlug, 'room1' | 'room2'> = {
   'also-szint': 'room2',
 }
 
+/** Immersive experience subpage slugs under /elmenyek. */
+export const EXPERIENCE_SLUGS = ['jacuzzi', 'sauna', 'bograc'] as const
+export type ExperienceSlug = (typeof EXPERIENCE_SLUGS)[number]
+
+export const experienceHref = (lang: Locale, slug: ExperienceSlug): string =>
+  `/${lang}/${ROUTES.experiences}/${slug}`
+
 /** Primary navigation shown in the navbar and footer. dictKey points into dict.nav. */
 export const MAIN_NAV: {
   dictKey: 'about' | 'rooms' | 'experiences' | 'gallery' | 'contact'

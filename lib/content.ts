@@ -58,3 +58,22 @@ export const GALLERY_IMAGES: { src: string; alt: string; aspect: 'landscape' | '
 
 /** Wide forest banner reused for subpage hero backgrounds. */
 export const HERO_BANNER = U('photo-1448375240586-882707db888b', 1920)
+
+/** Imagery paired by index with dict.testimonials.stories for the guest wall. */
+export const STORY_IMAGES: string[] = [
+  U('photo-1540555700478-4be289fbecef', 640),
+  U('photo-1472214103451-9374bd1c798e', 640),
+  U('photo-1448375240586-882707db888b', 640),
+  U('photo-1504204267155-aaad8e81290d', 640),
+  U('photo-1501854140801-50d01698950b', 640),
+  U('photo-1571896349842-33c89424de2d', 640),
+  U('photo-1631049307264-da0ec9d70304', 640),
+  U('photo-1510798831971-661eb04b3739', 640),
+]
+
+/** Backdrops for the immersive experience scenes (and their static fallbacks). */
+export const EXPERIENCE_SCENE_IMAGES: Record<'jacuzzi' | 'sauna' | 'bograc', string> = {
+  jacuzzi: U('photo-1571896349842-33c89424de2d', 1920),
+  sauna: U('photo-1540555700478-4be289fbecef', 1920),
+  bograc: U('photo-1504204267155-aaad8e81290d', 1920),
+}
