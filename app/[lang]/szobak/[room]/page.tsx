@@ -7,6 +7,7 @@ import { getDictionary, hasLocale } from '../../dictionaries'
 import PageHero from '@/components/ui/PageHero'
 import Reveal from '@/components/ui/Reveal'
 import BookingCta from '@/components/sections/BookingCta'
+import SharedElementFlip from '@/components/engine/SharedElementFlip'
 import { ROOM_MEDIA } from '@/lib/content'
 import { href, roomHref, ROOM_SLUGS, ROOM_KEY_BY_SLUG, type RoomSlug } from '@/lib/nav'
 
@@ -44,6 +45,7 @@ export default async function RoomDetailPage({ params }: Props) {
 
   return (
     <>
+      <SharedElementFlip src={media.hero} />
       <PageHero
         title={r.tagline}
         subtitle={r.name}

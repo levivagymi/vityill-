@@ -9,6 +9,7 @@ import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { ROOM_MEDIA, type RoomKey } from '@/lib/content'
 import { href, roomHref } from '@/lib/nav'
+import { setPendingFlip } from '@/lib/flip-transition'
 import type { Locale } from '@/lib/types'
 
 /** Icons correspond positionally to dict.rooms.<room>.badges — the badge
@@ -32,6 +33,7 @@ function RoomCard({
       <Link
         href={detailHref}
         data-cursor="view"
+        onClick={(e) => setPendingFlip(e.currentTarget, media.hero)}
         className={`relative aspect-[4/3] lg:aspect-auto lg:min-h-[440px] overflow-hidden group ${reversed ? 'lg:order-2' : ''}`}
       >
         <div className="w-full h-full transition-transform duration-700 group-hover:scale-[1.04]">

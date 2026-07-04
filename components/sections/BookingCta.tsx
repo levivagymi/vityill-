@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
+import Magnetic from '@/components/ui/Magnetic'
 import { EmblemMark } from '@/components/brand/Logo'
 import { href } from '@/lib/nav'
 import { HERO_BANNER } from '@/lib/content'
@@ -48,13 +49,15 @@ export default function BookingCta() {
               {dict.bookingCta.text}
             </p>
             <div className="cta-el flex flex-col sm:flex-row gap-3">
-              <Link
-                href={href(lang, 'booking')}
-                className="inline-flex items-center justify-center gap-2 bg-[#FFF4CC] hover:bg-[rgba(255,244,204,0.9)] text-[#1A4731] font-sans font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 cursor-pointer"
-                data-cursor="view"
-              >
-                {dict.bookingCta.button} <ArrowRight size={16} />
-              </Link>
+              <Magnetic>
+                <Link
+                  href={href(lang, 'booking')}
+                  className="inline-flex items-center justify-center gap-2 bg-[#FFF4CC] hover:bg-[rgba(255,244,204,0.9)] text-[#1A4731] font-sans font-semibold text-sm px-8 py-4 rounded-full transition-colors duration-300 cursor-pointer"
+                  data-cursor="view"
+                >
+                  {dict.bookingCta.button} <ArrowRight size={16} />
+                </Link>
+              </Magnetic>
               <Link
                 href={href(lang, 'contact')}
                 className="inline-flex items-center justify-center border border-[rgba(255,244,204,0.3)] hover:border-[rgba(255,244,204,0.6)] text-[#FFF4CC] font-sans font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 cursor-pointer"
