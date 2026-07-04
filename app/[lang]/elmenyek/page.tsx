@@ -8,12 +8,19 @@ import PageHero from '@/components/ui/PageHero'
 import Reveal from '@/components/ui/Reveal'
 import BookingCta from '@/components/sections/BookingCta'
 import { EXPERIENCES, type ExperienceKey, HERO_BANNER } from '@/lib/content'
-import { href } from '@/lib/nav'
+import { href, experienceHref, type ExperienceSlug } from '@/lib/nav'
 
 type Props = { params: Promise<{ lang: string }> }
 
 const ICONS: Record<ExperienceKey, React.ElementType> = {
   sauna: Flame, pool: Waves, grill: UtensilsCrossed, forest: Trees,
+}
+
+/** Cards with a matching immersive subpage deep-link into it. */
+const SCENE_BY_KEY: Partial<Record<ExperienceKey, ExperienceSlug>> = {
+  pool: 'jacuzzi',
+  sauna: 'sauna',
+  grill: 'bograc',
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -60,13 +67,24 @@ export default async function ExperiencesPage({ params }: Props) {
                   </div>
                   <h2 className="font-heading text-2xl sm:text-3xl mb-4">{item.name}</h2>
                   <p className="font-sans text-foreground/60 leading-[1.85] text-base mb-6">{item.long}</p>
-                  <Link
-                    href={href(lang, 'booking')}
-                    className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground hover:gap-3 transition-all cursor-pointer"
-                    data-cursor="view"
-                  >
-                    {dict.nav.bookNow} <ArrowRight size={15} />
-                  </Link>
+                  <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+                    {SCENE_BY_KEY[key] && (
+                      <Link
+                        href={experienceHref(lang, SCENE_BY_KEY[key]!)}
+                        className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground border border-foreground/25 hover:border-foreground/60 px-5 py-2.5 rounded-full transition-all cursor-pointer"
+                        data-cursor="view"
+                      >
+                        {dict.experiences.explore} <ArrowRight size={15} />
+                      </Link>
+                    )}
+                    <Link
+                      href={href(lang, 'booking')}
+                      className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground hover:gap-3 transition-all cursor-pointer"
+                      data-cursor="view"
+                    >
+                      {dict.nav.bookNow} <ArrowRight size={15} />
+                    </Link>
+                  </div>
                 </div>
               </Reveal>
             )
