@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation'
 import { getDictionary, hasLocale } from './dictionaries'
-import CinematicStory from '@/components/sections/CinematicStory'
+import CinematicStoryLazy from '@/components/sections/CinematicStoryLazy'
 import About from '@/components/sections/About'
 import Amenities from '@/components/sections/Amenities'
 import Rooms from '@/components/sections/Rooms'
 import Gallery from '@/components/sections/Gallery'
-import Testimonials from '@/components/sections/Testimonials'
+import GuestStoriesLazy from '@/components/sections/GuestStoriesLazy'
 import Location from '@/components/sections/Location'
+import AvailabilityStrip from '@/components/availability/AvailabilityStrip'
 import BookingCta from '@/components/sections/BookingCta'
 import CinematicSkipPrompt from '@/components/engine/CinematicSkipPrompt'
 
@@ -21,13 +22,14 @@ export default async function LangPage({ params }: PageProps<'/[lang]'>) {
       <main>
         {/* The cinematic hero is aria-hidden, so the page heading lives here. */}
         <h1 className="sr-only">{dict.cinematic.srTitle}</h1>
-        <CinematicStory />
+        <CinematicStoryLazy />
         <About />
         <Amenities />
         <Rooms />
         <Gallery limit={8} />
-        <Testimonials />
+        <GuestStoriesLazy />
         <Location />
+        <AvailabilityStrip />
         <BookingCta />
       </main>
     </>
