@@ -4,9 +4,12 @@ import { getDictionary, hasLocale } from './dictionaries'
 import { notFound } from 'next/navigation'
 import LenisProvider from '@/components/engine/LenisProvider'
 import CustomCursor from '@/components/engine/CustomCursor'
+import AmbientGlow from '@/components/engine/AmbientGlow'
+import ScrollProgress from '@/components/engine/ScrollProgress'
 import PageTransitionOverlay from '@/components/engine/PageTransitionOverlay'
 import ThemeProvider from '@/components/providers/ThemeProvider'
 import { DictProvider } from '@/components/providers/DictProvider'
+import CommandProvider from '@/components/providers/CommandProvider'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import CookieBanner from '@/components/layout/CookieBanner'
@@ -56,14 +59,18 @@ export default async function LangLayout({ children, params }: Props) {
     <ThemeProvider>
       <LenisProvider>
         <DictProvider dict={dict}>
-          <DevNoticeModal />
-          <LangUpdater lang={lang} />
-          <PageTransitionOverlay />
-          <CustomCursor />
-          <Navbar />
-          {children}
-          <Footer />
-          <CookieBanner />
+          <CommandProvider>
+            <DevNoticeModal />
+            <LangUpdater lang={lang} />
+            <PageTransitionOverlay />
+            <CustomCursor />
+            <AmbientGlow />
+            <ScrollProgress />
+            <Navbar />
+            {children}
+            <Footer />
+            <CookieBanner />
+          </CommandProvider>
         </DictProvider>
       </LenisProvider>
     </ThemeProvider>

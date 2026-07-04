@@ -2,10 +2,11 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import { Menu, X, Sun, Moon } from 'lucide-react'
+import { Menu, X, Sun, Moon, Search } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { useTheme } from '@/components/providers/ThemeProvider'
+import { useCommand } from '@/components/command/command-context'
 import Logo from '@/components/brand/Logo'
 import { MAIN_NAV, href, switchLocalePath } from '@/lib/nav'
 import type { Locale } from '@/lib/types'
@@ -16,6 +17,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const lang = (params?.lang as Locale) ?? 'hu'
   const { theme, toggle } = useTheme()
+  const { setOpen: setCommandOpen } = useCommand()
 
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -146,6 +148,19 @@ export default function Navbar() {
                   </Link>
                 ))}
               </div>
+
+              <button
+                onClick={() => setCommandOpen(true)}
+                aria-label={dict.command.title}
+                aria-keyshortcuts="Meta+K Control+K"
+                className={`hidden md:flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-full border transition-all duration-200 cursor-pointer ${iconBtn}`}
+                data-cursor="view"
+              >
+                <Search size={13} aria-hidden />
+                <kbd className="font-sans text-[10px] tracking-wider border border-current/25 rounded px-1 py-px opacity-70">
+                  ⌘K
+                </kbd>
+              </button>
 
               <button
                 onClick={toggle}

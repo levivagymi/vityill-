@@ -157,6 +157,28 @@
     "heroSubtitle": "Private Sauna, Außenpool, Lagerfeuerabende und unberührter Wald — jede Form der Erholung an einem Ort.",
     "intro": "Vityilló ist nicht nur eine Unterkunft, sondern ein Erlebnis. Entdecken Sie die Details, die eine gewöhnliche Auszeit unvergesslich machen.",
     "discover": "Entdecken",
+    "back": "Zurück zu den Erlebnissen",
+    "explore": "Ins Erlebnis eintauchen",
+    "bookCta": "Jetzt buchen",
+    "scrollHint": "Scrollen — die Szene reagiert",
+    "jacuzzi": {
+      "eyebrow": "Wasser-Erlebnis",
+      "title": "Jacuzzi & Pool",
+      "desc": "Tauchen Sie ein in warmes Wasser mit Panoramablick auf die Gerecse-Hügel.",
+      "detail": "Temperaturgesteuerter privater Außenpool und Whirlpool, umgeben von den Wäldern der Gerecse-Hügel. Volle Privatnutzung — das Wasser antwortet auf jede Ihrer Bewegungen."
+    },
+    "sauna": {
+      "eyebrow": "Thermal-Erlebnis",
+      "title": "Finnische Sauna",
+      "desc": "Entspannen Sie in der traditionellen Wärme einer finnischen Sauna.",
+      "detail": "Traditionelle finnische Sauna zur exklusiven Privatnutzung. Hohe Wärme und ziehender Dampf regenerieren Körper und Geist — der Dunst verdichtet sich beim Scrollen."
+    },
+    "bograc": {
+      "eyebrow": "Feuer & Geschmack",
+      "title": "Lagerfeuer-Abende",
+      "desc": "Ein Kessel über offenem Feuer — das perfekte Abendtreffen.",
+      "detail": "Ausgestatteter Außen-Kesselgrillplatz, wo das Kochen über offenem Feuer die Gäste mit der Natur verbindet. Die Glut lodert auf, wenn Sie sich bewegen."
+    },
     "items": {
       "sauna": {
         "name": "Private finnische Sauna",
@@ -265,6 +287,23 @@
     "guestsValue": "{adults} Erwachsene, {children} Kinder",
     "selectDatesFirst": "Bitte wählen Sie zuerst Ihr An- und Abreisedatum."
   },
+  "availability": {
+    "label": "Verfügbarkeit",
+    "title": "Nächste freie Termine",
+    "subtitle": "Ein gepflegter Kalender — gewählte Termine bestätigen wir auf Anfrage sofort.",
+    "seasonLow": "Ruhige Saison",
+    "seasonMid": "Zwischensaison",
+    "seasonHigh": "Hauptsaison",
+    "night": "Nächte",
+    "minNights": "min. 2 Nächte",
+    "checkDates": "Termine prüfen",
+    "legendOpen": "Frei",
+    "legendHeld": "Reserviert",
+    "legendBooked": "Belegt",
+    "weeksTitle": "Die nächsten 8 Wochen",
+    "openNightsLabel": "freie Nächte in den nächsten 60 Tagen",
+    "windowsTitle": "Nächste freie Zeitfenster"
+  },
   "bookingCta": {
     "label": "Verfügbarkeit",
     "title": "Bereit zum Auftanken?",
@@ -315,7 +354,19 @@
     "avgLabel": "Durchschnittliche Bewertung",
     "satisfiedLabel": "Zufriedene Gäste",
     "starsLabel": "5 Sterne",
-    "goTo": "Bewertung"
+    "goTo": "Bewertung",
+    "wallTitle": "Geschichten unserer Gäste",
+    "wallSubtitle": "Echte Momente von Menschen, die hier aufgetankt haben",
+    "stories": [
+      { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "Sauna und Außenpool waren perfekt. Jeden Morgen weckte uns Vogelgesang — pure Magie." },
+      { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung im Gerecse-Gebirge ist atemberaubend." },
+      { "name": "Sarah Johnson", "country": "London, UK", "rating": 5, "quote": "Ein traumhafter Rückzugsort. Der private Wald ist magisch — wir wollten gar nicht abreisen." },
+      { "name": "Nagy Balázs & Zsuzsa", "country": "Győr, HU", "rating": 5, "quote": "Der abendliche Kesselgrill am Feuer war unvergesslich. Wir kommen auf jeden Fall wieder!" },
+      { "name": "Markus Schmidt", "country": "München, DE", "rating": 5, "quote": "Luxus und Natur in perfekter Harmonie. Der Ausblick am Morgen ist unbeschreiblich schön." },
+      { "name": "Horváth Lilla", "country": "Pécs, HU", "rating": 5, "quote": "Aus dem Jacuzzi die Sterne beobachten, rundherum nur Waldesstille. Mehr kann man nicht verlangen." },
+      { "name": "Claire Dubois", "country": "Lyon, FR", "rating": 5, "quote": "Ein perfekter Zufluchtsort. Jedes Detail atmet Ruhe — die private Sauna war ein Traum." },
+      { "name": "Szabó Márk", "country": "Tata, HU", "rating": 5, "quote": "Perfekt für ein Wochenende mit Freunden: Kesselgrill, Pool, Wanderwege ab der Haustür. Professionell und doch familiär." }
+    ]
   },
   "footer": {
     "tagline": "Luxus-Rückzugsort im Herzen des Gerecse",
@@ -424,6 +475,20 @@
         }
       ]
     }
+  },
+  "command": {
+    "title": "Schnellnavigation",
+    "placeholder": "Suche: Seiten, Zimmer, Erlebnisse…",
+    "empty": "Keine Treffer",
+    "groupNav": "Navigation",
+    "groupActions": "Aktionen",
+    "groupLang": "Sprache",
+    "bookNow": "Buchung starten",
+    "toggleTheme": "Design wechseln",
+    "jumpPrefix": "Springen zu: ",
+    "hintNavigate": "navigieren",
+    "hintRun": "öffnen",
+    "hintClose": "schließen"
   },
   "cinematic": {
     "srTitle": "Vityilló Gästehaus – Luxus-Gästehaus im Herzen des Gerecse-Gebirges, Szomód",

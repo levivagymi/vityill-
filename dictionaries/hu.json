@@ -157,6 +157,28 @@
     "heroSubtitle": "Privát szauna, kültéri medence, bográcsos esték és érintetlen erdő — a feltöltődés minden formája egy helyen.",
     "intro": "A Vityilló nem csupán szállás, hanem élmény. Fedezze fel azokat a részleteket, amelyek a hétköznapi pihenést felejthetetlenné teszik.",
     "discover": "Fedezze fel",
+    "back": "Vissza az élményekhez",
+    "explore": "Belépés az élménybe",
+    "bookCta": "Foglaljon most",
+    "scrollHint": "Görgessen — az élmény reagál",
+    "jacuzzi": {
+      "eyebrow": "Vízi élmény",
+      "title": "Jacuzzi & Medence",
+      "desc": "Merüljön el a meleg vízben a Gerecse panorámájával.",
+      "detail": "Privát kültéri medence és pezsgőfürdő, körülvéve a Gerecse-hegység festői erdejével. Szabályozható hőmérséklet, teljes privát használat — a víz minden mozdulatára válaszol."
+    },
+    "sauna": {
+      "eyebrow": "Termál élmény",
+      "title": "Finn szauna",
+      "desc": "Lazuljon el a hagyományos finn szauna melegében.",
+      "detail": "Hagyományos finn szauna teljes privát használattal. A magas hő és a gomolygó pára mélyrehatóan felfrissíti a testet és a lelket — a forróság a görgetéssel együtt sűrűsödik."
+    },
+    "bograc": {
+      "eyebrow": "Tűz & ízek",
+      "title": "Bográcsos esték",
+      "desc": "Nyílt láng felett rotyogó bogrács — a tökéletes esti összejövetel.",
+      "detail": "Felszerelt kültéri bográcsos tűzhely, ahol a tűz körüli főzés élménye összeköti a vendégeket a természettel. A parázs felizzik, ahogy Ön mozdul."
+    },
     "items": {
       "sauna": {
         "name": "Privát finn szauna",
@@ -265,6 +287,23 @@
     "guestsValue": "{adults} felnőtt, {children} gyermek",
     "selectDatesFirst": "Kérjük, először válasszon érkezési és távozási dátumot."
   },
+  "availability": {
+    "label": "Elérhetőség",
+    "title": "Következő szabad időpontok",
+    "subtitle": "Gondozott naptár — a kiválasztott dátumokat kérésre azonnal megerősítjük.",
+    "seasonLow": "Csendes szezon",
+    "seasonMid": "Középszezon",
+    "seasonHigh": "Főszezon",
+    "night": "éj",
+    "minNights": "min. 2 éj",
+    "checkDates": "Dátumok ellenőrzése",
+    "legendOpen": "Szabad",
+    "legendHeld": "Opció alatt",
+    "legendBooked": "Foglalt",
+    "weeksTitle": "A következő 8 hét",
+    "openNightsLabel": "szabad éjszaka a következő 60 napban",
+    "windowsTitle": "Legközelebbi szabad ablakok"
+  },
   "bookingCta": {
     "label": "Szabad időpontok",
     "title": "Készen áll a feltöltődésre?",
@@ -315,7 +354,19 @@
     "avgLabel": "Átlagos értékelés",
     "satisfiedLabel": "Elégedett vendég",
     "starsLabel": "5 csillag",
-    "goTo": "Vélemény"
+    "goTo": "Vélemény",
+    "wallTitle": "Vendégeink történetei",
+    "wallSubtitle": "Valódi pillanatok azoktól, akik nálunk töltődtek fel",
+    "stories": [
+      { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "A szauna és a kültéri medence tökéletes volt. Reggel a madarak énekére ébredtünk — varázslatos." },
+      { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung im Gerecse-Gebirge ist atemberaubend." },
+      { "name": "Sarah Johnson", "country": "London, UK", "rating": 5, "quote": "Absolutely stunning retreat. The private forest setting is magical — we didn't want to leave." },
+      { "name": "Nagy Balázs & Zsuzsa", "country": "Győr, HU", "rating": 5, "quote": "A bográcsos esti grillezés feledhetetlen élmény volt. Feltétlenül visszatérünk!" },
+      { "name": "Markus Schmidt", "country": "München, DE", "rating": 5, "quote": "Luxus und Natur in perfekter Harmonie. Der Ausblick am Morgen ist unbeschreiblich." },
+      { "name": "Horváth Lilla", "country": "Pécs, HU", "rating": 5, "quote": "A jacuzziból néztük a csillagokat, körülöttünk csak az erdő csendje. Ennél többet nem is kérhettünk volna." },
+      { "name": "Claire Dubois", "country": "Lyon, FR", "rating": 5, "quote": "Un refuge parfait. Chaque détail respire le calme — le sauna privé était un rêve." },
+      { "name": "Szabó Márk", "country": "Tata, HU", "rating": 5, "quote": "Baráti hétvégére tökéletes: bogrács, medence, túrautak a küszöbről. Profi, mégis családias." }
+    ]
   },
   "footer": {
     "tagline": "Luxus menedék a Gerecse szívében",
@@ -424,6 +475,20 @@
         }
       ]
     }
+  },
+  "command": {
+    "title": "Gyorsnavigáció",
+    "placeholder": "Keresés: oldalak, szobák, élmények…",
+    "empty": "Nincs találat",
+    "groupNav": "Navigáció",
+    "groupActions": "Műveletek",
+    "groupLang": "Nyelvváltás",
+    "bookNow": "Foglalás indítása",
+    "toggleTheme": "Téma váltása",
+    "jumpPrefix": "Ugrás: ",
+    "hintNavigate": "lépkedés",
+    "hintRun": "megnyitás",
+    "hintClose": "bezárás"
   },
   "cinematic": {
     "srTitle": "Vityilló Vendégház – Luxus vendégház a Gerecse szívében, Szomódon",

@@ -157,6 +157,28 @@
     "heroSubtitle": "Private sauna, outdoor pool, bonfire evenings and untouched forest — every form of recharging in one place.",
     "intro": "Vityilló is not just accommodation, but an experience. Discover the details that turn an ordinary break into an unforgettable one.",
     "discover": "Discover",
+    "back": "Back to experiences",
+    "explore": "Step into the experience",
+    "bookCta": "Book now",
+    "scrollHint": "Scroll — the scene responds",
+    "jacuzzi": {
+      "eyebrow": "Aquatic experience",
+      "title": "Jacuzzi & Pool",
+      "desc": "Sink into warm water with panoramic views of the Gerecse hills.",
+      "detail": "Temperature-controlled private outdoor pool and hot tub, surrounded by the scenic forests of the Gerecse hills. Full private access — the water answers your every move."
+    },
+    "sauna": {
+      "eyebrow": "Thermal experience",
+      "title": "Finnish sauna",
+      "desc": "Unwind in the traditional warmth of a Finnish sauna.",
+      "detail": "Traditional Finnish sauna for exclusive private use. The high heat and drifting steam deeply rejuvenate body and mind — the haze thickens as you scroll."
+    },
+    "bograc": {
+      "eyebrow": "Fire & flavour",
+      "title": "Open-fire evenings",
+      "desc": "A bubbling kettle over open flames — the perfect evening gathering.",
+      "detail": "Equipped outdoor kettle-grill fireplace where cooking over live fire connects guests with nature. The embers flare as you move."
+    },
     "items": {
       "sauna": {
         "name": "Private Finnish Sauna",
@@ -265,6 +287,23 @@
     "guestsValue": "{adults} adults, {children} children",
     "selectDatesFirst": "Please select your arrival and departure dates first."
   },
+  "availability": {
+    "label": "Availability",
+    "title": "Next open dates",
+    "subtitle": "A curated calendar — selected dates are confirmed on request, right away.",
+    "seasonLow": "Quiet season",
+    "seasonMid": "Mid season",
+    "seasonHigh": "High season",
+    "night": "nights",
+    "minNights": "min. 2 nights",
+    "checkDates": "Check dates",
+    "legendOpen": "Open",
+    "legendHeld": "On hold",
+    "legendBooked": "Booked",
+    "weeksTitle": "The next 8 weeks",
+    "openNightsLabel": "open nights in the next 60 days",
+    "windowsTitle": "Nearest open windows"
+  },
   "bookingCta": {
     "label": "Availability",
     "title": "Ready to recharge?",
@@ -315,7 +354,19 @@
     "avgLabel": "Average rating",
     "satisfiedLabel": "Satisfied guests",
     "starsLabel": "5 stars",
-    "goTo": "Review"
+    "goTo": "Review",
+    "wallTitle": "Guest stories",
+    "wallSubtitle": "Real moments from the people who recharged here",
+    "stories": [
+      { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "The sauna and outdoor pool were perfect. We woke to birdsong every morning — pure magic." },
+      { "name": "Thomas Müller", "country": "Vienna, AT", "rating": 5, "quote": "A beautiful place to unwind. The Gerecse hills setting is breathtaking." },
+      { "name": "Sarah Johnson", "country": "London, UK", "rating": 5, "quote": "Absolutely stunning retreat. The private forest setting is magical — we didn't want to leave." },
+      { "name": "Nagy Balázs & Zsuzsa", "country": "Győr, HU", "rating": 5, "quote": "The evening kettle-grill by the fire was unforgettable. We will absolutely be back!" },
+      { "name": "Markus Schmidt", "country": "Munich, DE", "rating": 5, "quote": "Luxury and nature in perfect harmony. The morning view over the hills is indescribable." },
+      { "name": "Horváth Lilla", "country": "Pécs, HU", "rating": 5, "quote": "We watched the stars from the jacuzzi with nothing around but forest silence. Could not ask for more." },
+      { "name": "Claire Dubois", "country": "Lyon, FR", "rating": 5, "quote": "A perfect refuge. Every detail breathes calm — the private sauna was a dream." },
+      { "name": "Szabó Márk", "country": "Tata, HU", "rating": 5, "quote": "Perfect for a friends' weekend: kettle grill, pool, trails from the doorstep. Professional yet homely." }
+    ]
   },
   "footer": {
     "tagline": "Luxury retreat in the heart of the Gerecse",
@@ -424,6 +475,20 @@
         }
       ]
     }
+  },
+  "command": {
+    "title": "Quick navigation",
+    "placeholder": "Search pages, rooms, experiences…",
+    "empty": "No results",
+    "groupNav": "Navigate",
+    "groupActions": "Actions",
+    "groupLang": "Language",
+    "bookNow": "Start booking",
+    "toggleTheme": "Toggle theme",
+    "jumpPrefix": "Jump to: ",
+    "hintNavigate": "navigate",
+    "hintRun": "open",
+    "hintClose": "close"
   },
   "cinematic": {
     "srTitle": "Vityilló Guesthouse – Luxury guesthouse in the heart of the Gerecse hills, Szomód",
