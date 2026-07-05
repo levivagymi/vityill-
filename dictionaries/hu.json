@@ -48,41 +48,52 @@
     "label": "Felszereltség",
     "title": "Minden, amire szüksége van",
     "subtitle": "Gondosan kialakítva a tökéletes pihenéshez",
+    "overviewTitle": "Áttekintés",
+    "exploreCta": "Élmény felfedezése",
     "sauna": {
       "name": "Privát szauna",
-      "desc": "Finn szauna kizárólag az Ön számára"
+      "desc": "Finn szauna kizárólag az Ön számára",
+      "detail": "Finn hagyományok szerint épített privát szauna, kizárólag az Ön és vendégei számára fenntartva. A magas hő és a fahéjas illatú faburkolat tökéletes helyszín az esti kikapcsolódáshoz."
     },
     "pool": {
       "name": "Kültéri medence",
-      "desc": "Jacuzzival felszerelt kültéri medence"
+      "desc": "Jacuzzival felszerelt kültéri medence",
+      "detail": "A kültéri medence jacuzzival kombinálva kínál felüdülést bármely évszakban, közvetlen kilátással a Gerecse zöld dombjaira."
     },
     "forest": {
       "name": "Privát erdő",
-      "desc": "Kizárólagos természetélmény"
+      "desc": "Kizárólagos természetélmény",
+      "detail": "A vendégházat körülölelő privát erdő kizárólag az Ön vendégeié — csendes sétautak, tiszta levegő és teljes elzártság a külvilágtól."
     },
     "lighting": {
       "name": "Hangulatos világítás",
-      "desc": "Légkörteremtő ambient megvilágítás"
+      "desc": "Légkörteremtő ambient megvilágítás",
+      "detail": "Gondosan tervezett, meleg tónusú világítás minden helyiségben, amely esténként otthonos, hangulatos atmoszférát teremt beltérben és a teraszon egyaránt."
     },
     "view": {
       "name": "Panorámás kilátás",
-      "desc": "Lélegzetelállító természeti panoráma"
+      "desc": "Lélegzetelállító természeti panoráma",
+      "detail": "A ház minden nagyobb ablakából és a teraszról lélegzetelállító panoráma nyílik a Gerecse-hegység erdős dombjaira — napkeltétől napnyugtáig."
     },
     "ac": {
       "name": "Klímaberendezés",
-      "desc": "Modern split klíma minden helyiségben"
+      "desc": "Modern split klíma minden helyiségben",
+      "detail": "Minden helyiségben modern split klímaberendezés biztosítja az ideális hőmérsékletet, így a nyári hónapokban is kellemes marad a tartózkodás."
     },
     "tv": {
       "name": "Smart TV",
-      "desc": "Netflix, HBO Max és egyéb streaming"
+      "desc": "Netflix, HBO Max és egyéb streaming",
+      "detail": "Nagyméretű Smart TV-k Netflix, HBO Max és egyéb streaming szolgáltatásokkal felszerelve — tökéletes egy nyugodt esti filmnézéshez."
     },
     "kitchen": {
       "name": "Teljes konyha",
-      "desc": "Teljesen felszerelt modern konyha"
+      "desc": "Teljesen felszerelt modern konyha",
+      "detail": "Teljesen felszerelt modern konyha minden szükséges eszközzel, edénnyel és háztartási géppel, hogy önállóan is kényelmesen főzhessenek."
     },
     "grill": {
       "name": "Bográcsos grill",
-      "desc": "Kültéri bográcsos grillhely"
+      "desc": "Kültéri bográcsos grillhely",
+      "detail": "Hagyományos magyar bográcsozásra alkalmas kültéri tűzhely, közösségi élményt kínálva barátok és család körében, szabad ég alatt."
     }
   },
   "rooms": {

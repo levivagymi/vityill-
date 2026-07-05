@@ -59,6 +59,21 @@ export const GALLERY_IMAGES: { src: string; alt: string; aspect: 'landscape' | '
 /** Wide forest banner reused for subpage hero backgrounds. */
 export const HERO_BANNER = U('photo-1448375240586-882707db888b', 1920)
 
+export type AmenityKey = 'sauna' | 'pool' | 'forest' | 'lighting' | 'view' | 'ac' | 'tv' | 'kitchen' | 'grill'
+
+/** Hero imagery for each amenity detail subpage; falls back to HERO_BANNER where no distinct shot exists. */
+export const AMENITY_IMAGES: Record<AmenityKey, string> = {
+  sauna: U('photo-1540555700478-4be289fbecef', 1920),
+  pool: U('photo-1571896349842-33c89424de2d', 1920),
+  forest: U('photo-1472214103451-9374bd1c798e', 1920),
+  lighting: U('photo-1505691938895-1758d7feb511', 1920),
+  view: U('photo-1501854140801-50d01698950b', 1920),
+  ac: HERO_BANNER,
+  tv: HERO_BANNER,
+  kitchen: U('photo-1484154218962-a197022b5858', 1920),
+  grill: U('photo-1504204267155-aaad8e81290d', 1920),
+}
+
 /** Imagery paired by index with dict.testimonials.stories for the guest wall. */
 export const STORY_IMAGES: string[] = [
   U('photo-1540555700478-4be289fbecef', 640),
