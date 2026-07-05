@@ -57,7 +57,7 @@ const PH8_IMGS = [
 ]
 
 // ── Component ─────────────────────────────────────────────────────────────────
-export default function CinematicStory() {
+export default function CinematicStory({ onFinish }: { onFinish?: () => void }) {
   const dict           = useDict()
   const sectionRef     = useRef<HTMLElement>(null)
   const steamCanvasRef = useRef<HTMLCanvasElement>(null)
@@ -147,7 +147,7 @@ export default function CinematicStory() {
             // At progress=0 (page load, before any scroll) the cursor stays visible so the
             // cookie banner and cinematic-prompt card are still navigable.
             onUpdate: (self) => setCinematic(self.progress > 0.002),
-            onLeave:     () => setCinematic(false),
+            onLeave:     () => { setCinematic(false); onFinish?.() },
             onLeaveBack: () => setCinematic(false),
           },
         })
@@ -400,6 +400,7 @@ export default function CinematicStory() {
       mm.revert(); ro.disconnect()
       stopSteam(); stopEmbers(); setCinematic(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const typo1 = dict.cinematic.floors.split('')

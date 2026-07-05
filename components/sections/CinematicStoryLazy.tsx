@@ -15,6 +15,6 @@ const CinematicStory = dynamic(() => import('./CinematicStory'), {
   ),
 })
 
-export default function CinematicStoryLazy() {
-  return <CinematicStory />
+export default function CinematicStoryLazy({ onFinish }: { onFinish?: () => void }) {
+  return <CinematicStory onFinish={onFinish} />
 }

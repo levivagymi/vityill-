@@ -8,7 +8,7 @@ import { prefersReducedMotion } from '@/lib/utils'
 
 const STORAGE_KEY = 'cinematic-prompt-seen'
 
-export default function CinematicSkipPrompt() {
+export default function CinematicSkipPrompt({ onSkip }: { onSkip?: () => void }) {
   const dict = useDict()
   const [visible, setVisible] = useState(false)
   const overlayRef   = useRef<HTMLDivElement>(null)
@@ -100,11 +100,7 @@ export default function CinematicSkipPrompt() {
 
   const handleWatch = () => dismiss()
 
-  const handleSkip = () =>
-    dismiss(() => {
-      const about = document.getElementById('rolunk')
-      if (about) lenis?.scrollTo(about)
-    })
+  const handleSkip = () => dismiss(onSkip)
 
   // Escape behaves like "watch": close the prompt, stay at the top.
   useEffect(() => {
