@@ -56,5 +56,17 @@
       "c:\\Users\\narin\\.claude\\projects\\c--Users-narin-Desktop-vityill-\\memory",
       "C:\\Users\\narin\\Desktop\\vityilló\\public\\brand"
     ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start-global-claude-md.sh"
+          }
+        ]
+      }
+    ]
   }
 }
