@@ -408,7 +408,14 @@ export default function CinematicStory() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-dvh overflow-hidden"
+      // lvh (large viewport height), not dvh: GSAP's pin:true snapshots this
+      // element's height in pixels once and holds it fixed while pinned. If
+      // that snapshot were taken against dvh (which shrinks while Safari's
+      // address bar is expanded), scrolling — which collapses the bar and
+      // grows the real viewport — reveals empty space below the frozen
+      // pinned box. Sizing to lvh up front means the box is already tall
+      // enough for the chrome-collapsed case, so nothing is ever exposed.
+      className="relative h-lvh overflow-hidden"
       style={{ pointerEvents: 'none', cursor: 'none', userSelect: 'none', backgroundColor: '#0a1a10' }}
       aria-hidden="true"
     >
