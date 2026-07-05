@@ -48,41 +48,52 @@
     "label": "Amenities",
     "title": "Everything you need",
     "subtitle": "Thoughtfully crafted for the perfect retreat",
+    "overviewTitle": "Overview",
+    "exploreCta": "Explore the experience",
     "sauna": {
       "name": "Private Sauna",
-      "desc": "Finnish sauna exclusively for you"
+      "desc": "Finnish sauna exclusively for you",
+      "detail": "A private sauna built in the Finnish tradition, reserved exclusively for you and your guests. Intense heat and fragrant cedar paneling make it the perfect place to unwind in the evening."
     },
     "pool": {
       "name": "Outdoor Pool",
-      "desc": "Outdoor pool with jacuzzi"
+      "desc": "Outdoor pool with jacuzzi",
+      "detail": "The outdoor pool paired with a jacuzzi offers refreshment in any season, with direct views of the green hills of the Gerecse range."
     },
     "forest": {
       "name": "Private Forest",
-      "desc": "Exclusive nature experience"
+      "desc": "Exclusive nature experience",
+      "detail": "The private forest surrounding the guesthouse is yours alone — quiet trails, fresh air, and complete seclusion from the outside world."
     },
     "lighting": {
       "name": "Mood Lighting",
-      "desc": "Atmospheric ambient lighting"
+      "desc": "Atmospheric ambient lighting",
+      "detail": "Carefully designed, warm-toned lighting throughout every room creates a cozy, inviting atmosphere indoors and out on the terrace, evening after evening."
     },
     "view": {
       "name": "Panoramic View",
-      "desc": "Breathtaking natural panorama"
+      "desc": "Breathtaking natural panorama",
+      "detail": "Every major window and the terrace open onto a breathtaking panorama of the forested hills of the Gerecse mountains — from sunrise to sunset."
     },
     "ac": {
       "name": "Air Conditioning",
-      "desc": "Modern split AC in every room"
+      "desc": "Modern split AC in every room",
+      "detail": "Modern split air conditioning in every room keeps the temperature just right, so your stay remains comfortable even in the summer months."
     },
     "tv": {
       "name": "Smart TV",
-      "desc": "Netflix, HBO Max and more"
+      "desc": "Netflix, HBO Max and more",
+      "detail": "Large Smart TVs equipped with Netflix, HBO Max and other streaming services — perfect for a relaxed evening in."
     },
     "kitchen": {
       "name": "Full Kitchen",
-      "desc": "Fully equipped modern kitchen"
+      "desc": "Fully equipped modern kitchen",
+      "detail": "A fully equipped modern kitchen with every tool, pot, and appliance you need to cook comfortably on your own."
     },
     "grill": {
       "name": "Kettle Grill",
-      "desc": "Outdoor Hungarian bogrács grill"
+      "desc": "Outdoor Hungarian bogrács grill",
+      "detail": "An outdoor kettle grill set up for traditional Hungarian bogrács cooking — a shared experience for friends and family under the open sky."
     }
   },
   "rooms": {
