@@ -108,6 +108,159 @@ export function drawEmbers(
   })
 }
 
+// ── Pointer tracker ───────────────────────────────────────────────────────────
+
+export type PointerState = {
+  x: number; y: number
+  /** Velocity in px/frame, normalized to ~60fps. */
+  vx: number; vy: number
+  speed: number
+  active: boolean
+}
+
+/**
+ * Window-level pointer tracking for the pointer-events:none scenes. The
+ * sticky full-viewport scenes map clientX/Y 1:1 onto their canvases, so no
+ * element-space conversion is needed. Call decay() once per frame so gusts
+ * fade after the pointer stops moving.
+ */
+export function trackPointer(): { state: PointerState; decay: () => void; dispose: () => void } {
+  const state: PointerState = { x: -1e4, y: -1e4, vx: 0, vy: 0, speed: 0, active: false }
+  let lastX = 0, lastY = 0, lastT = 0
+  const onMove = (e: PointerEvent) => {
+    const t = performance.now()
+    if (state.active && lastT) {
+      const dt = Math.max(8, t - lastT)
+      state.vx = ((e.clientX - lastX) / dt) * 16.7
+      state.vy = ((e.clientY - lastY) / dt) * 16.7
+      state.speed = Math.hypot(state.vx, state.vy)
+    }
+    state.x = e.clientX
+    state.y = e.clientY
+    state.active = true
+    lastX = e.clientX; lastY = e.clientY; lastT = t
+  }
+  const onLeave = () => {
+    state.active = false
+    state.vx = state.vy = state.speed = 0
+  }
+  window.addEventListener('pointermove', onMove, { passive: true })
+  document.addEventListener('pointerleave', onLeave)
+  window.addEventListener('blur', onLeave)
+  return {
+    state,
+    decay: () => {
+      state.vx *= 0.9; state.vy *= 0.9; state.speed *= 0.9
+    },
+    dispose: () => {
+      window.removeEventListener('pointermove', onMove)
+      document.removeEventListener('pointerleave', onLeave)
+      window.removeEventListener('blur', onLeave)
+    },
+  }
+}
+
+// ── Pointer forces ────────────────────────────────────────────────────────────
+
+/** Particle that remembers its base drift so pointer impulses can decay back. */
+export type DrivenParticle = Particle & { bvx: number; bvy: number }
+
+export const drive = (ps: Particle[]): DrivenParticle[] =>
+  ps.map((p) => Object.assign(p, { bvx: p.vx, bvy: p.vy }))
+
+export type PointerFx = {
+  kind: 'repel' | 'attract' | 'vortex' | 'gust'
+  radius: number
+  strength: number
+}
+
+/**
+ * Applies a cursor force field to a driven particle field. Each frame the
+ * velocity springs back toward its base drift first, so impulses perturb and
+ * settle instead of accumulating without bound.
+ */
+export function applyPointerForce(ps: DrivenParticle[], m: PointerState, fx: PointerFx) {
+  for (const p of ps) {
+    p.vx += (p.bvx - p.vx) * 0.08
+    p.vy += (p.bvy - p.vy) * 0.08
+    if (!m.active) continue
+    const dx = p.x - m.x
+    const dy = p.y - m.y
+    const d2 = dx * dx + dy * dy
+    if (d2 >= fx.radius * fx.radius || d2 < 1) continue
+    const d = Math.sqrt(d2)
+    const f = (1 - d / fx.radius) * fx.strength
+    switch (fx.kind) {
+      case 'repel':
+        p.vx += (dx / d) * f
+        p.vy += (dy / d) * f
+        break
+      case 'attract':
+        p.vx -= (dx / d) * f * 0.6
+        p.vy -= (dy / d) * f * 0.6
+        p.opacity = Math.min(p.maxOpacity, p.opacity + 0.03)
+        break
+      case 'vortex':
+        p.vx += (-dy / d) * f - (dx / d) * f * 0.12
+        p.vy += (dx / d) * f - (dy / d) * f * 0.12
+        break
+      case 'gust':
+        p.vx += m.vx * f * 0.15
+        p.vy += m.vy * f * 0.15
+        break
+    }
+  }
+}
+
+// ── Cursor spark pool ─────────────────────────────────────────────────────────
+
+/** Dormant ring-buffer pool; slots come alive via emitSpark and fade out. */
+export function makeSparkPool(cap: number): Particle[] {
+  return Array.from({ length: cap }, () => ({
+    x: 0, y: 0, r: 0, vx: 0, vy: 0,
+    opacity: 0, maxOpacity: 0, phase: 0, wobble: 0,
+  }))
+}
+
+export type SparkOpts = {
+  r: [number, number]
+  /** Vertical drift range; negative rises, positive falls. */
+  rise: [number, number]
+  /** Fraction of the pointer velocity inherited at birth. */
+  kick: number
+}
+
+export function emitSpark(p: Particle, m: PointerState, opts: SparkOpts) {
+  p.x = m.x + (Math.random() - 0.5) * 14
+  p.y = m.y + (Math.random() - 0.5) * 14
+  p.r = opts.r[0] + Math.random() * (opts.r[1] - opts.r[0])
+  p.vx = m.vx * opts.kick + (Math.random() - 0.5) * 1.2
+  p.vy = m.vy * opts.kick + opts.rise[0] + Math.random() * (opts.rise[1] - opts.rise[0])
+  p.opacity = 0.85 + Math.random() * 0.15
+  p.maxOpacity = 1
+  p.phase = Math.random() * Math.PI * 2
+  p.wobble = 0.3 + Math.random() * 0.5
+}
+
+/** Draws & advances a spark pool. Never clears — layer it after an ambient draw. */
+export function drawSparks(ctx: CanvasRenderingContext2D, pool: Particle[], t: number, palette: RGB[]) {
+  pool.forEach((p, i) => {
+    if (p.opacity <= 0.015) return
+    p.x += p.vx + Math.sin(t * 0.002 + p.phase) * p.wobble
+    p.y += p.vy
+    p.vx *= 0.97
+    p.opacity -= 0.016
+    const [r, g, b] = palette[i % palette.length]
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+    ctx.fillStyle = `rgba(${r},${g},${b},${p.opacity})`; ctx.fill()
+    const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3.5)
+    glow.addColorStop(0, `rgba(${r},${g},${b},${p.opacity * 0.3})`)
+    glow.addColorStop(1, `rgba(${r},${g},${b},0)`)
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3.5, 0, Math.PI * 2)
+    ctx.fillStyle = glow; ctx.fill()
+  })
+}
+
 // ── RAF loop guard ────────────────────────────────────────────────────────────
 
 export type RafLoop = { start: () => void; stop: () => void; running: () => boolean }

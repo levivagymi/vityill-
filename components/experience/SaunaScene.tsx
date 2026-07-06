@@ -1,18 +1,24 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { ScrollTrigger } from '@/lib/gsap'
-import { isDark, makeSteam, drawSteam, rafLoop, type Particle, type RGB } from '@/lib/canvas-fx'
+import {
+  isDark, makeSteam, drawSteam, rafLoop, trackPointer, drive, applyPointerForce,
+  type DrivenParticle, type PointerFx, type RGB,
+} from '@/lib/canvas-fx'
 
 /**
  * Steam particles (shared physics from lib/canvas-fx) behind an SVG
  * feTurbulence/feDisplacementMap heat-haze whose distortion deepens with
- * scroll progress — the sauna gets hotter the further you go.
+ * scroll progress — the sauna gets hotter the further you go. Waving the
+ * cursor parts the steam like a hand and flares the haze for a beat.
  */
+
+const STIR: PointerFx = { kind: 'repel', radius: 150, strength: 1.6 }
 export default function SaunaScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const turbRef = useRef<SVGFETurbulenceElement>(null)
   const dispRef = useRef<SVGFEDisplacementMapElement>(null)
-  const particles = useRef<Particle[]>([])
+  const particles = useRef<DrivenParticle[]>([])
   const intensityRef = useRef(0)
 
   useEffect(() => {
@@ -25,7 +31,7 @@ export default function SaunaScene() {
     const resize = () => {
       W = canvas.width = window.innerWidth
       H = canvas.height = window.innerHeight
-      particles.current = makeSteam(W, H, 70)
+      particles.current = drive(makeSteam(W, H, 70))
     }
     resize()
     window.addEventListener('resize', resize)
@@ -37,13 +43,20 @@ export default function SaunaScene() {
       onUpdate: (self) => { intensityRef.current = self.progress },
     })
 
+    const pointer = trackPointer()
+
     let frame = 0
     const loop = rafLoop((t) => {
       frame++
       const intensity = intensityRef.current
+      const m = pointer.state
 
-      // Heat-haze: baseFrequency wobbles slowly, displacement grows with heat.
-      const scale = 8 + intensity * 28
+      // A hand through the steam: particles part around the cursor.
+      applyPointerForce(particles.current, m, STIR)
+
+      // Heat-haze: baseFrequency wobbles slowly, displacement grows with heat —
+      // and flares briefly when the cursor whips through.
+      const scale = 8 + intensity * 28 + Math.min(14, m.speed * 0.35)
       const freq = 0.006 + intensity * 0.014 + Math.sin(frame * 0.008) * 0.002
       if (turbRef.current) {
         turbRef.current.setAttribute('baseFrequency', `${freq.toFixed(4)} ${(freq * 0.7).toFixed(4)}`)
@@ -56,11 +69,13 @@ export default function SaunaScene() {
       ctx.globalAlpha = 0.45 + intensity * 0.55
       drawSteam(ctx, W, H, particles.current, t, steamColor)
       ctx.globalAlpha = 1
+      pointer.decay()
     })
     loop.start()
 
     return () => {
       loop.stop()
+      pointer.dispose()
       window.removeEventListener('resize', resize)
       st.kill()
     }
