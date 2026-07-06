@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { ROUTES, ROOM_SLUGS } from '@/lib/nav'
+import { ROUTES, ROOM_SLUGS, EXPERIENCE_SLUGS } from '@/lib/nav'
 
 const BASE = 'https://vityillo.hu'
 const LOCALES = ['hu', 'en', 'de'] as const
@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ROUTES.rooms,
     ...ROOM_SLUGS.map((s) => `${ROUTES.rooms}/${s}`),
     ROUTES.experiences,
+    ...EXPERIENCE_SLUGS.map((s) => `${ROUTES.experiences}/${s}`),
     ROUTES.gallery,
     ROUTES.contact,
     ROUTES.booking,

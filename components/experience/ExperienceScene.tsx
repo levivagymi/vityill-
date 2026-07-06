@@ -4,17 +4,32 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { allowAmbientMotion } from '@/lib/utils'
 import type { ExperienceSlug } from '@/lib/nav'
+import type { ParallaxVariant } from './ParallaxScene'
 
 // Each scene ships as its own client-only chunk — none of them belong in the
 // initial bundle, and none of them can render on the server anyway.
 const JacuzziCanvas = dynamic(() => import('./JacuzziCanvas'), { ssr: false })
 const SaunaScene = dynamic(() => import('./SaunaScene'), { ssr: false })
 const BogracCanvas = dynamic(() => import('./BogracCanvas'), { ssr: false })
+const ParallaxScene = dynamic(() => import('./ParallaxScene'), { ssr: false })
+
+/** The parallax variants share one chunk; each slug gets a stable wrapper. */
+function parallax(variant: ParallaxVariant): React.ComponentType {
+  return function ParallaxVariantScene() {
+    return <ParallaxScene variant={variant} />
+  }
+}
 
 const SCENES: Record<ExperienceSlug, React.ComponentType> = {
   jacuzzi: JacuzziCanvas,
   sauna: SaunaScene,
   bograc: BogracCanvas,
+  erdo: parallax('erdo'),
+  vilagitas: parallax('vilagitas'),
+  kilatas: parallax('kilatas'),
+  klima: parallax('klima'),
+  tv: parallax('tv'),
+  konyha: parallax('konyha'),
 }
 
 /**

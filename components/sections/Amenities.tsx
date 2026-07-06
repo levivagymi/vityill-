@@ -10,7 +10,7 @@ import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
 import type { AmenityKey } from '@/lib/content'
-import { amenityHref, AMENITY_SLUG_BY_KEY } from '@/lib/nav'
+import { experienceHref, EXPERIENCE_SLUG_BY_AMENITY } from '@/lib/nav'
 import type { Locale } from '@/lib/types'
 
 const AMENITY_ICONS: Record<AmenityKey, React.ElementType> = {
@@ -56,7 +56,7 @@ export default function Amenities() {
             return (
               <Link
                 key={key}
-                href={amenityHref(lang, AMENITY_SLUG_BY_KEY[key])}
+                href={experienceHref(lang, EXPERIENCE_SLUG_BY_AMENITY[key])}
                 data-cursor="view"
                 className="amenity-card group relative block bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 lg:p-7
                            hover:border-foreground/15 hover:bg-foreground/[0.06] transition-all duration-300

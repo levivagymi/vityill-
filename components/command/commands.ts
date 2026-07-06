@@ -1,9 +1,10 @@
 import type { LucideIcon } from 'lucide-react'
 import {
-  BedDouble, CalendarCheck, CookingPot, Flame, Home, Images,
+  BedDouble, CalendarCheck, Home, Images,
   Landmark, Languages, Mail, MapPin, MessageSquareQuote, Sparkles,
-  SunMoon, Waves,
+  SunMoon,
 } from 'lucide-react'
+import { EXPERIENCE_ICONS } from '@/components/experience/experience-icons'
 import {
   MAIN_NAV, ROOM_SLUGS, ROOM_KEY_BY_SLUG, EXPERIENCE_SLUGS,
   href, roomHref, experienceHref, switchLocalePath,
@@ -37,12 +38,6 @@ const NAV_ICONS: Record<string, LucideIcon> = {
   experiences: Sparkles,
   gallery: Images,
   contact: Mail,
-}
-
-const EXPERIENCE_ICONS: Record<(typeof EXPERIENCE_SLUGS)[number], LucideIcon> = {
-  jacuzzi: Waves,
-  sauna: Flame,
-  bograc: CookingPot,
 }
 
 const SECTION_JUMPS: { hash: string; dictKey: 'about' | 'amenities' | 'rooms' | 'gallery' | 'location' }[] = [

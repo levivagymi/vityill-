@@ -2,26 +2,16 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Flame, Waves, UtensilsCrossed, Trees, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { getDictionary, hasLocale } from '../dictionaries'
 import PageHero from '@/components/ui/PageHero'
 import Reveal from '@/components/ui/Reveal'
 import BookingCta from '@/components/sections/BookingCta'
-import { EXPERIENCES, type ExperienceKey, HERO_BANNER } from '@/lib/content'
-import { href, experienceHref, type ExperienceSlug } from '@/lib/nav'
+import { EXPERIENCE_ICONS } from '@/components/experience/experience-icons'
+import { EXPERIENCE_SCENE_IMAGES, HERO_BANNER } from '@/lib/content'
+import { href, experienceHref, EXPERIENCE_SLUGS } from '@/lib/nav'
 
 type Props = { params: Promise<{ lang: string }> }
-
-const ICONS: Record<ExperienceKey, React.ElementType> = {
-  sauna: Flame, pool: Waves, grill: UtensilsCrossed, forest: Trees,
-}
-
-/** Cards with a matching immersive subpage deep-link into it. */
-const SCENE_BY_KEY: Partial<Record<ExperienceKey, ExperienceSlug>> = {
-  pool: 'jacuzzi',
-  sauna: 'sauna',
-  grill: 'bograc',
-}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
@@ -51,32 +41,31 @@ export default async function ExperiencesPage({ params }: Props) {
         </Reveal>
 
         <div className="space-y-20 lg:space-y-28">
-          {EXPERIENCES.map(({ key, image }, i) => {
-            const item = dict.experiences.items[key]
-            const Icon = ICONS[key]
+          {EXPERIENCE_SLUGS.map((slug, i) => {
+            const exp = dict.experiences[slug]
+            const Icon = EXPERIENCE_ICONS[slug]
             const reversed = i % 2 === 1
             return (
-              <Reveal key={key} className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+              <Reveal key={slug} className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
                 <div className={`relative aspect-[4/3] rounded-2xl overflow-hidden ${reversed ? 'lg:order-2' : ''}`}>
-                  <Image src={image} alt={item.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src={EXPERIENCE_SCENE_IMAGES[slug]} alt={exp.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
                 </div>
                 <div className={reversed ? 'lg:order-1' : ''}>
                   <div className="w-12 h-12 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center mb-5">
                     <Icon size={22} className="text-foreground" />
                   </div>
-                  <h2 className="font-heading text-2xl sm:text-3xl mb-4">{item.name}</h2>
-                  <p className="font-sans text-foreground/60 leading-[1.85] text-base mb-6">{item.long}</p>
+                  <p className="font-sans uppercase tracking-[0.3em] text-foreground/50 text-xs mb-3">{exp.eyebrow}</p>
+                  <h2 className="font-heading text-2xl sm:text-3xl mb-4">{exp.title}</h2>
+                  <p className="font-sans text-foreground/60 leading-[1.85] text-base mb-6">{exp.detail}</p>
                   <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
-                    {SCENE_BY_KEY[key] && (
-                      <Link
-                        href={experienceHref(lang, SCENE_BY_KEY[key]!)}
-                        className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground border border-foreground/25 hover:border-foreground/60 px-5 py-2.5 rounded-full transition-all cursor-pointer"
-                        data-cursor="view"
-                      >
-                        {dict.experiences.explore} <ArrowRight size={15} />
-                      </Link>
-                    )}
+                    <Link
+                      href={experienceHref(lang, slug)}
+                      className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground border border-foreground/25 hover:border-foreground/60 px-5 py-2.5 rounded-full transition-all cursor-pointer"
+                      data-cursor="view"
+                    >
+                      {dict.experiences.explore} <ArrowRight size={15} />
+                    </Link>
                     <Link
                       href={href(lang, 'booking')}
                       className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground hover:gap-3 transition-all cursor-pointer"

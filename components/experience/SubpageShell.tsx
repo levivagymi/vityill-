@@ -32,7 +32,13 @@ export default function SubpageShell({
   const dict = useDict()
   const params = useParams()
   const lang = (params?.lang as Locale) ?? 'hu'
-  const others = EXPERIENCE_SLUGS.filter((s) => s !== slug)
+  // Cyclic window of three: every page recommends a different trio, and the
+  // ring covers all experiences without flooding the footer with chips.
+  const idx = EXPERIENCE_SLUGS.indexOf(slug)
+  const others = Array.from(
+    { length: 3 },
+    (_, k) => EXPERIENCE_SLUGS[(idx + k + 1) % EXPERIENCE_SLUGS.length],
+  )
 
   return (
     <main className="relative">

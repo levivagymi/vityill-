@@ -48,52 +48,41 @@
     "label": "Ausstattung",
     "title": "Alles, was Sie brauchen",
     "subtitle": "Durchdacht gestaltet für den perfekten Aufenthalt",
-    "overviewTitle": "Überblick",
-    "exploreCta": "Erlebnis entdecken",
     "sauna": {
       "name": "Private Sauna",
-      "desc": "Finnische Sauna exklusiv für Sie",
-      "detail": "Eine private Sauna nach finnischer Tradition, exklusiv für Sie und Ihre Gäste reserviert. Intensive Hitze und duftende Zedernverkleidung machen sie zum perfekten Ort für die abendliche Entspannung."
+      "desc": "Finnische Sauna exklusiv für Sie"
     },
     "pool": {
       "name": "Außenpool",
-      "desc": "Außenpool mit Whirlpool",
-      "detail": "Der Außenpool in Kombination mit dem Whirlpool bietet zu jeder Jahreszeit Erfrischung, mit direktem Blick auf die grünen Hügel des Gerecse-Gebirges."
+      "desc": "Außenpool mit Whirlpool"
     },
     "forest": {
       "name": "Privatwald",
-      "desc": "Exklusives Naturerlebnis",
-      "detail": "Der private Wald rund um das Gästehaus gehört ganz Ihnen — ruhige Pfade, frische Luft und vollständige Abgeschiedenheit von der Außenwelt."
+      "desc": "Exklusives Naturerlebnis"
     },
     "lighting": {
       "name": "Stimmungsbeleuchtung",
-      "desc": "Atmosphärische Ambiente-Beleuchtung",
-      "detail": "Sorgfältig gestaltete, warm getönte Beleuchtung in jedem Raum schafft Abend für Abend eine gemütliche, einladende Atmosphäre — drinnen wie auf der Terrasse."
+      "desc": "Atmosphärische Ambiente-Beleuchtung"
     },
     "view": {
       "name": "Panoramablick",
-      "desc": "Atemberaubendes Naturpanorama",
-      "detail": "Von jedem größeren Fenster und der Terrasse aus öffnet sich ein atemberaubendes Panorama auf die bewaldeten Hügel des Gerecse-Gebirges — vom Sonnenaufgang bis zum Sonnenuntergang."
+      "desc": "Atemberaubendes Naturpanorama"
     },
     "ac": {
       "name": "Klimaanlage",
-      "desc": "Moderne Split-Klimaanlage in jedem Zimmer",
-      "detail": "Moderne Split-Klimaanlagen in jedem Zimmer sorgen für die ideale Temperatur, sodass Ihr Aufenthalt auch in den Sommermonaten angenehm bleibt."
+      "desc": "Moderne Split-Klimaanlage in jedem Zimmer"
     },
     "tv": {
       "name": "Smart TV",
-      "desc": "Netflix, HBO Max und mehr",
-      "detail": "Große Smart-TVs mit Netflix, HBO Max und weiteren Streaming-Diensten — perfekt für einen entspannten Filmabend."
+      "desc": "Netflix, HBO Max und mehr"
     },
     "kitchen": {
       "name": "Vollküche",
-      "desc": "Voll ausgestattete moderne Küche",
-      "detail": "Eine voll ausgestattete moderne Küche mit allem nötigen Werkzeug, Geschirr und Geräten, um bequem selbst zu kochen."
+      "desc": "Voll ausgestattete moderne Küche"
     },
     "grill": {
       "name": "Kessel-Grill",
-      "desc": "Ungarischer Bogrács-Grill im Freien",
-      "detail": "Ein Außen-Kesselgrill für traditionelles ungarisches Bogrács-Kochen — ein gemeinsames Erlebnis für Freunde und Familie unter freiem Himmel."
+      "desc": "Ungarischer Bogrács-Grill im Freien"
     }
   },
   "rooms": {
@@ -190,27 +179,41 @@
       "desc": "Ein Kessel über offenem Feuer — das perfekte Abendtreffen.",
       "detail": "Ausgestatteter Außen-Kesselgrillplatz, wo das Kochen über offenem Feuer die Gäste mit der Natur verbindet. Die Glut lodert auf, wenn Sie sich bewegen."
     },
-    "items": {
-      "sauna": {
-        "name": "Private finnische Sauna",
-        "desc": "Eine finnische Sauna, exklusiv für Sie reserviert.",
-        "long": "Am Ende des Tages gibt es nichts Besseres als die Wärme der eigenen privaten finnischen Sauna. Der Duft des Holzes, die heißen Steine und die völlige Stille bieten perfekte Regeneration — ohne Menschenmengen, ohne Warteschlangen, jederzeit."
-      },
-      "pool": {
-        "name": "Außenpool & Whirlpool",
-        "desc": "Ein Außenpool mit integriertem Whirlpool.",
-        "long": "Tauchen Sie in den Außenpool ein, während Sie auf die Baumkronen des Waldes blicken. Die integrierte Whirlpool-Funktion verwöhnt Sie mit sprudelndem Wasser, sogar unter einem Sternenhimmel."
-      },
-      "grill": {
-        "name": "Lagerfeuerabende",
-        "desc": "Traditioneller Kesselgrill und Feuerstelle auf der Terrasse.",
-        "long": "Das Herz der ungarischen Gastfreundschaft ist der Bogrács-Kessel. Versammeln Sie sich um die Feuerstelle und den Grill im Freien, um Ihren Lieblingseintopf oder Gulasch zuzubereiten, während sich der Abend langsam über den Wald legt."
-      },
-      "forest": {
-        "name": "Privatwald & Wanderwege",
-        "desc": "Ihr eigener Wald und die Gerecse-Wege direkt vor der Tür.",
-        "long": "Ein Privatwald und die markierten Wanderwege des Gerecse-Gebirges erwarten Sie in der unmittelbaren Umgebung des Hauses. Wandern, radeln oder einfach durchatmen — die Natur ist hier zum Greifen nah."
-      }
+    "erdo": {
+      "eyebrow": "Natur",
+      "title": "Privatwald",
+      "desc": "Ein exklusives Naturerlebnis direkt vor der Tür.",
+      "detail": "Der private Wald rund um das Gästehaus gehört ganz Ihnen — ruhige Pfade, frische Luft und vollständige Abgeschiedenheit von der Außenwelt. Nebel zieht zwischen den Baumkronen, während Sie sich bewegen."
+    },
+    "vilagitas": {
+      "eyebrow": "Licht & Stimmung",
+      "title": "Stimmungsbeleuchtung",
+      "desc": "Atmosphärische Ambiente-Beleuchtung, Abend für Abend.",
+      "detail": "Sorgfältig gestaltete, warm getönte Beleuchtung in jedem Raum schafft eine gemütliche Atmosphäre — drinnen wie auf der Terrasse. Die Lichter pulsieren sanft, wenn die Dämmerung einsetzt."
+    },
+    "kilatas": {
+      "eyebrow": "Panorama",
+      "title": "Panoramablick",
+      "desc": "Ein atemberaubendes Panorama auf die Gerecse-Hügel.",
+      "detail": "Von jedem größeren Fenster und der Terrasse aus öffnet sich ein atemberaubendes Panorama auf die bewaldeten Hügel des Gerecse-Gebirges — vom Sonnenaufgang bis zum Sonnenuntergang. Die Ebenen der Landschaft gewinnen beim Scrollen an Tiefe."
+    },
+    "klima": {
+      "eyebrow": "Komfort",
+      "title": "Klimatisierte Räume",
+      "desc": "Moderne Split-Klimaanlage in jedem Zimmer.",
+      "detail": "Moderne Split-Klimaanlagen in jedem Zimmer sorgen für die ideale Temperatur, sodass Ihr Aufenthalt auch im Hochsommer angenehm bleibt. Ein kühler Luftstrom durchzieht den Raum, während Sie sich bewegen."
+    },
+    "tv": {
+      "eyebrow": "Filmabende",
+      "title": "Smart TV & Streaming",
+      "desc": "Netflix, HBO Max und weitere Streaming-Dienste.",
+      "detail": "Große Smart-TVs mit Netflix, HBO Max und weiteren Streaming-Diensten — perfekt für einen ruhigen Filmabend in der Stille des Waldes. Das Leuchten des Bildschirms erfüllt den Abend."
+    },
+    "konyha": {
+      "eyebrow": "Heimat der Aromen",
+      "title": "Vollküche",
+      "desc": "Eine voll ausgestattete moderne Küche.",
+      "detail": "Eine voll ausgestattete moderne Küche mit allem nötigen Werkzeug, Geschirr und Geräten, um bequem selbst zu kochen. Die Düfte ziehen langsam durchs Haus."
     }
   },
   "gallery": {
