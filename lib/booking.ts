@@ -3,10 +3,8 @@ import { z } from 'zod'
 /** Set to true when the site is ready to accept real bookings. */
 export const BOOKING_ENABLED = false
 
-/** Nightly prices in EUR, indicative, for two guests. */
-export const ROOM_PRICES = { room1: 120, room2: 100, both: 200 } as const
-export const CLEANING_FEE = 35 // EUR, one-off
-export const MAX_GUESTS = 10
+/** Whole-house booking; site-wide occupancy cap. */
+export const MAX_GUESTS = 6
 
 /** Booking contact must be an adult; oldest accepted birth year is a sanity bound. */
 export const MIN_BIRTH_YEAR = 1900
@@ -20,8 +18,6 @@ export const todayISO = (): string => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-export type RoomChoice = keyof typeof ROOM_PRICES
-
 /** Whole nights between two ISO date strings (yyyy-mm-dd). Returns 0 if invalid/negative. */
 export function nightsBetween(checkIn?: string, checkOut?: string): number {
   if (!checkIn || !checkOut) return 0
@@ -33,9 +29,69 @@ export function nightsBetween(checkIn?: string, checkOut?: string): number {
   return nights > 0 ? nights : 0
 }
 
-export function estimateTotal(room: RoomChoice, nights: number) {
-  const accommodation = ROOM_PRICES[room] * nights
-  return { accommodation, cleaning: nights > 0 ? CLEANING_FEE : 0, total: accommodation + (nights > 0 ? CLEANING_FEE : 0) }
+export type DayType = 'weekday' | 'weekend'
+export type GroupTier = 'small' | 'large' // small = 1-2 paid fő, large = 3-6 paid fő
+
+/** HUF, per person, per night. */
+export const RATE_TABLE: Record<DayType, Record<GroupTier, number>> = {
+  weekday: { small: 30_000, large: 25_000 }, // Mon-Thu
+  weekend: { small: 35_000, large: 30_000 }, // Fri-Sun
+} as const
+
+/** "Weekend" = the night's start date is Fri/Sat/Sun. getUTCDay() on purpose -
+ *  ISO date-only strings parse as UTC midnight, avoiding a local-timezone
+ *  off-by-one for a visitor whose browser clock is in another UTC offset. */
+export function nightDayType(dateISO: string): DayType {
+  const day = new Date(dateISO).getUTCDay() // 0=Sun..6=Sat
+  return day === 5 || day === 6 || day === 0 ? 'weekend' : 'weekday'
+}
+
+export type StayInput = {
+  checkIn: string; checkOut: string
+  adults: number; childrenUnder4: number; childrenOver4: number
+}
+export type PriceBreakdownGroup = {
+  type: DayType; nights: number; ratePerPerson: number; guestCount: number; subtotal: number
+}
+export type PriceEstimate = {
+  nights: number
+  paidGuestCount: number    // adults + childrenOver4 - tier bracket + billing
+  totalGuestCount: number   // adults + childrenUnder4 + childrenOver4 - occupancy cap only
+  breakdown: PriceBreakdownGroup[]  // <=2 entries (one per day-type actually present)
+  total: number
+}
+
+/** Single source of truth for stay pricing, consumed by BookingWizard's live
+ *  sidebar (called on every keystroke, often with incomplete input - stays
+ *  lenient, returns a zero estimate rather than throwing). */
+export function calculateStayPrice(input: StayInput): PriceEstimate {
+  const nights = nightsBetween(input.checkIn, input.checkOut)
+  const adults = Number.isFinite(input.adults) ? Math.max(0, input.adults) : 0
+  const childrenUnder4 = Number.isFinite(input.childrenUnder4) ? Math.max(0, input.childrenUnder4) : 0
+  const childrenOver4 = Number.isFinite(input.childrenOver4) ? Math.max(0, input.childrenOver4) : 0
+  const paidGuestCount = adults + childrenOver4
+  const totalGuestCount = paidGuestCount + childrenUnder4
+
+  if (nights <= 0 || paidGuestCount <= 0) {
+    return { nights, paidGuestCount, totalGuestCount, breakdown: [], total: 0 }
+  }
+
+  const tier: GroupTier = paidGuestCount <= 2 ? 'small' : 'large'
+  const nightsByType = new Map<DayType, number>()
+  const startMs = new Date(input.checkIn).getTime()
+  for (let i = 0; i < nights; i++) {
+    const dateISO = new Date(startMs + i * 86_400_000).toISOString().slice(0, 10)
+    const type = nightDayType(dateISO)
+    nightsByType.set(type, (nightsByType.get(type) ?? 0) + 1)
+  }
+
+  const breakdown: PriceBreakdownGroup[] = Array.from(nightsByType, ([type, groupNights]) => {
+    const ratePerPerson = RATE_TABLE[type][tier]
+    return { type, nights: groupNights, ratePerPerson, guestCount: paidGuestCount, subtotal: ratePerPerson * paidGuestCount * groupNights }
+  })
+
+  const total = breakdown.reduce((sum, g) => sum + g.subtotal, 0)
+  return { nights, paidGuestCount, totalGuestCount, breakdown, total }
 }
 
 /** Server-side validation schema (locale-independent messages). */
@@ -47,14 +103,13 @@ export const bookingServerSchema = z
     checkIn: z.string().regex(ISO_DATE),
     checkOut: z.string().regex(ISO_DATE),
     adults: z.number().int().min(1).max(MAX_GUESTS),
-    children: z.number().int().min(0).max(MAX_GUESTS),
-    childrenAges: z.string().max(100).optional().default(''),
+    childrenUnder4: z.number().int().min(0).max(MAX_GUESTS),
+    childrenOver4: z.number().int().min(0).max(MAX_GUESTS),
     nationality: z.string().min(1),
     residence: z.string().min(1),
     postalCode: z.string().trim().min(1).max(20),
     gender: z.enum(['male', 'female', 'other']),
     birthYear: z.number().int().min(MIN_BIRTH_YEAR).max(MAX_BIRTH_YEAR),
-    room: z.enum(['room1', 'room2', 'both']),
     channel: z.enum(['direct', 'airbnb', 'booking', 'facebook', 'other']),
     requests: z.string().max(2000).optional().default(''),
     locale: z.string().max(5).optional(),
@@ -68,7 +123,7 @@ export const bookingServerSchema = z
     message: 'check-in must not be in the past',
     path: ['checkIn'],
   })
-  .refine((d) => d.adults + d.children <= MAX_GUESTS, {
+  .refine((d) => d.adults + d.childrenUnder4 + d.childrenOver4 <= MAX_GUESTS, {
     message: 'too many guests',
     path: ['adults'],
   })
