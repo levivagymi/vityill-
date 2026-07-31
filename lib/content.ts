@@ -3,16 +3,71 @@
  * Text lives in dictionaries/*.json; this file holds image sources and
  * the keys that bind a card/section to its translated copy.
  *
- * Images are real photos of the property, optimized (resized + WebP) by
- * scripts/optimize-images.mjs from the raw sources in images/ into
- * public/images/. No sauna or bathroom photo exists among the source
- * photos — those slots use the closest available real substitute
- * (wellness/fireplace corner, living room) rather than stock imagery.
+ * Images are real photos of the property. All of them are served straight
+ * from Supabase Storage (a public bucket, filenames "img (N).webp") — no
+ * local copy is shipped. IMAGE_NUMBERS below is the one place that maps a
+ * descriptive content key to the actual Supabase file number; it was built
+ * by visually matching each numbered export to what it depicts. No sauna
+ * or bathroom photo exists among the source photos — those slots use the
+ * closest available real substitute (wellness/fireplace corner, living
+ * room) rather than stock imagery.
  */
 
 import type { ExperienceSlug } from '@/lib/nav'
 
-export const imageUrl = (name: string) => `/images/${name}.webp`
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+const SUPABASE_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_BUCKET
+
+if (!SUPABASE_URL || !SUPABASE_BUCKET) {
+  throw new Error(
+    'Missing NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_BUCKET - set both in .env.local (see .env.example). All site images are served from Supabase Storage.'
+  )
+}
+
+/** Descriptive content key -> Supabase Storage file number ("img (N).webp"). */
+const IMAGE_NUMBERS: Record<string, number> = {
+  'room-upper-hero': 89,
+  'room-upper-bed-window': 90,
+  'room-upper-stove-detail': 85,
+  'room-upper-alt-angle': 87,
+  'room-lower-hero': 92,
+  'room-lower-beds-wardrobe': 91,
+  'room-lower-beds-closeup': 93,
+  'room-lower-desk-window': 94,
+  'forest-clearing-dawn': 15,
+  'house-exterior-day': 25,
+  'wellness-fireplace-corner': 86,
+  'hot-tub-jets': 32,
+  'kitchen-modern': 60,
+  'living-room-cozy': 82,
+  'bograc-panorama': 21,
+  'view-panorama-well': 52,
+  'forest-path-driveway': 16,
+  'forest-path-misty': 19,
+  'hero-banner-wide': 4,
+  'house-exterior-portrait': 27,
+  'hot-tub-full-view': 33,
+  'bograc-cauldron-detail': 20,
+  'forest-clearing-alt': 12,
+  'patio-lights-dusk': 55,
+  'ac-unit-room': 83,
+  'tv-media-wall': 84,
+  'kitchen-modern-alt': 70,
+  'dining-room-deer-art': 56,
+  'living-room-sunroom': 79,
+  'cinematic-house-facade': 26,
+  'forest-driveway-fence': 9,
+  'forest-clearing-morning': 13,
+  'kitchen-counter-detail': 66,
+  'door-handle-detail': 73,
+  'cabinet-detail': 77,
+}
+
+export const imageUrl = (name: string) => {
+  const n = IMAGE_NUMBERS[name]
+  if (!n) throw new Error(`lib/content.ts: no Supabase image number mapped for "${name}"`)
+  return `${SUPABASE_URL}/storage/v1/object/public/${SUPABASE_BUCKET}/img%20(${n}).webp`
+}
 
 export type RoomKey = 'room1' | 'room2'
 
