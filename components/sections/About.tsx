@@ -5,6 +5,7 @@ import { Trees, Users, MapPin } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { EmblemMark } from '@/components/brand/Logo'
+import { imageUrl } from '@/lib/content'
 
 export default function About() {
   const dict = useDict()
@@ -44,8 +45,8 @@ export default function About() {
           <div className="about-left relative" style={{ opacity: 0 }}>
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80&fit=crop"
-                alt="Vityilló cabin exterior surrounded by forest"
+                src={imageUrl('house-exterior-portrait')}
+                alt="A Vityilló Vendégház kertje és terasza, erdővel körülvéve"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

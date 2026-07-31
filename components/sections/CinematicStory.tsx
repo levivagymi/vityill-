@@ -4,6 +4,7 @@ import Image from 'next/image'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { makeSteam, drawSteam, makeEmbers, drawEmbers, rafLoop, type Particle } from '@/lib/canvas-fx'
+import { imageUrl } from '@/lib/content'
 
 // ── Static data ───────────────────────────────────────────────────────────────
 const HERO_SCATTER = [
@@ -46,14 +47,14 @@ const STARS = Array.from({ length: 90 }, (_, i) => ({
 }))
 
 const PH8_IMGS = [
-  { id: 'photo-1564013799919-ab600027ffc6', top: '8%',  left: '7%',  w: 128 },
-  { id: 'photo-1448375240586-882707db888b', top: '7%',  left: '74%', w: 112 },
-  { id: 'photo-1510798831971-661eb04b3739', top: '74%', left: '11%', w: 118 },
-  { id: 'photo-1571896349842-33c89424de2d', top: '72%', left: '70%', w: 104 },
-  { id: 'photo-1541123437800-1bb1317badc2', top: '41%', left: '2%',  w:  88 },
-  { id: 'photo-1558618666-fcd25c85cd64',    top: '40%', left: '88%', w:  94 },
-  { id: 'photo-1501854140801-50d01698950b', top: '19%', left: '42%', w:  98 },
-  { id: 'photo-1555396273-367ea4eb4db5',    top: '67%', left: '43%', w: 108 },
+  { src: imageUrl('house-exterior-day'),        top: '8%',  left: '7%',  w: 128 },
+  { src: imageUrl('wellness-fireplace-corner'), top: '7%',  left: '74%', w: 112 },
+  { src: imageUrl('hot-tub-full-view'),         top: '74%', left: '11%', w: 118 },
+  { src: imageUrl('bograc-cauldron-detail'),    top: '72%', left: '70%', w: 104 },
+  { src: imageUrl('kitchen-counter-detail'),    top: '41%', left: '2%',  w:  88 },
+  { src: imageUrl('door-handle-detail'),        top: '40%', left: '88%', w:  94 },
+  { src: imageUrl('forest-clearing-morning'),   top: '19%', left: '42%', w:  98 },
+  { src: imageUrl('cinematic-house-facade'),    top: '67%', left: '43%', w: 108 },
 ]
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -426,7 +427,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         <div className="absolute inset-0 bg-[#0a1a10]" />
         <div className="absolute inset-0 w-full h-[130%] -top-[15%]" style={{ willChange: 'transform' }}>
           <Image
-            src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&fit=crop"
+            src={imageUrl('house-exterior-day')}
             alt="" fill priority className="object-cover" sizes="100vw"
           />
         </div>
@@ -459,7 +460,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
       {/* ── PH1: House image — zooms in from depth, windows glow warm ──────── */}
       <div className="ph1-house-img absolute inset-0" style={{ zIndex: 2, willChange: 'transform,opacity,filter' }}>
         <Image
-          src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&q=90&fit=crop"
+          src={imageUrl('cinematic-house-facade')}
           alt="" fill className="object-cover" sizes="100vw" priority
         />
         <div className="ph1-window absolute" style={{
@@ -482,28 +483,28 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         style={{ zIndex: 3, clipPath: 'polygon(0% 0%,100% 0%,100% 100%,0% 100%)', willChange: 'opacity,clip-path' }}>
         <div className="absolute inset-0 bg-[#040c07]" />
         <div className="ph2-l5 absolute inset-0" style={{ willChange: 'transform' }}>
-          <Image src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=65&fit=crop"
+          <Image src={imageUrl('forest-clearing-alt')}
             alt="" fill className="object-cover opacity-35" sizes="100vw" />
         </div>
         <div className="ph2-l4 absolute inset-0" style={{ willChange: 'transform' }}>
-          <Image src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=68&fit=crop"
+          <Image src={imageUrl('forest-driveway-fence')}
             alt="" fill className="object-cover opacity-50" sizes="100vw" />
         </div>
         <div className="ph2-l3 absolute" style={{ top: '-8%', left: '-15%', width: '130%', height: '116%', willChange: 'transform' }}>
-          <Image src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1600&q=72&fit=crop"
+          <Image src={imageUrl('forest-path-driveway')}
             alt="" fill className="object-cover opacity-65" sizes="130vw" />
         </div>
         <div className="ph2-l2 absolute" style={{ top: '-5%', left: '-8%', width: '116%', height: '110%', willChange: 'transform' }}>
-          <Image src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1400&q=78&fit=crop"
+          <Image src={imageUrl('forest-path-misty')}
             alt="" fill className="object-cover" sizes="116vw" />
         </div>
         {/* Layer 1: split L/R so they blast to opposite sides */}
         <div className="ph2-l1-left absolute inset-0" style={{ clipPath: 'inset(0 50% 0 0)', willChange: 'transform' }}>
-          <Image src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=88&fit=crop"
+          <Image src={imageUrl('forest-clearing-morning')}
             alt="" fill className="object-cover" sizes="100vw" />
         </div>
         <div className="ph2-l1-right absolute inset-0" style={{ clipPath: 'inset(0 0 0 50%)', willChange: 'transform' }}>
-          <Image src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=88&fit=crop"
+          <Image src={imageUrl('forest-clearing-morning')}
             alt="" fill className="object-cover" sizes="100vw" />
         </div>
         <div className="ph2-fog absolute inset-0 pointer-events-none" style={{
@@ -519,7 +520,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         <div className="absolute inset-0 flex items-center justify-center gap-4 sm:gap-8 px-4" style={{ zIndex: 2 }}>
           <div className="ph3-jacuzzi relative flex-1 rounded-2xl overflow-hidden"
             style={{ maxWidth: 430, aspectRatio: '4/3', willChange: 'transform,opacity' }}>
-            <Image src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=860&q=85&fit=crop"
+            <Image src={imageUrl('hot-tub-full-view')}
               alt="" fill className="object-cover" sizes="430px" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#060f08]/88 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4">
@@ -529,7 +530,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           </div>
           <div className="ph3-sauna relative flex-1 rounded-2xl overflow-hidden"
             style={{ maxWidth: 430, aspectRatio: '4/3', willChange: 'transform,opacity' }}>
-            <Image src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&q=85&fit=crop"
+            <Image src={imageUrl('wellness-fireplace-corner')}
               alt="" fill className="object-cover" sizes="430px" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#060f08]/88 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4">
@@ -585,15 +586,15 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         <div className="ph5-mask absolute inset-0" style={{ clipPath: 'circle(0% at 50% 50%)', willChange: 'clip-path' }}>
           <div className="absolute inset-0 grid grid-cols-3">
             <div className="relative overflow-hidden">
-              <Image src="https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=640&q=82&fit=crop"
+              <Image src={imageUrl('kitchen-counter-detail')}
                 alt="" fill className="object-cover" sizes="33vw" />
             </div>
             <div className="relative overflow-hidden">
-              <Image src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=82&fit=crop"
+              <Image src={imageUrl('door-handle-detail')}
                 alt="" fill className="object-cover" sizes="33vw" />
             </div>
             <div className="relative overflow-hidden">
-              <Image src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=640&q=82&fit=crop"
+              <Image src={imageUrl('cabinet-detail')}
                 alt="" fill className="object-cover" sizes="33vw" />
             </div>
           </div>
@@ -617,7 +618,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           style={{ zIndex: 1, pointerEvents: 'none' }} />
         <div className="ph6-silhouette absolute bottom-0 left-0 right-0" style={{ zIndex: 2, willChange: 'transform' }}>
           <div className="relative w-full" style={{ aspectRatio: '21/8' }}>
-            <Image src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=85&fit=crop"
+            <Image src={imageUrl('bograc-cauldron-detail')}
               alt="" fill className="object-cover object-top" sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#040804]/88" />
           </div>
@@ -643,7 +644,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
             style={{ left: s.left, top: s.top, width: s.size, height: s.size, opacity: 0, willChange: 'opacity' }} />
         ))}
         <div className="ph7-house absolute inset-0" style={{ willChange: 'transform,opacity,filter' }}>
-          <Image src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&q=85&fit=crop"
+          <Image src={imageUrl('cinematic-house-facade')}
             alt="" fill className="object-cover" sizes="100vw"
             style={{ filter: 'saturate(0.25) brightness(0.28) hue-rotate(215deg)' }} />
           <div className="absolute inset-0 bg-[#020308]/52" />
@@ -673,7 +674,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         {PH8_IMGS.map((a, i) => (
           <div key={i} className="ph8-asset absolute overflow-hidden rounded-xl"
             style={{ top: a.top, left: a.left, width: a.w, height: Math.round(a.w * 0.75), willChange: 'transform,opacity,filter' }}>
-            <Image src={`https://images.unsplash.com/${a.id}?w=240&q=60&fit=crop`}
+            <Image src={a.src}
               alt="" fill className="object-cover" sizes={`${a.w}px`} />
           </div>
         ))}

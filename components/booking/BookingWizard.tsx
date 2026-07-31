@@ -13,21 +13,23 @@ import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { href } from '@/lib/nav'
 import {
-  BOOKING_ENABLED, COUNTRIES, ROOM_PRICES, CLEANING_FEE,
+  BOOKING_ENABLED, COUNTRIES, MAX_GUESTS,
   MIN_BIRTH_YEAR, MAX_BIRTH_YEAR, todayISO,
-  nightsBetween, estimateTotal, type RoomChoice,
+  nightsBetween, calculateStayPrice,
 } from '@/lib/booking'
 import type { Locale } from '@/lib/types'
 
 type FormData = {
-  checkIn: string; checkOut: string; room: RoomChoice
-  adults: number; children: number; childrenAges?: string
+  checkIn: string; checkOut: string
+  adults: number; childrenUnder4: number; childrenOver4: number
   name: string; email: string; phone: string
   gender: 'male' | 'female' | 'other'; birthYear: number
   nationality: string; residence: string; postalCode: string
   channel: 'direct' | 'airbnb' | 'booking' | 'facebook' | 'other'
   requests?: string; agree: true
 }
+
+const NUMBER_LOCALE: Record<Locale, string> = { hu: 'hu-HU', en: 'en-US', de: 'de-DE' }
 
 const inputClass =
   'w-full bg-foreground/[0.04] border border-foreground/[0.10] text-foreground placeholder-foreground/25 rounded-xl px-4 py-3 font-sans text-sm focus:outline-none focus:border-foreground/40 focus:ring-2 focus:ring-foreground/10 focus:bg-foreground/[0.06] transition-all duration-200'
@@ -64,10 +66,9 @@ export default function BookingWizard() {
     .object({
       checkIn: z.string().min(1, d.requiredField),
       checkOut: z.string().min(1, d.requiredField),
-      room: z.enum(['room1', 'room2', 'both'], { error: d.requiredField }),
-      adults: z.number({ error: d.minAdults }).min(1, d.minAdults).max(10),
-      children: z.number().min(0).max(10),
-      childrenAges: z.string().optional(),
+      adults: z.number({ error: d.minAdults }).min(1, d.minAdults).max(MAX_GUESTS),
+      childrenUnder4: z.number().min(0).max(MAX_GUESTS),
+      childrenOver4: z.number().min(0).max(MAX_GUESTS),
       name: z.string().min(1, d.requiredField),
       email: z.string().min(1, d.requiredField).pipe(z.email(d.invalidEmail)),
       phone: z.string().min(3, d.invalidPhone),
@@ -81,6 +82,7 @@ export default function BookingWizard() {
       agree: z.literal(true, { error: d.agreeError }),
     })
     .refine((v) => nightsBetween(v.checkIn, v.checkOut) > 0, { message: d.datesError, path: ['checkOut'] })
+    .refine((v) => v.adults + v.childrenUnder4 + v.childrenOver4 <= MAX_GUESTS, { message: d.tooManyGuests, path: ['adults'] })
 
   const {
     register, handleSubmit, watch, trigger, setError, getValues,
@@ -88,17 +90,16 @@ export default function BookingWizard() {
   } = useForm<FormData>({
     resolver: zodResolver(schema) as never,
     mode: 'onTouched',
-    defaultValues: { adults: 2, children: 0, room: 'room1' },
+    defaultValues: { adults: 2, childrenUnder4: 0, childrenOver4: 0 },
   })
 
   const checkIn = watch('checkIn')
   const checkOut = watch('checkOut')
-  const room = watch('room') ?? 'room1'
   const adults = watch('adults') ?? 0
-  const children = watch('children') ?? 0
-  const watchChildren = children
+  const childrenUnder4 = watch('childrenUnder4') ?? 0
+  const childrenOver4 = watch('childrenOver4') ?? 0
   const nights = nightsBetween(checkIn, checkOut)
-  const { accommodation, cleaning, total } = estimateTotal(room, nights)
+  const estimate = calculateStayPrice({ checkIn, checkOut, adults, childrenUnder4, childrenOver4 })
 
   useEffect(() => {
     if (panelRef.current) {
@@ -107,7 +108,7 @@ export default function BookingWizard() {
   }, [step, status])
 
   const steps = [
-    { icon: CalendarDays, label: d.stepStay, fields: ['checkIn', 'checkOut', 'room', 'adults', 'children'] as const },
+    { icon: CalendarDays, label: d.stepStay, fields: ['checkIn', 'checkOut', 'adults', 'childrenUnder4', 'childrenOver4'] as const },
     { icon: Users, label: d.stepGuest, fields: ['name', 'email', 'phone', 'gender', 'birthYear', 'nationality', 'residence', 'postalCode'] as const },
     { icon: ClipboardCheck, label: d.stepReview, fields: ['channel', 'agree'] as const },
   ]
@@ -116,6 +117,15 @@ export default function BookingWizard() {
     const ok = await trigger(steps[step].fields as never)
     if (step === 0 && nights <= 0) {
       setError('checkOut', { message: d.datesError })
+      return
+    }
+    // Cross-field refine errors aren't reliably surfaced by trigger() when
+    // called with a subset of field names (a known react-hook-form +
+    // zodResolver limitation) - checked explicitly here, same as the dates
+    // check above. The schema-level refine still guards handleSubmit() on
+    // final submit, and bookingServerSchema guards the server independently.
+    if (step === 0 && adults + childrenUnder4 + childrenOver4 > MAX_GUESTS) {
+      setError('adults', { message: d.tooManyGuests })
       return
     }
     if (ok) setStep((s) => Math.min(s + 1, steps.length - 1))
@@ -139,8 +149,7 @@ export default function BookingWizard() {
     }
   }
 
-  const roomLabel = (r: RoomChoice) => (r === 'room1' ? d.room1Label : r === 'room2' ? d.room2Label : d.bothLabel)
-  const fmt = (n: number) => `${n.toLocaleString('hu-HU')} €`
+  const fmt = (n: number) => `${n.toLocaleString(NUMBER_LOCALE[lang])} Ft`
 
   if (status === 'success') {
     return (
@@ -203,26 +212,17 @@ export default function BookingWizard() {
                     <input {...register('checkOut')} type="date" min={checkIn || todayISO()} className={inputClass} />
                   </Field>
                 </div>
-                <Field label={d.room} error={errors.room?.message}>
-                  <select {...register('room')} className={inputClass}>
-                    <option value="room1" className="bg-background">{d.room1Label} — {ROOM_PRICES.room1} €{dict.common.perNight}</option>
-                    <option value="room2" className="bg-background">{d.room2Label} — {ROOM_PRICES.room2} €{dict.common.perNight}</option>
-                    <option value="both" className="bg-background">{d.bothLabel} — {ROOM_PRICES.both} €{dict.common.perNight}</option>
-                  </select>
-                </Field>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid sm:grid-cols-3 gap-4">
                   <Field label={d.adults} error={errors.adults?.message}>
-                    <input {...register('adults', { valueAsNumber: true })} type="number" min={1} max={10} className={inputClass} />
+                    <input {...register('adults', { valueAsNumber: true })} type="number" min={1} max={MAX_GUESTS} className={inputClass} />
                   </Field>
-                  <Field label={d.children} error={errors.children?.message}>
-                    <input {...register('children', { valueAsNumber: true })} type="number" min={0} max={10} className={inputClass} />
+                  <Field label={d.childrenUnder4} error={errors.childrenUnder4?.message}>
+                    <input {...register('childrenUnder4', { valueAsNumber: true })} type="number" min={0} max={MAX_GUESTS} className={inputClass} />
+                  </Field>
+                  <Field label={d.childrenOver4} error={errors.childrenOver4?.message}>
+                    <input {...register('childrenOver4', { valueAsNumber: true })} type="number" min={0} max={MAX_GUESTS} className={inputClass} />
                   </Field>
                 </div>
-                {watchChildren > 0 && (
-                  <Field label={d.childrenAges} error={errors.childrenAges?.message}>
-                    <input {...register('childrenAges')} type="text" placeholder="5, 8, 12" className={inputClass} />
-                  </Field>
-                )}
               </div>
             )}
 
@@ -280,8 +280,7 @@ export default function BookingWizard() {
                 <div className="rounded-xl border border-foreground/[0.1] divide-y divide-foreground/[0.06]">
                   {[
                     { label: d.summaryStay, value: nights > 0 ? `${checkIn} → ${checkOut} · ${nights} ${d.nights}` : '—' },
-                    { label: d.summaryGuests, value: `${adults} + ${children}` },
-                    { label: d.summaryRoom, value: roomLabel(room) },
+                    { label: d.summaryGuests, value: `${adults} + ${childrenUnder4 + childrenOver4}` },
                     { label: d.summaryContact, value: `${getValues('name') || '—'} · ${getValues('email') || ''}` },
                   ].map((r) => (
                     <div key={r.label} className="flex items-center justify-between gap-4 px-4 py-3">
@@ -380,25 +379,29 @@ export default function BookingWizard() {
       {/* Summary column */}
       <aside className="lg:col-span-2 lg:sticky lg:top-28">
         <div className="bg-foreground/[0.04] border border-foreground/[0.1] rounded-2xl p-6">
-          <h3 className="font-heading text-xl mb-1">{d.summaryTitle}</h3>
-          <p className="text-xs font-sans text-foreground/45 mb-5">{roomLabel(room)}</p>
+          <h3 className="font-heading text-xl mb-5">{d.summaryTitle}</h3>
 
           <div className="space-y-3 text-sm font-sans">
             <div className="flex items-center justify-between">
               <span className="text-foreground/55">{d.summaryStay}</span>
               <span className="text-foreground/85 text-right">{nights > 0 ? `${nights} ${d.nights}` : '—'}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-foreground/55">{d.pricePerNightLabel}</span>
-              <span className="text-foreground/85">{nights > 0 ? fmt(accommodation) : '—'}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-foreground/55">{d.cleaningFee}</span>
-              <span className="text-foreground/85">{nights > 0 ? fmt(cleaning) : fmt(CLEANING_FEE)}</span>
-            </div>
+            {estimate.breakdown.length > 0 && (
+              <div className="space-y-1.5 pt-1">
+                <p className="text-[11px] font-sans uppercase tracking-wider text-foreground/40">{d.breakdownTitle}</p>
+                {estimate.breakdown.map((g) => (
+                  <div key={g.type} className="flex items-center justify-between gap-3 text-xs">
+                    <span className="text-foreground/55">
+                      {g.type === 'weekend' ? d.weekendLabel : d.weekdayLabel} · {g.nights} {g.nights === 1 ? d.nightLabelShort : d.nights} × {fmt(g.ratePerPerson)}/{d.ratePerPersonPerNight} × {g.guestCount}
+                    </span>
+                    <span className="text-foreground/80 shrink-0">{fmt(g.subtotal)}</span>
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="flex items-center justify-between pt-3 mt-1 border-t border-foreground/[0.1]">
               <span className="font-semibold text-foreground">{d.estimatedTotal}</span>
-              <span className="font-heading text-2xl font-semibold text-foreground">{fmt(total)}</span>
+              <span className="font-heading text-2xl font-semibold text-foreground">{fmt(estimate.total)}</span>
             </div>
           </div>
 

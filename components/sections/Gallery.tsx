@@ -136,7 +136,7 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
         >
           <div ref={lightboxImgRef} onClick={(e) => e.stopPropagation()} className="relative max-w-5xl max-h-[85vh] w-full h-full flex items-center justify-center">
             <div className="relative w-full h-full">
-              <Image src={images[lightboxIdx].src.replace(/w=\d+/, 'w=1600')} alt={images[lightboxIdx].alt} fill className="object-contain" sizes="90vw" />
+              <Image src={images[lightboxIdx].src} alt={images[lightboxIdx].alt} fill className="object-contain" sizes="90vw" />
             </div>
           </div>
 
