@@ -69,6 +69,34 @@ export const imageUrl = (name: string) => {
   return `${SUPABASE_URL}/storage/v1/object/public/${SUPABASE_BUCKET}/img%20(${n}).webp`
 }
 
+/** Descriptive content key -> literal Supabase Storage video filename
+ *  (video files keep their own uploaded names, unlike the numbered
+ *  "img (N).webp" convention above).
+ *  Content-prep note for any video that gets SCROLL-SCRUBBED (its
+ *  currentTime is set imperatively on scroll, e.g. PH2 below) rather
+ *  than just autoplay/looped: it must be encoded with a short
+ *  keyframe/GOP interval, or every seek forces the decoder to walk
+ *  forward from a distant keyframe and judders badly - confirmed on
+ *  "Videoweb (2).mp4", which originally had just 2 keyframes in 13.4s
+ *  (one ~10s gap). Validated fix (6.4MB -> 13.7MB, keyframe every
+ *  0.25s / 6 frames @ 24fps, audio stripped since playback is always
+ *  muted):
+ *    ffmpeg -i src.mp4 -an -c:v libx264 -preset medium -crf 20 \
+ *      -g 6 -keyint_min 6 -sc_threshold 0 -bf 0 -pix_fmt yuv420p \
+ *      -movflags +faststart out.mp4
+ *  A plain autoplay/loop video (no scrubbing) doesn't need this - its
+ *  default long-GOP encode is more efficient and plays back fine. */
+const VIDEO_NAMES: Record<string, string> = {
+  'ph2-forest-flythrough': 'Videoweb (2).mp4',
+  'ph1-hero-loop': 'Videoweb (4).mp4',
+}
+
+export const videoUrl = (name: string) => {
+  const filename = VIDEO_NAMES[name]
+  if (!filename) throw new Error(`lib/content.ts: no Supabase video filename mapped for "${name}"`)
+  return `${SUPABASE_URL}/storage/v1/object/public/${SUPABASE_BUCKET}/${encodeURIComponent(filename)}`
+}
+
 export type RoomKey = 'room1' | 'room2'
 
 export const ROOM_MEDIA: Record<RoomKey, { slug: string; hero: string; gallery: string[] }> = {

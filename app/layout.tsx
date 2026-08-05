@@ -18,7 +18,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Vityilló Vendégház',
-  description: 'Luxus vendégház a Gerecse-hegység szívében, Szomódon.',
+  description: 'Luxus vendégház Szomódon, a Szőlősor dűlőben.',
 }
 
 export const viewport: Viewport = {

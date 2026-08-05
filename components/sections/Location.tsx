@@ -1,6 +1,6 @@
 'use client'
 import { useRef, useEffect } from 'react'
-import { MapPin, Mountain, Castle, Building2, Church } from 'lucide-react'
+import { MapPin, Castle, Building2, Church } from 'lucide-react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import gsap from '@/lib/gsap'
@@ -11,7 +11,6 @@ import { href } from '@/lib/nav'
 import type { Locale } from '@/lib/types'
 
 const HIGHLIGHTS = [
-  { key: 'gerecse', icon: Mountain, color: '#c9a84c', dist: null },
   { key: 'tata', icon: Castle, color: '#b8d4a0', dist: '10 km' },
   { key: 'budapest', icon: Building2, color: '#a0c0d8', dist: '60 km' },
   { key: 'esztergom', icon: Church, color: '#d4a8c0', dist: '30 km' },
@@ -76,7 +75,7 @@ export default function Location() {
           <div className="location-fade-left relative">
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/[0.08]">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=18.27%2C47.71%2C18.35%2C47.75&layer=mapnik&marker=47.730%2C18.314"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=18.30%2C47.66%2C18.38%2C47.70&layer=mapnik&marker=47.682%2C18.342"
                 width="100%"
                 height="100%"
                 style={{ border: 'none', filter: 'invert(85%) hue-rotate(165deg) brightness(0.8) contrast(0.9)' }}

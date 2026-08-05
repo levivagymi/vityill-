@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Vityilló Vendégház – Szomód",
-    "description": "Luxus vendégház a Gerecse-hegység szívében, Szomódon. Privát erdő, szauna, medence."
+    "description": "Luxus vendégház Szomódon, a Szőlősor dűlőben. Privát erdő, szauna, medence."
   },
   "nav": {
     "about": "Rólunk",
@@ -28,7 +28,7 @@
     "explore": "Felfedezés"
   },
   "hero": {
-    "eyebrow": "Szomód, Gerecse-hegység",
+    "eyebrow": "Szomód, Magyarország",
     "title": "Vityilló Vendégház",
     "tagline": "Menedék a természetben",
     "subtitle": "Privát erdő, szauna, medence — ahol a luxus találkozik a vadonnal",
@@ -38,11 +38,12 @@
   "about": {
     "label": "A mi történetünk",
     "title": "Ahol az erdő találkozik a kényelemmel",
-    "p1": "A Vityilló Vendégház Szomód festői falujában, a Gerecse-hegység lábánál rejtőzik — ahol a természet csendje és a modern luxus tökéletes harmóniában él. Privát erdővel körülvéve, csendes ligetek és friss levegő övezi ezt a különleges szálláshelyet.",
-    "p2": "Akár romantikus pároknak, akár kisebb csoportoknak keresnek kivételes menedéket, a Vityilló egyedülálló élményt kínál: saját szauna, kültéri medence, bográcsos grill és panorámás kilátás a Gerecse dombjain át.",
+    "p1": "A Vityilló Vendégház Szomód festői falujában, a Szőlősor dűlőben rejtőzik — ahol a természet csendje és a modern luxus tökéletes harmóniában él. Privát erdővel körülvéve, csendes ligetek és friss levegő övezi ezt a különleges szálláshelyet.",
+    "p2": "Akár romantikus pároknak, akár kisebb csoportoknak keresnek kivételes menedéket, a Vityilló egyedülálló élményt kínál: saját szauna, kültéri medence, bográcsos grill és panorámás kilátás a környező dombokra.",
     "badge1": "Privát erdő",
     "badge2": "Max. 6 vendég",
-    "badge3": "Szomód, Gerecse"
+    "badge3": "Szomód",
+    "maxGuestsLabel": "max. vendég"
   },
   "amenities": {
     "label": "Felszereltség",
@@ -105,7 +106,12 @@
     "sizeLabel": "Alapterület",
     "guestsLabel": "Férőhely",
     "bedsLabel": "Ágyak",
-    "priceNote": "Az ár tájékoztató jellegű, két fő részére, éjszakánként.",
+    "priceNote": "Irányár, fő/éj alapon. A végösszeg a létszámtól és a naptól (hétköznap/hétvége) függ.",
+    "perPersonPerNight": "/fő/éj",
+    "houseName": "Teljes vendégház",
+    "houseTagline": "Franciaágyas hálószoba és háromágyas szoba — két szinten",
+    "houseDesc": "A Vityillót mindig egyben foglalja: a felső szinten egy franciaágyas mester hálószoba nappali sarokkal, az alsó szinten egy háromágyas szoba saját fürdővel — összesen akár 6 fő számára.",
+    "upperFloorNote": "3–6 fő esetén a felső szint automatikusan a foglalás része, hogy mindenki kényelmesen elférjen.",
     "room1": {
       "name": "Felső szint",
       "tagline": "Mester hálószoba & nappali",
@@ -164,8 +170,8 @@
     "jacuzzi": {
       "eyebrow": "Vízi élmény",
       "title": "Jacuzzi & Medence",
-      "desc": "Merüljön el a meleg vízben a Gerecse panorámájával.",
-      "detail": "Privát kültéri medence és pezsgőfürdő, körülvéve a Gerecse-hegység festői erdejével. Szabályozható hőmérséklet, teljes privát használat — a víz minden mozdulatára válaszol."
+      "desc": "Merüljön el a meleg vízben, panorámás kilátással a tájra.",
+      "detail": "Privát kültéri medence és pezsgőfürdő, körülvéve festői erdővel. Szabályozható hőmérséklet, teljes privát használat — a víz minden mozdulatára válaszol."
     },
     "sauna": {
       "eyebrow": "Termál élmény",
@@ -194,8 +200,8 @@
     "kilatas": {
       "eyebrow": "Panoráma",
       "title": "Panorámás kilátás",
-      "desc": "Lélegzetelállító panoráma a Gerecse dombjaira.",
-      "detail": "A ház minden nagyobb ablakából és a teraszról lélegzetelállító panoráma nyílik a Gerecse-hegység erdős dombjaira — napkeltétől napnyugtáig. A táj rétegei a görgetésre mélységet kapnak."
+      "desc": "Lélegzetelállító panoráma a környező dombokra.",
+      "detail": "A ház minden nagyobb ablakából és a teraszról lélegzetelállító panoráma nyílik az erdős dombokra — napkeltétől napnyugtáig. A táj rétegei a görgetésre mélységet kapnak."
     },
     "klima": {
       "eyebrow": "Komfort",
@@ -230,7 +236,7 @@
     "label": "Foglalás",
     "title": "Foglalja le szállását",
     "subtitle": "Töltse ki az adatokat és hamarosan felvesszük Önnel a kapcsolatot",
-    "heroSubtitle": "Néhány lépés, és máris foglalt az Ön pihenése a Gerecse szívében.",
+    "heroSubtitle": "Néhány lépés, és máris foglalt az Ön pihenése Szomódon.",
     "name": "Teljes neve",
     "email": "Email cím",
     "phone": "Telefonszám",
@@ -292,6 +298,7 @@
     "summaryGuests": "Vendégek",
     "summaryContact": "Kapcsolattartó",
     "datesError": "A távozás dátuma legyen későbbi az érkezésnél",
+    "minNightsError": "A minimális tartózkodás 2 éjszaka",
     "pastDateError": "A dátum nem lehet a múltban",
     "agree": "Elolvastam és elfogadom az ÁSZF-et és az adatkezelési tájékoztatót.",
     "agreeError": "A folytatáshoz el kell fogadnia a feltételeket",
@@ -318,17 +325,15 @@
   "bookingCta": {
     "label": "Szabad időpontok",
     "title": "Készen áll a feltöltődésre?",
-    "text": "Foglalja le a Vityilló Vendégházat, és élvezze a Gerecse érintetlen nyugalmát privát erdővel, szaunával és medencével.",
+    "text": "Foglalja le a Vityilló Vendégházat, és élvezze Szomód érintetlen nyugalmát privát erdővel, szaunával és medencével.",
     "button": "Foglalás indítása",
     "secondary": "Kapcsolatfelvétel"
   },
   "location": {
     "label": "Helyszín",
     "title": "Hogyan juthat el hozzánk",
-    "address": "Szomód, Komárom-Esztergom megye, Magyarország",
+    "address": "Szomód, Szőlősor dűlő 119, 2896, Magyarország",
     "nearby": "Közelünkben",
-    "gerecse": "Gerecse-hegység",
-    "gerecsedesc": "Túraútvonalak és természetvédelmi terület",
     "tata": "Tata",
     "tatadesc": "10 km — Történelmi vár és Öreg-tó",
     "budapest": "Budapest",
@@ -370,7 +375,7 @@
     "wallSubtitle": "Valódi pillanatok azoktól, akik nálunk töltődtek fel",
     "stories": [
       { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "A szauna és a kültéri medence tökéletes volt. Reggel a madarak énekére ébredtünk — varázslatos." },
-      { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung im Gerecse-Gebirge ist atemberaubend." },
+      { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung in Szomód ist atemberaubend." },
       { "name": "Sarah Johnson", "country": "London, UK", "rating": 5, "quote": "Absolutely stunning retreat. The private forest setting is magical — we didn't want to leave." },
       { "name": "Nagy Balázs & Zsuzsa", "country": "Győr, HU", "rating": 5, "quote": "A bográcsos esti grillezés feledhetetlen élmény volt. Feltétlenül visszatérünk!" },
       { "name": "Markus Schmidt", "country": "München, DE", "rating": 5, "quote": "Luxus und Natur in perfekter Harmonie. Der Ausblick am Morgen ist unbeschreiblich." },
@@ -380,7 +385,7 @@
     ]
   },
   "footer": {
-    "tagline": "Luxus menedék a Gerecse szívében",
+    "tagline": "Luxus menedék Szomód szívében",
     "contact": "Kapcsolat",
     "phone": "+36 30 123 4567",
     "email": "info@vityillo.hu",
@@ -502,7 +507,7 @@
     "hintClose": "bezárás"
   },
   "cinematic": {
-    "srTitle": "Vityilló Vendégház – Luxus vendégház a Gerecse szívében, Szomódon",
+    "srTitle": "Vityilló Vendégház – Luxus vendégház Szomódon",
     "skipTitle": "Egy filmszerű élmény vár rád",
     "skipText": "Görgetéssel irányítod a történetet — vagy átugorhatod.",
     "skipBtn": "Átugrás",
@@ -521,6 +526,16 @@
     "nightLabel": "Éjszakai csend",
     "floors": "2 SZINT",
     "guests": "MAX 6 VENDÉG",
+    "blueprint": {
+      "jacuzziRoof": "JACUZZI TETŐ",
+      "jacuzzi": "JACUZZI",
+      "shower": "ZUHANY",
+      "doubleBed": "FRANCIAÁGY",
+      "kitchen": "KONYHA",
+      "bath": "FÜRDŐ",
+      "stairs": "LÉPCSŐ",
+      "singleBed": "1 SZEMÉLYES ÁGY"
+    },
     "words": [
       "Természet",
       "Wellness",

@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Vityilló Guest House – Szomód",
-    "description": "Luxury guest house in the heart of the Gerecse hills, Szomód. Private forest, sauna, pool."
+    "description": "Luxury guest house in Szomód, Hungary. Private forest, sauna, pool."
   },
   "nav": {
     "about": "About",
@@ -28,7 +28,7 @@
     "explore": "Explore"
   },
   "hero": {
-    "eyebrow": "Szomód, Gerecse Hills",
+    "eyebrow": "Szomód, Hungary",
     "title": "Vityilló Guest House",
     "tagline": "A retreat in nature",
     "subtitle": "Private forest, sauna, pool — where luxury meets the wilderness",
@@ -38,11 +38,12 @@
   "about": {
     "label": "Our Story",
     "title": "Where the forest meets comfort",
-    "p1": "Vityilló Guest House nestles in the picturesque village of Szomód, at the foot of the Gerecse hills — where the silence of nature and modern luxury coexist in perfect harmony. Surrounded by a private forest, serene clearings and fresh air embrace this extraordinary retreat.",
-    "p2": "Whether you seek a romantic escape for two or an exceptional hideaway for a small group, Vityilló offers a unique experience: private sauna, outdoor pool, kettle grill and panoramic views across the Gerecse hills.",
+    "p1": "Vityilló Guest House nestles in the picturesque village of Szomód — where the silence of nature and modern luxury coexist in perfect harmony. Surrounded by a private forest, serene clearings and fresh air embrace this extraordinary retreat.",
+    "p2": "Whether you seek a romantic escape for two or an exceptional hideaway for a small group, Vityilló offers a unique experience: private sauna, outdoor pool, kettle grill and panoramic views across the surrounding hills.",
     "badge1": "Private Forest",
     "badge2": "Max. 6 Guests",
-    "badge3": "Szomód, Gerecse"
+    "badge3": "Szomód",
+    "maxGuestsLabel": "max. guests"
   },
   "amenities": {
     "label": "Amenities",
@@ -105,7 +106,12 @@
     "sizeLabel": "Floor area",
     "guestsLabel": "Capacity",
     "bedsLabel": "Beds",
-    "priceNote": "Indicative price for two guests, per night.",
+    "priceNote": "Indicative rate, per person/night. The final total depends on group size and the day of the week.",
+    "perPersonPerNight": "/person/night",
+    "houseName": "Entire Guest House",
+    "houseTagline": "A double-bed master room and a three-bed room — across two floors",
+    "houseDesc": "Vityilló is always booked as one: a master bedroom with a double bed and a living corner upstairs, and a three-bed room with its own bathroom downstairs — for up to 6 guests in total.",
+    "upperFloorNote": "For groups of 3–6, the upper floor is automatically included in the booking so everyone fits comfortably.",
     "room1": {
       "name": "Upper Floor",
       "tagline": "Master bedroom & living area",
@@ -164,8 +170,8 @@
     "jacuzzi": {
       "eyebrow": "Aquatic experience",
       "title": "Jacuzzi & Pool",
-      "desc": "Sink into warm water with panoramic views of the Gerecse hills.",
-      "detail": "Temperature-controlled private outdoor pool and hot tub, surrounded by the scenic forests of the Gerecse hills. Full private access — the water answers your every move."
+      "desc": "Sink into warm water with panoramic views of the countryside.",
+      "detail": "Temperature-controlled private outdoor pool and hot tub, surrounded by scenic private forest. Full private access — the water answers your every move."
     },
     "sauna": {
       "eyebrow": "Thermal experience",
@@ -194,8 +200,8 @@
     "kilatas": {
       "eyebrow": "Panorama",
       "title": "Panoramic view",
-      "desc": "A breathtaking panorama of the Gerecse hills.",
-      "detail": "Every major window and the terrace open onto a breathtaking panorama of the forested hills of the Gerecse mountains — from sunrise to sunset. The layers of the landscape gain depth as you scroll."
+      "desc": "A breathtaking panorama of the surrounding hills.",
+      "detail": "Every major window and the terrace open onto a breathtaking panorama of forested hills — from sunrise to sunset. The layers of the landscape gain depth as you scroll."
     },
     "klima": {
       "eyebrow": "Comfort",
@@ -230,7 +236,7 @@
     "label": "Booking",
     "title": "Reserve Your Stay",
     "subtitle": "Fill in your details and we will be in touch shortly",
-    "heroSubtitle": "A few steps and your retreat in the heart of the Gerecse is booked.",
+    "heroSubtitle": "A few steps and your retreat in Szomód is booked.",
     "name": "Full Name",
     "email": "Email Address",
     "phone": "Phone Number",
@@ -292,6 +298,7 @@
     "summaryGuests": "Guests",
     "summaryContact": "Contact",
     "datesError": "The check-out date must be after check-in",
+    "minNightsError": "The minimum stay is 2 nights",
     "pastDateError": "The date cannot be in the past",
     "agree": "I have read and accept the Terms & Conditions and the Privacy Policy.",
     "agreeError": "You must accept the terms to continue",
@@ -318,17 +325,15 @@
   "bookingCta": {
     "label": "Availability",
     "title": "Ready to recharge?",
-    "text": "Book Vityilló Guest House and enjoy the untouched calm of the Gerecse with a private forest, sauna and pool.",
+    "text": "Book Vityilló Guest House and enjoy the untouched calm of Szomód with a private forest, sauna and pool.",
     "button": "Start booking",
     "secondary": "Get in touch"
   },
   "location": {
     "label": "Location",
     "title": "How to find us",
-    "address": "Szomód, Komárom-Esztergom County, Hungary",
+    "address": "Szomód, Szőlősor dűlő 119, 2896, Hungary",
     "nearby": "Nearby",
-    "gerecse": "Gerecse Hills",
-    "gerecsedesc": "Hiking trails and nature reserve",
     "tata": "Tata",
     "tatadesc": "10 km — Historic castle & lake",
     "budapest": "Budapest",
@@ -370,7 +375,7 @@
     "wallSubtitle": "Real moments from the people who recharged here",
     "stories": [
       { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "The sauna and outdoor pool were perfect. We woke to birdsong every morning — pure magic." },
-      { "name": "Thomas Müller", "country": "Vienna, AT", "rating": 5, "quote": "A beautiful place to unwind. The Gerecse hills setting is breathtaking." },
+      { "name": "Thomas Müller", "country": "Vienna, AT", "rating": 5, "quote": "A beautiful place to unwind. The Szomód countryside setting is breathtaking." },
       { "name": "Sarah Johnson", "country": "London, UK", "rating": 5, "quote": "Absolutely stunning retreat. The private forest setting is magical — we didn't want to leave." },
       { "name": "Nagy Balázs & Zsuzsa", "country": "Győr, HU", "rating": 5, "quote": "The evening kettle-grill by the fire was unforgettable. We will absolutely be back!" },
       { "name": "Markus Schmidt", "country": "Munich, DE", "rating": 5, "quote": "Luxury and nature in perfect harmony. The morning view over the hills is indescribable." },
@@ -380,7 +385,7 @@
     ]
   },
   "footer": {
-    "tagline": "Luxury retreat in the heart of the Gerecse",
+    "tagline": "Luxury retreat in the heart of Szomód",
     "contact": "Contact",
     "phone": "+36 30 123 4567",
     "email": "info@vityillo.hu",
@@ -502,7 +507,7 @@
     "hintClose": "close"
   },
   "cinematic": {
-    "srTitle": "Vityilló Guesthouse – Luxury guesthouse in the heart of the Gerecse hills, Szomód",
+    "srTitle": "Vityilló Guesthouse – Luxury guesthouse in Szomód, Hungary",
     "skipTitle": "A cinematic experience awaits",
     "skipText": "You drive the story by scrolling — or you can skip it.",
     "skipBtn": "Skip",
@@ -521,6 +526,16 @@
     "nightLabel": "Nocturnal calm",
     "floors": "2 FLOORS",
     "guests": "MAX 6 GUESTS",
+    "blueprint": {
+      "jacuzziRoof": "JACUZZI ROOF",
+      "jacuzzi": "JACUZZI",
+      "shower": "SHOWER",
+      "doubleBed": "DOUBLE BED",
+      "kitchen": "KITCHEN",
+      "bath": "BATHROOM",
+      "stairs": "STAIRS",
+      "singleBed": "SINGLE BED"
+    },
     "words": [
       "Nature",
       "Wellness",

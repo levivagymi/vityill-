@@ -4,7 +4,8 @@ import Image from 'next/image'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { makeSteam, drawSteam, makeEmbers, drawEmbers, rafLoop, type Particle } from '@/lib/canvas-fx'
-import { imageUrl } from '@/lib/content'
+import { imageUrl, videoUrl } from '@/lib/content'
+import HouseBlueprint, { BLUEPRINT_BG } from '@/components/blueprint/HouseBlueprint'
 
 // ── Static data ───────────────────────────────────────────────────────────────
 const HERO_SCATTER = [
@@ -16,29 +17,6 @@ const HERO_SCATTER = [
   { x:  860, y: -340, rotate:  22 },
 ]
 
-
-// Inline SVG floor plan — ground floor + first floor + details
-const BLUEPRINT_PATHS = [
-  'M 80 410 L 720 410 L 720 250 L 80 250 Z',
-  'M 140 250 L 660 250 L 660 110 L 140 110 Z',
-  'M 310 410 L 310 250', 'M 510 410 L 510 250',
-  'M 80 330 L 310 330', 'M 510 330 L 720 330',
-  'M 350 250 L 350 110', 'M 140 185 L 660 185',
-  'M 195 410 L 195 380 L 240 380',
-  'M 415 410 L 415 380 L 455 380',
-  'M 175 250 L 175 215 L 215 215',
-  'M 445 250 L 445 215 L 480 215',
-  'M 110 275 L 195 275', 'M 580 275 L 680 275',
-  'M 110 368 L 198 368', 'M 582 368 L 680 368',
-  'M 168 138 L 258 138', 'M 432 138 L 530 138', 'M 582 138 L 648 138',
-  'M 510 400 L 510 260',
-  'M 510 393 L 540 393', 'M 510 377 L 540 377', 'M 510 361 L 540 361',
-  'M 510 345 L 540 345', 'M 510 329 L 540 329', 'M 510 313 L 540 313',
-  'M 510 297 L 540 297', 'M 510 281 L 540 281', 'M 510 265 L 540 265',
-  'M 80 110 L 400 28 L 720 110',
-  'M 558 110 L 558 52 L 600 52 L 600 110',
-  'M 48 58 L 48 78', 'M 38 68 L 58 68',
-]
 
 const STARS = Array.from({ length: 90 }, (_, i) => ({
   left: `${(i * 13.73 + 3.1) % 100}%`,
@@ -65,10 +43,40 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
   const emberCanvasRef = useRef<HTMLCanvasElement>(null)
   const steamPs        = useRef<Particle[]>([])
   const emberPs        = useRef<Particle[]>([])
+  const ph2VideoRef    = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
+
+    // iOS Safari ignores currentTime seeks on a video that has never started
+    // a play cycle; a muted play->immediate-pause "wakes" the decoder so the
+    // PH2 scroll-scrub tween below actually repaints on later seeks.
+    const ph2Video = ph2VideoRef.current
+    if (ph2Video) {
+      ph2Video.muted = true
+      ph2Video.play().then(() => ph2Video.pause()).catch(() => {})
+    }
+
+    // Judder fix: a <video> seek is async (the decoder has to walk to the
+    // target frame). Writing `currentTime` on every scroll tick queues up
+    // seeks faster than the decoder can finish them, so playback visibly
+    // lags/stutters behind the scroll. Instead we track only the latest
+    // desired position and let a seek finish (the `seeked` event) before
+    // issuing the next one - fast scrolling then skips straight to the
+    // newest frame instead of stepping through every queued-up one.
+    let ph2SeekTarget = 0
+    let ph2Seeking = false
+    const applyPh2Seek = () => {
+      const v = ph2VideoRef.current
+      if (!v || !v.duration || ph2Seeking) return
+      const t = ph2SeekTarget * v.duration
+      if (Math.abs(v.currentTime - t) < 0.008) return
+      ph2Seeking = true
+      v.currentTime = t
+    }
+    const onPh2Seeked = () => { ph2Seeking = false; applyPh2Seek() }
+    ph2Video?.addEventListener('seeked', onPh2Seeked)
 
     const setCinematic = (on: boolean) =>
       on
@@ -111,29 +119,36 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
     }
     const stopEmbers = emberLoop.stop
 
-    // ── Init SVG stroke-dash ─────────────────────────────────────────────────
-    section.querySelectorAll<SVGPathElement>('.ph4-path').forEach(path => {
-      const len = path.getTotalLength()
-      path.style.strokeDasharray  = `${len}`
-      path.style.strokeDashoffset = `${len}`
-    })
+    // Every phase layer above PH1 must start hidden. This runs in BOTH matchMedia
+    // branches: if it only ran in the animated one, a reduced-motion visitor would
+    // get every layer at its default opacity 1 — PH8's opaque collage (z-index 9)
+    // covering the section, plus the two cream singularity dots (z-index 20/21)
+    // parked dead centre.
+    const setInitialStates = () => {
+      gsap.set(['.ph2-layer','.ph3-layer','.ph4-layer','.ph5-layer',
+                '.ph6-layer','.ph7-layer','.ph8-layer'], { opacity: 0 })
+      gsap.set('.ph1-house-img',  { scale: 4, opacity: 0, filter: 'blur(20px)' })
+      gsap.set('.ph1-window',     { opacity: 0 })
+      gsap.set('.ph4-letter',     { y: -120, opacity: 0 })
+      gsap.set('.ph7-star',       { opacity: 0 })
+      gsap.set('.ph6-silhouette', { yPercent: 150 })
+      gsap.set('.ph8-asset',      { opacity: 0 })
+      gsap.set('.ce-dot',  { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 })
+      gsap.set('.ce-flash',{ xPercent: -50, yPercent: -50, scale: 1, opacity: 0 })
+    }
 
     const mm = gsap.matchMedia()
 
     mm.add('(prefers-reduced-motion: no-preference)', () => {
       const ctx = gsap.context(() => {
 
-        // ── Initial states ───────────────────────────────────────────────────
-        gsap.set(['.ph2-layer','.ph3-layer','.ph4-layer','.ph5-layer',
-                  '.ph6-layer','.ph7-layer','.ph8-layer'], { opacity: 0 })
-        gsap.set('.ph1-house-img',  { scale: 4, opacity: 0, filter: 'blur(20px)' })
-        gsap.set('.ph1-window',     { opacity: 0 })
-        gsap.set('.ph4-letter',     { y: -120, opacity: 0 })
-        gsap.set('.ph7-star',       { opacity: 0 })
-        gsap.set('.ph6-silhouette', { yPercent: 150 })
-        gsap.set('.ph8-asset',      { opacity: 0 })
-        gsap.set('.ce-dot',  { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 })
-        gsap.set('.ce-flash',{ xPercent: -50, yPercent: -50, scale: 1, opacity: 0 })
+        setInitialStates()
+
+        // Blueprint draw-in state. Every path carries pathLength="1", so the dash
+        // is unit-normalised and no getTotalLength() measurement is needed. Kept
+        // inside this branch (and expressed as gsap.set, not raw element.style) so
+        // mm.revert() and a live media-query flip both restore it.
+        gsap.set('.ph4-path', { strokeDasharray: 1, strokeDashoffset: 1 })
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -183,12 +198,17 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         // ════════════════════════════════════════════════════════════════════
         tl.to('.ph2-layer', { opacity: 1, duration: 2 }, 9)
 
-        tl.to('.ph2-l1-left',  { x: '-210%', scale: 2.5, duration: 7, ease: 'power1.inOut' }, 10.5)
-        tl.to('.ph2-l1-right', { x:  '210%', scale: 2.5, duration: 7, ease: 'power1.inOut' }, 10.5)
-        tl.fromTo('.ph2-l2', { x: '0%' }, { x: '-62%', duration: 8, ease: 'none' }, 10)
-        tl.fromTo('.ph2-l3', { x: '0%' }, { x:  '52%', duration: 8, ease: 'none' }, 10)
-        tl.fromTo('.ph2-l4', { x: '0%' }, { x: '-18%', duration: 9, ease: 'none' }, 10)
-        tl.fromTo('.ph2-l5', { x: '0%' }, { x:  '13%', duration: 9, ease: 'none' }, 10)
+        // Video scrub proxy: progress 0->1 maps to video.currentTime 0->duration.
+        // Reuses the master timeline's scrub(1.5) for the same lerp/settle behavior
+        // as every other tween here - no separate RAF loop needed.
+        const ph2Scrub = { progress: 0 }
+        tl.fromTo(ph2Scrub, { progress: 0 }, {
+          progress: 1, duration: 9, ease: 'none',
+          onUpdate: () => {
+            ph2SeekTarget = ph2Scrub.progress
+            applyPh2Seek()
+          },
+        }, 10)
         tl.fromTo('.ph2-fog', { x: '-6%' }, { x: '6%', duration: 9, ease: 'sine.inOut' }, 10)
         tl.to('.ph1-house-img', { scale: 1.22, opacity: 0.5, duration: 6, ease: 'power1.inOut' }, 10)
 
@@ -234,12 +254,25 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         // ════════════════════════════════════════════════════════════════════
         tl.to('.ph4-layer', { opacity: 1, duration: 1.5 }, 33)
 
-        section.querySelectorAll<SVGPathElement>('.ph4-path').forEach((path, i) => {
+        // Stagger derived from the actual path count instead of a fixed 0.15, so
+        // the drawing always lands before the title cascades (.ph4-l1 at 39.5,
+        // .ph4-l2 finishing ~42.5) no matter how dense the blueprint gets. The
+        // min() keeps the original cadence for small counts and can only ever err
+        // toward finishing early.
+        const ph4Paths = section.querySelectorAll<SVGPathElement>('.ph4-path')
+        const PH4_DRAW_START = 34.5
+        const PH4_DRAW_END   = 41.4
+        const PH4_MAX_DUR    = 1.4 + 0.28 * 3   // worst case of the i%4 duration ladder
+        const ph4Step = ph4Paths.length > 1
+          ? Math.min(0.15, (PH4_DRAW_END - PH4_MAX_DUR - PH4_DRAW_START) / (ph4Paths.length - 1))
+          : 0
+
+        ph4Paths.forEach((path, i) => {
           tl.to(path, {
             strokeDashoffset: 0,
             duration: 1.4 + (i % 4) * 0.28,
             ease: 'power1.inOut',
-          }, 34.5 + i * 0.15)
+          }, PH4_DRAW_START + i * ph4Step)
         })
 
         tl.to('.ph4-l1 .ph4-letter', {
@@ -253,6 +286,13 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           stagger: { each: 0.055, from: 'start' },
           duration: 0.9, ease: 'elastic.out(1,0.4)',
         }, 41)
+
+        // fromTo, not to: under scrub a bare .to() would record the start value on
+        // first render — 1, since <text> carries no opacity — and animate nothing.
+        tl.fromTo('.ph4-label',
+          { opacity: 0 },
+          { opacity: 1, duration: 1.1, stagger: 0.09, ease: 'power1.out' },
+        41.6)
 
         tl.to('.ph4-svg-wrap', {
           scaleX: 0.01, scaleY: 0.01, opacity: 0,
@@ -387,6 +427,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
 
     // ── Reduced-motion fallback ───────────────────────────────────────────────
     mm.add('(prefers-reduced-motion: reduce)', () => {
+      setInitialStates()
       gsap.set('.ce-hero-echo',                         { opacity: 0 })
       gsap.set('.ph3-layer',                            { opacity: 1 })
       gsap.set('.ph3-jacuzzi,.ph3-sauna',               { x: 0, skewX: 0, rotation: 0, scale: 1, opacity: 1 })
@@ -399,6 +440,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
 
     return () => {
       mm.revert(); ro.disconnect()
+      ph2Video?.removeEventListener('seeked', onPh2Seeked)
       stopSteam(); stopEmbers(); setCinematic(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -426,16 +468,23 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
       <div className="ce-hero-echo absolute inset-0" style={{ zIndex: 1 }}>
         <div className="absolute inset-0 bg-[#0a1a10]" />
         <div className="absolute inset-0 w-full h-[130%] -top-[15%]" style={{ willChange: 'transform' }}>
-          <Image
-            src={imageUrl('house-exterior-day')}
-            alt="" fill priority className="object-cover" sizes="100vw"
+          <video
+            src={videoUrl('ph1-hero-loop')}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A4731]/40 via-transparent to-[#0a1a10]/80" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <div className="ce-hero-el flex items-center gap-3 mb-6" style={{ willChange: 'transform' }}>
             <div className="h-px w-12 bg-[rgba(255,244,204,.35)]" />
-            <span className="font-sans text-[rgba(255,244,204,.7)] text-xs uppercase tracking-[.35em]">Gerecse · Szomód</span>
+            <span className="font-sans text-[rgba(255,244,204,.7)] text-xs uppercase tracking-[.35em]">Szomód · Magyarország</span>
             <div className="h-px w-12 bg-[rgba(255,244,204,.35)]" />
           </div>
           <h2 className="ce-hero-el font-heading text-5xl sm:text-7xl lg:text-8xl text-[#FFF4CC] leading-none tracking-tight mb-3"
@@ -478,34 +527,21 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1a10]/75 via-transparent to-[#0a1a10]/88" />
       </div>
 
-      {/* ── PH2: Forest — 5-layer parallax ─────────────────────────────────── */}
+      {/* ── PH2: Forest — scroll-scrubbed flythrough video ──────────────────── */}
       <div className="ph2-layer absolute inset-0"
-        style={{ zIndex: 3, clipPath: 'polygon(0% 0%,100% 0%,100% 100%,0% 100%)', willChange: 'opacity,clip-path' }}>
+        style={{ zIndex: 3, clipPath: 'polygon(0% 0%,100% 0%,100% 100%,0% 100%)', overflow: 'hidden', willChange: 'opacity,clip-path' }}>
         <div className="absolute inset-0 bg-[#040c07]" />
-        <div className="ph2-l5 absolute inset-0" style={{ willChange: 'transform' }}>
-          <Image src={imageUrl('forest-clearing-alt')}
-            alt="" fill className="object-cover opacity-35" sizes="100vw" />
-        </div>
-        <div className="ph2-l4 absolute inset-0" style={{ willChange: 'transform' }}>
-          <Image src={imageUrl('forest-driveway-fence')}
-            alt="" fill className="object-cover opacity-50" sizes="100vw" />
-        </div>
-        <div className="ph2-l3 absolute" style={{ top: '-8%', left: '-15%', width: '130%', height: '116%', willChange: 'transform' }}>
-          <Image src={imageUrl('forest-path-driveway')}
-            alt="" fill className="object-cover opacity-65" sizes="130vw" />
-        </div>
-        <div className="ph2-l2 absolute" style={{ top: '-5%', left: '-8%', width: '116%', height: '110%', willChange: 'transform' }}>
-          <Image src={imageUrl('forest-path-misty')}
-            alt="" fill className="object-cover" sizes="116vw" />
-        </div>
-        {/* Layer 1: split L/R so they blast to opposite sides */}
-        <div className="ph2-l1-left absolute inset-0" style={{ clipPath: 'inset(0 50% 0 0)', willChange: 'transform' }}>
-          <Image src={imageUrl('forest-clearing-morning')}
-            alt="" fill className="object-cover" sizes="100vw" />
-        </div>
-        <div className="ph2-l1-right absolute inset-0" style={{ clipPath: 'inset(0 0 0 50%)', willChange: 'transform' }}>
-          <Image src={imageUrl('forest-clearing-morning')}
-            alt="" fill className="object-cover" sizes="100vw" />
+        <div className="ph2-video-wrap absolute inset-0 overflow-hidden" style={{ willChange: 'transform' }}>
+          <video
+            ref={ph2VideoRef}
+            src={videoUrl('ph2-forest-flythrough')}
+            muted
+            playsInline
+            preload="auto"
+            disablePictureInPicture
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         </div>
         <div className="ph2-fog absolute inset-0 pointer-events-none" style={{
           willChange: 'transform',
@@ -542,23 +578,13 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
       </div>
 
       {/* ── PH4: Blueprint ──────────────────────────────────────────────────── */}
-      <div className="ph4-layer absolute inset-0" style={{ zIndex: 5, backgroundColor: '#020609', willChange: 'opacity' }}>
-        <div className="ph4-svg-wrap absolute inset-0 flex items-center justify-center" style={{ willChange: 'transform,opacity' }}>
-          <svg viewBox="20 20 760 420" className="w-full max-w-2xl h-auto px-4"
-            style={{ filter: 'drop-shadow(0 0 12px rgba(100,180,255,.38))' }}>
-            {BLUEPRINT_PATHS.map((d, i) => (
-              <path key={i} className="ph4-path" d={d} fill="none"
-                stroke={i < 2 ? 'rgba(120,188,255,.92)' : 'rgba(100,168,255,.65)'}
-                strokeWidth={i < 2 ? 2.5 : 1.5}
-                strokeLinecap="round" strokeLinejoin="round"
-              />
-            ))}
-            <text x="145" y="348" fill="rgba(100,180,255,.42)" fontSize="10" fontFamily="monospace">NAPPALI</text>
-            <text x="335" y="348" fill="rgba(100,180,255,.42)" fontSize="10" fontFamily="monospace">HÁLÓSZOBA</text>
-            <text x="535" y="348" fill="rgba(100,180,255,.42)" fontSize="10" fontFamily="monospace">KONYHA</text>
-            <text x="158" y="218" fill="rgba(100,180,255,.42)" fontSize="10" fontFamily="monospace">FÜRDŐ</text>
-            <text x="398" y="168" fill="rgba(100,180,255,.42)" fontSize="9"  fontFamily="monospace">HÁLÓSZOBA 2</text>
-          </svg>
+      <div className="ph4-layer absolute inset-0" style={{ zIndex: 5, backgroundColor: BLUEPRINT_BG, willChange: 'opacity' }}>
+        {/* Horizontal gutter only. This wrap is absolute inset-0 and the implosion
+            below spins it about 'center center', so any vertical padding would
+            drag the convergence point off the drawing. */}
+        <div className="ph4-svg-wrap absolute inset-0 flex items-center justify-center px-4" style={{ willChange: 'transform,opacity' }}>
+          <HouseBlueprint pathClassName="ph4-path" labelClassName="ph4-label"
+            labels={dict.cinematic.blueprint} />
         </div>
         <div className="ph4-letters-wrap absolute inset-0 flex flex-col items-center justify-end pb-20 gap-4"
           style={{ willChange: 'opacity' }}>

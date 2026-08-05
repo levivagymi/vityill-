@@ -67,7 +67,7 @@ export default async function ContactPage({ params }: Props) {
                 </li>
               </ul>
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=47.730,18.314"
+                href="https://www.google.com/maps/dir/?api=1&destination=47.682,18.342"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground hover:gap-3 transition-all"
@@ -78,7 +78,7 @@ export default async function ContactPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/[0.08]">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=18.27%2C47.71%2C18.35%2C47.75&layer=mapnik&marker=47.730%2C18.314"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=18.30%2C47.66%2C18.38%2C47.70&layer=mapnik&marker=47.682%2C18.342"
                 width="100%"
                 height="100%"
                 style={{ border: 'none', filter: 'invert(85%) hue-rotate(165deg) brightness(0.8) contrast(0.9)' }}

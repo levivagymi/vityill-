@@ -6,6 +6,7 @@ import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { EmblemMark } from '@/components/brand/Logo'
 import { imageUrl } from '@/lib/content'
+import { MAX_GUESTS } from '@/lib/booking'
 
 export default function About() {
   const dict = useDict()
@@ -57,9 +58,9 @@ export default function About() {
               className="about-card absolute -bottom-6 -right-4 lg:-right-8 bg-card/95 backdrop-blur-md border border-foreground/[0.15] rounded-xl p-4 lg:p-5 shadow-xl"
               style={{ opacity: 0 }}
             >
-              <div className="text-3xl lg:text-4xl font-heading font-bold text-foreground leading-none">10</div>
-              <div className="text-xs font-sans text-foreground/50 mt-1 uppercase tracking-wider">max. vendég</div>
-              <div className="text-xs font-sans text-foreground/35 mt-0.5">Szomód, Gerecse</div>
+              <div className="text-3xl lg:text-4xl font-heading font-bold text-foreground leading-none">{MAX_GUESTS}</div>
+              <div className="text-xs font-sans text-foreground/50 mt-1 uppercase tracking-wider">{dict.about.maxGuestsLabel}</div>
+              <div className="text-xs font-sans text-foreground/35 mt-0.5">Szomód</div>
             </div>
             <div className="absolute -top-4 -left-4 w-24 h-px bg-gradient-to-r from-foreground/30 to-transparent" />
             <div className="absolute -top-4 -left-4 w-px h-24 bg-gradient-to-b from-foreground/30 to-transparent" />

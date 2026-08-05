@@ -1,10 +1,14 @@
 import { z } from 'zod'
+import type { Locale } from './types'
 
 /** Set to true when the site is ready to accept real bookings. */
 export const BOOKING_ENABLED = false
 
 /** Whole-house booking; site-wide occupancy cap. */
 export const MAX_GUESTS = 6
+
+/** Shortest bookable stay, in nights. */
+export const MIN_NIGHTS = 2
 
 /** Booking contact must be an adult; oldest accepted birth year is a sanity bound. */
 export const MIN_BIRTH_YEAR = 1900
@@ -45,6 +49,15 @@ export function nightDayType(dateISO: string): DayType {
   const day = new Date(dateISO).getUTCDay() // 0=Sun..6=Sat
   return day === 5 || day === 6 || day === 0 ? 'weekend' : 'weekday'
 }
+
+export const NUMBER_LOCALE: Record<Locale, string> = { hu: 'hu-HU', en: 'en-US', de: 'de-DE' }
+
+export const formatHUF = (amount: number, locale: Locale): string =>
+  `${amount.toLocaleString(NUMBER_LOCALE[locale])} Ft`
+
+/** Indicative "from" rate shown on marketing cards: the 1-2 fő tier for
+ *  today's day-type, per person/night — even a single guest can book. */
+export const fromRatePerPerson = (): number => RATE_TABLE[nightDayType(todayISO())].small
 
 export type StayInput = {
   checkIn: string; checkOut: string
@@ -117,6 +130,10 @@ export const bookingServerSchema = z
   // ISO yyyy-mm-dd strings compare correctly as plain strings.
   .refine((d) => d.checkOut > d.checkIn, {
     message: 'check-out must be after check-in',
+    path: ['checkOut'],
+  })
+  .refine((d) => nightsBetween(d.checkIn, d.checkOut) >= MIN_NIGHTS, {
+    message: `minimum stay is ${MIN_NIGHTS} nights`,
     path: ['checkOut'],
   })
   .refine((d) => d.checkIn >= todayISO(), {

@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Vityilló Gästehaus – Szomód",
-    "description": "Luxus-Gästehaus im Herzen des Gerecse-Gebirges, Szomód. Privatwald, Sauna, Pool."
+    "description": "Luxus-Gästehaus in Szomód, Ungarn. Privatwald, Sauna, Pool."
   },
   "nav": {
     "about": "Über uns",
@@ -28,7 +28,7 @@
     "explore": "Entdecken"
   },
   "hero": {
-    "eyebrow": "Szomód, Gerecse-Gebirge",
+    "eyebrow": "Szomód, Ungarn",
     "title": "Vityilló Gästehaus",
     "tagline": "Ein Rückzugsort in der Natur",
     "subtitle": "Privatwald, Sauna, Pool — wo Luxus auf Wildnis trifft",
@@ -38,11 +38,12 @@
   "about": {
     "label": "Unsere Geschichte",
     "title": "Wo der Wald auf Komfort trifft",
-    "p1": "Das Vityilló Gästehaus liegt im malerischen Dorf Szomód am Fuße des Gerecse-Gebirges — wo die Stille der Natur und moderner Luxus in perfekter Harmonie koexistieren. Umgeben von einem Privatwald, umgibt diese außergewöhnliche Unterkunft die Stille der Lichtungen und die Frische der Luft.",
-    "p2": "Ob Sie eine romantische Auszeit zu zweit oder ein außergewöhnliches Versteck für eine kleine Gruppe suchen — Vityilló bietet ein einzigartiges Erlebnis: private Sauna, Außenpool, Bogrács-Grill und Panoramablick über die Gerecse-Hügel.",
+    "p1": "Das Vityilló Gästehaus liegt im malerischen Dorf Szomód — wo die Stille der Natur und moderner Luxus in perfekter Harmonie koexistieren. Umgeben von einem Privatwald, umgibt diese außergewöhnliche Unterkunft die Stille der Lichtungen und die Frische der Luft.",
+    "p2": "Ob Sie eine romantische Auszeit zu zweit oder ein außergewöhnliches Versteck für eine kleine Gruppe suchen — Vityilló bietet ein einzigartiges Erlebnis: private Sauna, Außenpool, Bogrács-Grill und Panoramablick über die umliegenden Hügel.",
     "badge1": "Privatwald",
     "badge2": "Max. 6 Gäste",
-    "badge3": "Szomód, Gerecse"
+    "badge3": "Szomód",
+    "maxGuestsLabel": "max. Gäste"
   },
   "amenities": {
     "label": "Ausstattung",
@@ -105,7 +106,12 @@
     "sizeLabel": "Wohnfläche",
     "guestsLabel": "Kapazität",
     "bedsLabel": "Betten",
-    "priceNote": "Richtpreis für zwei Gäste, pro Nacht.",
+    "priceNote": "Richtpreis pro Person/Nacht. Der Endpreis hängt von der Gruppengröße und dem Wochentag ab.",
+    "perPersonPerNight": "/Person/Nacht",
+    "houseName": "Gesamtes Gästehaus",
+    "houseTagline": "Ein Doppelbett-Hauptschlafzimmer und ein Dreibettzimmer — auf zwei Etagen",
+    "houseDesc": "Das Vityilló wird immer als Ganzes gebucht: im Obergeschoss ein Hauptschlafzimmer mit Doppelbett und Wohnecke, im Untergeschoss ein Dreibettzimmer mit eigenem Bad — für insgesamt bis zu 6 Gäste.",
+    "upperFloorNote": "Bei 3–6 Gästen ist das Obergeschoss automatisch Teil der Buchung, damit alle bequem Platz finden.",
     "room1": {
       "name": "Obergeschoss",
       "tagline": "Hauptschlafzimmer & Wohnbereich",
@@ -164,8 +170,8 @@
     "jacuzzi": {
       "eyebrow": "Wasser-Erlebnis",
       "title": "Jacuzzi & Pool",
-      "desc": "Tauchen Sie ein in warmes Wasser mit Panoramablick auf die Gerecse-Hügel.",
-      "detail": "Temperaturgesteuerter privater Außenpool und Whirlpool, umgeben von den Wäldern der Gerecse-Hügel. Volle Privatnutzung — das Wasser antwortet auf jede Ihrer Bewegungen."
+      "desc": "Tauchen Sie ein in warmes Wasser mit Panoramablick auf die umliegende Landschaft.",
+      "detail": "Temperaturgesteuerter privater Außenpool und Whirlpool, umgeben von malerischem Privatwald. Volle Privatnutzung — das Wasser antwortet auf jede Ihrer Bewegungen."
     },
     "sauna": {
       "eyebrow": "Thermal-Erlebnis",
@@ -194,8 +200,8 @@
     "kilatas": {
       "eyebrow": "Panorama",
       "title": "Panoramablick",
-      "desc": "Ein atemberaubendes Panorama auf die Gerecse-Hügel.",
-      "detail": "Von jedem größeren Fenster und der Terrasse aus öffnet sich ein atemberaubendes Panorama auf die bewaldeten Hügel des Gerecse-Gebirges — vom Sonnenaufgang bis zum Sonnenuntergang. Die Ebenen der Landschaft gewinnen beim Scrollen an Tiefe."
+      "desc": "Ein atemberaubendes Panorama auf die umliegenden Hügel.",
+      "detail": "Von jedem größeren Fenster und der Terrasse aus öffnet sich ein atemberaubendes Panorama auf die bewaldeten Hügel — vom Sonnenaufgang bis zum Sonnenuntergang. Die Ebenen der Landschaft gewinnen beim Scrollen an Tiefe."
     },
     "klima": {
       "eyebrow": "Komfort",
@@ -230,7 +236,7 @@
     "label": "Buchung",
     "title": "Reservieren Sie Ihren Aufenthalt",
     "subtitle": "Füllen Sie das Formular aus und wir melden uns kurzfristig bei Ihnen",
-    "heroSubtitle": "Wenige Schritte und Ihr Rückzugsort im Herzen des Gerecse ist gebucht.",
+    "heroSubtitle": "Wenige Schritte und Ihr Rückzugsort in Szomód ist gebucht.",
     "name": "Vollständiger Name",
     "email": "E-Mail-Adresse",
     "phone": "Telefonnummer",
@@ -292,6 +298,7 @@
     "summaryGuests": "Gäste",
     "summaryContact": "Kontakt",
     "datesError": "Das Abreisedatum muss nach der Anreise liegen",
+    "minNightsError": "Der Mindestaufenthalt beträgt 2 Nächte",
     "pastDateError": "Das Datum darf nicht in der Vergangenheit liegen",
     "agree": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
     "agreeError": "Sie müssen die Bedingungen akzeptieren, um fortzufahren",
@@ -318,17 +325,15 @@
   "bookingCta": {
     "label": "Verfügbarkeit",
     "title": "Bereit zum Auftanken?",
-    "text": "Buchen Sie das Vityilló Gästehaus und genießen Sie die unberührte Ruhe des Gerecse mit Privatwald, Sauna und Pool.",
+    "text": "Buchen Sie das Vityilló Gästehaus und genießen Sie die unberührte Ruhe von Szomód mit Privatwald, Sauna und Pool.",
     "button": "Buchung starten",
     "secondary": "Kontakt aufnehmen"
   },
   "location": {
     "label": "Lage",
     "title": "So finden Sie uns",
-    "address": "Szomód, Komitat Komárom-Esztergom, Ungarn",
+    "address": "Szomód, Szőlősor dűlő 119, 2896, Ungarn",
     "nearby": "In der Nähe",
-    "gerecse": "Gerecse-Gebirge",
-    "gerecsedesc": "Wanderwege und Naturschutzgebiet",
     "tata": "Tata",
     "tatadesc": "10 km — Historische Burg & See",
     "budapest": "Budapest",
@@ -370,7 +375,7 @@
     "wallSubtitle": "Echte Momente von Menschen, die hier aufgetankt haben",
     "stories": [
       { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "Sauna und Außenpool waren perfekt. Jeden Morgen weckte uns Vogelgesang — pure Magie." },
-      { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung im Gerecse-Gebirge ist atemberaubend." },
+      { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung in Szomód ist atemberaubend." },
       { "name": "Sarah Johnson", "country": "London, UK", "rating": 5, "quote": "Ein traumhafter Rückzugsort. Der private Wald ist magisch — wir wollten gar nicht abreisen." },
       { "name": "Nagy Balázs & Zsuzsa", "country": "Győr, HU", "rating": 5, "quote": "Der abendliche Kesselgrill am Feuer war unvergesslich. Wir kommen auf jeden Fall wieder!" },
       { "name": "Markus Schmidt", "country": "München, DE", "rating": 5, "quote": "Luxus und Natur in perfekter Harmonie. Der Ausblick am Morgen ist unbeschreiblich schön." },
@@ -380,7 +385,7 @@
     ]
   },
   "footer": {
-    "tagline": "Luxus-Rückzugsort im Herzen des Gerecse",
+    "tagline": "Luxus-Rückzugsort im Herzen von Szomód",
     "contact": "Kontakt",
     "phone": "+36 30 123 4567",
     "email": "info@vityillo.hu",
@@ -502,7 +507,7 @@
     "hintClose": "schließen"
   },
   "cinematic": {
-    "srTitle": "Vityilló Gästehaus – Luxus-Gästehaus im Herzen des Gerecse-Gebirges, Szomód",
+    "srTitle": "Vityilló Gästehaus – Luxus-Gästehaus in Szomód, Ungarn",
     "skipTitle": "Ein filmisches Erlebnis erwartet dich",
     "skipText": "Du steuerst die Geschichte durch Scrollen — oder überspringst sie.",
     "skipBtn": "Überspringen",
@@ -521,6 +526,16 @@
     "nightLabel": "Nächtliche Stille",
     "floors": "2 ETAGEN",
     "guests": "MAX 6 GÄSTE",
+    "blueprint": {
+      "jacuzziRoof": "JACUZZI-DACH",
+      "jacuzzi": "JACUZZI",
+      "shower": "DUSCHE",
+      "doubleBed": "DOPPELBETT",
+      "kitchen": "KÜCHE",
+      "bath": "BAD",
+      "stairs": "TREPPE",
+      "singleBed": "EINZELBETT"
+    },
     "words": [
       "Natur",
       "Wellness",

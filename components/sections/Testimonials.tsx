@@ -18,7 +18,7 @@ const REVIEWS = [
   {
     name: 'Thomas Müller',
     location: 'Wien, AT',
-    text: 'Ein wunderschöner Ort zum Entspannen. Die Sauna und der Pool waren fantastisch, und die Umgebung im Gerecse-Gebirge ist atemberaubend schön.',
+    text: 'Ein wunderschöner Ort zum Entspannen. Die Sauna und der Pool waren fantastisch, und die Umgebung in Szomód ist atemberaubend schön.',
     rating: 5,
     flag: '🇦🇹',
   },
@@ -39,7 +39,7 @@ const REVIEWS = [
   {
     name: 'Markus Schmidt',
     location: 'München, DE',
-    text: 'Luxus und Natur in perfekter Harmonie. Der Ausblick am Morgen über die Gerecse-Hügel ist unbeschreiblich schön. Absolute Empfehlung!',
+    text: 'Luxus und Natur in perfekter Harmonie. Der Ausblick am Morgen über die Hügel ist unbeschreiblich schön. Absolute Empfehlung!',
     rating: 5,
     flag: '🇩🇪',
   },

@@ -3,92 +3,79 @@ import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { BedDouble, BedSingle, Bath, Sofa, TreePine, DoorOpen, ArrowRight } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { ROOM_MEDIA, type RoomKey } from '@/lib/content'
+import { ROOM_MEDIA } from '@/lib/content'
 import { href, roomHref } from '@/lib/nav'
 import { setPendingFlip } from '@/lib/flip-transition'
+import { fromRatePerPerson, formatHUF } from '@/lib/booking'
 import type { Locale } from '@/lib/types'
 
-/** Icons correspond positionally to dict.rooms.<room>.badges — the badge
- *  order is identical across locales, so no per-language mapping is needed. */
-const BADGE_ICONS: Record<RoomKey, React.ElementType[]> = {
-  room1: [BedDouble, Bath, Sofa, TreePine],
-  room2: [BedSingle, Bath, DoorOpen],
-}
-
-function RoomCard({
-  roomKey, lang, dict, reversed,
-}: {
-  roomKey: RoomKey; lang: Locale; dict: ReturnType<typeof useDict>; reversed?: boolean
-}) {
-  const r = dict.rooms[roomKey]
-  const media = ROOM_MEDIA[roomKey]
-  const detailHref = roomHref(lang, media.slug as 'felso-szint' | 'also-szint')
+/** The house is always booked as a single unit (never per floor) — one card,
+ *  one price, one booking CTA. The floor links below just jump to photos. */
+function HouseCard({ lang, dict }: { lang: Locale; dict: ReturnType<typeof useDict> }) {
+  const price = fromRatePerPerson()
+  const upperHref = roomHref(lang, 'felso-szint')
+  const lowerHref = roomHref(lang, 'also-szint')
 
   return (
     <div className="room-card grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-foreground/[0.08] bg-foreground/[0.03]" style={{ opacity: 0 }}>
       <Link
-        href={detailHref}
+        href={upperHref}
         data-cursor="view"
-        onClick={(e) => setPendingFlip(e.currentTarget, media.hero)}
-        className={`relative aspect-[4/3] lg:aspect-auto lg:min-h-[440px] overflow-hidden group ${reversed ? 'lg:order-2' : ''}`}
+        onClick={(e) => setPendingFlip(e.currentTarget, ROOM_MEDIA.room1.hero)}
+        className="relative aspect-[4/3] lg:aspect-auto lg:min-h-[440px] overflow-hidden group"
       >
         <div className="w-full h-full transition-transform duration-700 group-hover:scale-[1.04]">
-          <Image src={media.hero} alt={r.tagline} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+          <Image src={ROOM_MEDIA.room1.hero} alt={dict.rooms.houseTagline} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
         </div>
         <div className="absolute top-4 left-4 bg-background/85 backdrop-blur border border-foreground/15 rounded-xl px-4 py-2">
           <div className="flex items-baseline gap-1">
-            <span className="text-foreground font-heading text-2xl font-semibold">{r.price}€</span>
-            <span className="text-foreground/45 text-xs font-sans">{dict.rooms.perNight}</span>
+            <span className="text-foreground font-heading text-2xl font-semibold">{formatHUF(price, lang)}</span>
+            <span className="text-foreground/45 text-xs font-sans">{dict.rooms.perPersonPerNight}</span>
           </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
       </Link>
 
-      <div className={`flex flex-col p-8 lg:p-10 ${reversed ? 'lg:order-1' : ''}`}>
+      <div className="flex flex-col p-8 lg:p-10">
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px w-8 bg-foreground/30" />
-          <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.25em]">{r.name}</span>
+          <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.25em]">{dict.rooms.houseName}</span>
         </div>
-        <h3 className="font-heading text-2xl sm:text-3xl mb-3 leading-tight">{r.tagline}</h3>
-        <p className="font-sans text-sm leading-relaxed mb-6 flex-1 text-foreground/55">{r.desc}</p>
-        <div className="flex flex-wrap items-center gap-4 mb-5 text-sm font-sans text-foreground/65">
-          <span className="flex items-center gap-1.5"><BedDouble size={15} className="text-foreground/55" /> {r.beds}</span>
-          <span className="text-foreground/30">·</span>
-          <span>{r.size}</span>
-          <span className="text-foreground/30">·</span>
-          <span>{r.guests}</span>
-        </div>
-        <div className="flex flex-wrap gap-2 mb-8">
-          {r.badges.map((badge, i) => {
-            const Icon = BADGE_ICONS[roomKey][i]
-            return (
-              <span key={badge} className="flex items-center gap-1.5 text-xs font-sans text-foreground/60 bg-foreground/[0.04] border border-foreground/[0.08] rounded-full px-3 py-1.5">
-                {Icon && <Icon size={11} className="text-foreground/55" />}
-                {badge}
-              </span>
-            )
-          })}
-        </div>
-        <div className="flex flex-col sm:flex-row gap-3">
+        <h3 className="font-heading text-2xl sm:text-3xl mb-3 leading-tight">{dict.rooms.houseTagline}</h3>
+        <p className="font-sans text-sm leading-relaxed mb-4 text-foreground/55">{dict.rooms.houseDesc}</p>
+        <p className="text-xs font-sans text-foreground/45 leading-relaxed flex items-start gap-2 mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-foreground/50 mt-1.5 shrink-0" />
+          {dict.rooms.upperFloorNote}
+        </p>
+        <div className="flex flex-wrap items-center gap-3 mb-8 text-sm font-sans">
           <Link
-            href={detailHref}
-            className="flex-1 inline-flex items-center justify-center gap-2 border border-foreground/25 hover:border-foreground/60 text-foreground/80 hover:text-foreground font-sans font-semibold text-sm py-3.5 rounded-xl transition-all duration-300 cursor-pointer"
+            href={upperHref}
+            onClick={(e) => setPendingFlip(e.currentTarget, ROOM_MEDIA.room1.hero)}
+            className="text-foreground/65 hover:text-foreground underline underline-offset-2 transition-colors"
             data-cursor="view"
           >
-            {dict.rooms.viewDetails} <ArrowRight size={15} />
+            {dict.rooms.room1.name}
           </Link>
+          <span className="text-foreground/30">·</span>
           <Link
-            href={href(lang, 'booking')}
-            className="flex-1 inline-flex items-center justify-center bg-foreground hover:bg-foreground/90 text-background font-sans font-semibold text-sm py-3.5 rounded-xl transition-all duration-300 hover:scale-[1.01] cursor-pointer"
+            href={lowerHref}
+            onClick={(e) => setPendingFlip(e.currentTarget, ROOM_MEDIA.room2.hero)}
+            className="text-foreground/65 hover:text-foreground underline underline-offset-2 transition-colors"
             data-cursor="view"
           >
-            {dict.rooms.book}
+            {dict.rooms.room2.name}
           </Link>
         </div>
+        <Link
+          href={href(lang, 'booking')}
+          className="inline-flex items-center justify-center bg-foreground hover:bg-foreground/90 text-background font-sans font-semibold text-sm py-3.5 rounded-xl transition-all duration-300 hover:scale-[1.01] cursor-pointer"
+          data-cursor="view"
+        >
+          {dict.rooms.book}
+        </Link>
       </div>
     </div>
   )
@@ -128,8 +115,7 @@ export default function Rooms({ withHeading = true }: { withHeading?: boolean })
         )}
 
         <div className="flex flex-col gap-6 lg:gap-8">
-          <RoomCard roomKey="room1" lang={lang} dict={dict} />
-          <RoomCard roomKey="room2" lang={lang} dict={dict} reversed />
+          <HouseCard lang={lang} dict={dict} />
         </div>
       </div>
     </section>

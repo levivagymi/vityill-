@@ -13,9 +13,9 @@ import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { href } from '@/lib/nav'
 import {
-  BOOKING_ENABLED, COUNTRIES, MAX_GUESTS,
+  BOOKING_ENABLED, COUNTRIES, MAX_GUESTS, MIN_NIGHTS,
   MIN_BIRTH_YEAR, MAX_BIRTH_YEAR, todayISO,
-  nightsBetween, calculateStayPrice,
+  nightsBetween, calculateStayPrice, formatHUF,
 } from '@/lib/booking'
 import type { Locale } from '@/lib/types'
 
@@ -28,8 +28,6 @@ type FormData = {
   channel: 'direct' | 'airbnb' | 'booking' | 'facebook' | 'other'
   requests?: string; agree: true
 }
-
-const NUMBER_LOCALE: Record<Locale, string> = { hu: 'hu-HU', en: 'en-US', de: 'de-DE' }
 
 const inputClass =
   'w-full bg-foreground/[0.04] border border-foreground/[0.10] text-foreground placeholder-foreground/25 rounded-xl px-4 py-3 font-sans text-sm focus:outline-none focus:border-foreground/40 focus:ring-2 focus:ring-foreground/10 focus:bg-foreground/[0.06] transition-all duration-200'
@@ -81,7 +79,14 @@ export default function BookingWizard() {
       requests: z.string().optional(),
       agree: z.literal(true, { error: d.agreeError }),
     })
-    .refine((v) => nightsBetween(v.checkIn, v.checkOut) > 0, { message: d.datesError, path: ['checkOut'] })
+    .superRefine((v, ctx) => {
+      const n = nightsBetween(v.checkIn, v.checkOut)
+      if (n <= 0) {
+        ctx.addIssue({ code: 'custom', message: d.datesError, path: ['checkOut'] })
+      } else if (n < MIN_NIGHTS) {
+        ctx.addIssue({ code: 'custom', message: d.minNightsError, path: ['checkOut'] })
+      }
+    })
     .refine((v) => v.adults + v.childrenUnder4 + v.childrenOver4 <= MAX_GUESTS, { message: d.tooManyGuests, path: ['adults'] })
 
   const {
@@ -100,6 +105,9 @@ export default function BookingWizard() {
   const childrenOver4 = watch('childrenOver4') ?? 0
   const nights = nightsBetween(checkIn, checkOut)
   const estimate = calculateStayPrice({ checkIn, checkOut, adults, childrenUnder4, childrenOver4 })
+  const minCheckOut = checkIn
+    ? new Date(new Date(checkIn).getTime() + MIN_NIGHTS * 86_400_000).toISOString().slice(0, 10)
+    : todayISO()
 
   useEffect(() => {
     if (panelRef.current) {
@@ -117,6 +125,10 @@ export default function BookingWizard() {
     const ok = await trigger(steps[step].fields as never)
     if (step === 0 && nights <= 0) {
       setError('checkOut', { message: d.datesError })
+      return
+    }
+    if (step === 0 && nights > 0 && nights < MIN_NIGHTS) {
+      setError('checkOut', { message: d.minNightsError })
       return
     }
     // Cross-field refine errors aren't reliably surfaced by trigger() when
@@ -149,7 +161,7 @@ export default function BookingWizard() {
     }
   }
 
-  const fmt = (n: number) => `${n.toLocaleString(NUMBER_LOCALE[lang])} Ft`
+  const fmt = (n: number) => formatHUF(n, lang)
 
   if (status === 'success') {
     return (
@@ -209,7 +221,7 @@ export default function BookingWizard() {
                     <input {...register('checkIn')} type="date" min={todayISO()} className={inputClass} />
                   </Field>
                   <Field label={d.checkOut} error={errors.checkOut?.message}>
-                    <input {...register('checkOut')} type="date" min={checkIn || todayISO()} className={inputClass} />
+                    <input {...register('checkOut')} type="date" min={minCheckOut} className={inputClass} />
                   </Field>
                 </div>
                 <div className="grid sm:grid-cols-3 gap-4">

@@ -10,6 +10,7 @@ import BookingCta from '@/components/sections/BookingCta'
 import SharedElementFlip from '@/components/engine/SharedElementFlip'
 import { ROOM_MEDIA } from '@/lib/content'
 import { href, roomHref, ROOM_SLUGS, ROOM_KEY_BY_SLUG, type RoomSlug } from '@/lib/nav'
+import { fromRatePerPerson, formatHUF } from '@/lib/booking'
 
 type Props = { params: Promise<{ lang: string; room: string }> }
 
@@ -97,8 +98,10 @@ export default async function RoomDetailPage({ params }: Props) {
           <aside className="lg:sticky lg:top-28">
             <div className="bg-foreground/[0.04] border border-foreground/[0.1] rounded-2xl p-6">
               <div className="flex items-baseline gap-1.5 mb-1">
-                <span className="font-heading text-4xl font-semibold text-foreground">{r.price}€</span>
-                <span className="text-foreground/45 text-sm font-sans">{dict.rooms.perNight}</span>
+                <span className="font-heading text-4xl font-semibold text-foreground">
+                  {formatHUF(fromRatePerPerson(), lang)}
+                </span>
+                <span className="text-foreground/45 text-sm font-sans">{dict.rooms.perPersonPerNight}</span>
               </div>
               <p className="text-xs font-sans text-foreground/40 mb-6">{dict.rooms.priceNote}</p>
 
