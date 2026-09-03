@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Quote, Star } from 'lucide-react'
-import gsap from '@/lib/gsap'
+import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { STORY_IMAGES } from '@/lib/content'
@@ -11,7 +11,7 @@ import type { Dictionary } from '@/lib/types'
 import { useTrustindexReviews } from '@/lib/trustindex'
 
 type Story = Dictionary['testimonials']['stories'][number] & { image: string }
-const MIN_LIVE_REVIEWS = 3
+const MIN_LIVE_REVIEWS = 6
 
 function Stars({ count }: { count: number }) {
   return (
@@ -80,10 +80,10 @@ export default function GuestStories() {
   const useLive = trustindexStatus === 'ready' && liveReviews.length >= MIN_LIVE_REVIEWS
 
   const stories: Story[] = useLive
-    ? liveReviews.map((r, i) => ({
+    ? liveReviews.slice(0, 12).map((r, i) => ({
         name: r.name,
         country: r.platform,
-        rating: Math.round(r.rating),
+        rating: Math.min(5, Math.max(0, Math.round((r.rating / (r.maxRating || 5)) * 5))),
         quote: r.text,
         image: STORY_IMAGES[i % STORY_IMAGES.length],
       }))
@@ -130,14 +130,22 @@ export default function GuestStories() {
   }, [marquee])
 
   useEffect(() => {
-    if (useLive && !wasLiveRef.current && allowAmbientMotion() && storiesWrapRef.current) {
+    if (!useLive || wasLiveRef.current || !allowAmbientMotion() || !storiesWrapRef.current) {
+      wasLiveRef.current = useLive
+      return
+    }
+    const ctx = gsap.context(() => {
       gsap.fromTo(
         storiesWrapRef.current,
         { opacity: 0 },
         { opacity: 1, duration: 0.6, ease: 'power2.out' },
       )
-    }
+    }, sectionRef)
+    // Live quotes replace curated ones and can be a different length, changing
+    // section height — pinned/scrubbed triggers further down the page must re-measure.
+    ScrollTrigger.refresh()
     wasLiveRef.current = useLive
+    return () => ctx.revert()
   }, [useLive])
 
   return (
@@ -175,8 +183,8 @@ export default function GuestStories() {
           </div>
         ) : (
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center gap-5">
-            {stories.slice(0, 6).map((s) => (
-              <StoryCard key={s.name} story={s} />
+            {stories.slice(0, 6).map((s, i) => (
+              <StoryCard key={`${s.name}-${i}`} story={s} />
             ))}
           </div>
         )}
