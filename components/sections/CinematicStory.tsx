@@ -24,6 +24,13 @@ const STARS = Array.from({ length: 90 }, (_, i) => ({
   size:  1 + (i % 3),
 }))
 
+// Everything except the Phase 1 hero backdrop (`.ce-hero-echo`, which holds the
+// looping background video) gets hidden once the visitor scrolls past the end
+// of the sequence. Kept as a flat selector list, not a per-phase loop, since
+// hiding is a single blunt cutover rather than a staged animation.
+const POST_SEQUENCE_HIDE_SELECTOR =
+  '.ph1-house-img, .ph2-layer, .ph3-layer, .ph4-layer, .ph5-layer, .ph6-layer, .ph7-layer, .ph8-layer, .ce-dot, .ce-flash'
+
 const PH8_IMGS = [
   { src: imageUrl('house-exterior-day'),        top: '8%',  left: '7%',  w: 128 },
   { src: imageUrl('wellness-fireplace-corner'), top: '7%',  left: '74%', w: 112 },
@@ -150,6 +157,14 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         // mm.revert() and a live media-query flip both restore it.
         gsap.set('.ph4-path', { strokeDasharray: 1, strokeDashoffset: 1 })
 
+        // display:none (not React-unmounting) so the DOM nodes the tweens below
+        // already reference stay alive - removing them from React's tree would
+        // orphan those tween references and permanently break reverse-scrubbing
+        // (onEnterBack) if the visitor scrolls back up after finishing.
+        const postSequenceEls = gsap.utils.toArray<HTMLElement>(POST_SEQUENCE_HIDE_SELECTOR, section)
+        const hideSequenceLayers = () => gsap.set(postSequenceEls, { display: 'none' })
+        const showSequenceLayers = () => gsap.set(postSequenceEls, { display: '' })
+
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
@@ -163,8 +178,9 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
             // At progress=0 (page load, before any scroll) the cursor stays visible so the
             // cookie banner and cinematic-prompt card are still navigable.
             onUpdate: (self) => setCinematic(self.progress > 0.002),
-            onLeave:     () => { setCinematic(false); onFinish?.() },
+            onLeave:     () => { setCinematic(false); hideSequenceLayers(); onFinish?.() },
             onLeaveBack: () => setCinematic(false),
+            onEnterBack: () => showSequenceLayers(),
           },
         })
 
