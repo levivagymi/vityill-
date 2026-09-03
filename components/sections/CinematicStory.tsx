@@ -165,6 +165,16 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         const hideSequenceLayers = () => gsap.set(postSequenceEls, { display: 'none' })
         const showSequenceLayers = () => gsap.set(postSequenceEls, { display: '' })
 
+        // The hero itself fades/scatters away by tl-position 7 of ~90, same as every
+        // other phase - hiding only the layers above it would just expose the empty
+        // section background, not the video. clearProps drops the tweens' inline
+        // transform/opacity so the hero (and its looping video) reappear exactly as
+        // they looked before any scrolling. Scrubbing back up overwrites this again
+        // on the next tick, since the same tweens keep writing those props once
+        // progress moves off 1 - no separate re-hide call is needed for it.
+        const heroEls = gsap.utils.toArray<HTMLElement>('.ce-hero-echo, .ce-hero-el', section)
+        const restoreHero = () => gsap.set(heroEls, { clearProps: 'all' })
+
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
@@ -178,7 +188,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
             // At progress=0 (page load, before any scroll) the cursor stays visible so the
             // cookie banner and cinematic-prompt card are still navigable.
             onUpdate: (self) => setCinematic(self.progress > 0.002),
-            onLeave:     () => { setCinematic(false); hideSequenceLayers(); onFinish?.() },
+            onLeave:     () => { setCinematic(false); hideSequenceLayers(); restoreHero(); onFinish?.() },
             onLeaveBack: () => setCinematic(false),
             onEnterBack: () => showSequenceLayers(),
           },
