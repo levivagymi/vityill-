@@ -8,8 +8,10 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import { STORY_IMAGES } from '@/lib/content'
 import { allowAmbientMotion } from '@/lib/utils'
 import type { Dictionary } from '@/lib/types'
+import { useTrustindexReviews } from '@/lib/trustindex'
 
 type Story = Dictionary['testimonials']['stories'][number] & { image: string }
+const MIN_LIVE_REVIEWS = 3
 
 function Stars({ count }: { count: number }) {
   return (
@@ -70,12 +72,25 @@ export default function GuestStories() {
   const sectionRef = useRef<HTMLElement>(null)
   const rowARef = useRef<HTMLDivElement>(null)
   const rowBRef = useRef<HTMLDivElement>(null)
+  const storiesWrapRef = useRef<HTMLDivElement>(null)
+  const wasLiveRef = useRef(false)
   const [marquee, setMarquee] = useState<boolean | null>(null)
 
-  const stories: Story[] = dict.testimonials.stories.map((s, i) => ({
-    ...s,
-    image: STORY_IMAGES[i % STORY_IMAGES.length],
-  }))
+  const { status: trustindexStatus, reviews: liveReviews } = useTrustindexReviews()
+  const useLive = trustindexStatus === 'ready' && liveReviews.length >= MIN_LIVE_REVIEWS
+
+  const stories: Story[] = useLive
+    ? liveReviews.map((r, i) => ({
+        name: r.name,
+        country: r.platform,
+        rating: Math.round(r.rating),
+        quote: r.text,
+        image: STORY_IMAGES[i % STORY_IMAGES.length],
+      }))
+    : dict.testimonials.stories.map((s, i) => ({
+        ...s,
+        image: STORY_IMAGES[i % STORY_IMAGES.length],
+      }))
   const rowA = stories.filter((_, i) => i % 2 === 0)
   const rowB = stories.filter((_, i) => i % 2 === 1)
 
@@ -114,6 +129,17 @@ export default function GuestStories() {
     return () => ctx.revert()
   }, [marquee])
 
+  useEffect(() => {
+    if (useLive && !wasLiveRef.current && allowAmbientMotion() && storiesWrapRef.current) {
+      gsap.fromTo(
+        storiesWrapRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: 'power2.out' },
+      )
+    }
+    wasLiveRef.current = useLive
+  }, [useLive])
+
   return (
     <section id="testimonials" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
       <div
@@ -129,30 +155,32 @@ export default function GuestStories() {
         />
       </div>
 
-      {marquee ? (
-        <div className="relative flex flex-col gap-5" role="region" aria-label={dict.testimonials.wallTitle}>
-          <div className="overflow-hidden" style={{ maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)' }}>
-            <div ref={rowARef} className="flex w-max gap-5" style={{ willChange: 'transform' }}>
-              {[...rowA, ...rowA].map((s, i) => (
-                <StoryCard key={`${s.name}-${i}`} story={s} />
-              ))}
+      <div ref={storiesWrapRef}>
+        {marquee ? (
+          <div className="relative flex flex-col gap-5" role="region" aria-label={dict.testimonials.wallTitle}>
+            <div className="overflow-hidden" style={{ maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)' }}>
+              <div ref={rowARef} className="flex w-max gap-5" style={{ willChange: 'transform' }}>
+                {[...rowA, ...rowA].map((s, i) => (
+                  <StoryCard key={`${s.name}-${i}`} story={s} />
+                ))}
+              </div>
+            </div>
+            <div className="overflow-hidden" style={{ maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)' }}>
+              <div ref={rowBRef} className="flex w-max gap-5" style={{ willChange: 'transform' }}>
+                {[...rowB, ...rowB].map((s, i) => (
+                  <StoryCard key={`${s.name}-${i}`} story={s} />
+                ))}
+              </div>
             </div>
           </div>
-          <div className="overflow-hidden" style={{ maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)' }}>
-            <div ref={rowBRef} className="flex w-max gap-5" style={{ willChange: 'transform' }}>
-              {[...rowB, ...rowB].map((s, i) => (
-                <StoryCard key={`${s.name}-${i}`} story={s} />
-              ))}
-            </div>
+        ) : (
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center gap-5">
+            {stories.slice(0, 6).map((s) => (
+              <StoryCard key={s.name} story={s} />
+            ))}
           </div>
-        </div>
-      ) : (
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center gap-5">
-          {stories.slice(0, 6).map((s) => (
-            <StoryCard key={s.name} story={s} />
-          ))}
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center gap-8 mt-14 pt-8 border-t border-foreground/[0.08]">
