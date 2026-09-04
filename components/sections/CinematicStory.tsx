@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useEffect } from 'react'
+import { useRef, useLayoutEffect } from 'react'
 import Image from 'next/image'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
@@ -57,7 +57,14 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
   const emberPs        = useRef<Particle[]>([])
   const ph2VideoRef    = useRef<HTMLVideoElement>(null)
 
-  useEffect(() => {
+  // Layout, not passive: on unmount this effect's cleanup (ro.disconnect() +
+  // mm.revert(), which kills the pinned trigger and un-wraps its ~12000px
+  // spacer) has to run in the commit's mutation phase, before CinematicGate's
+  // own layout effect corrects the scroll position - otherwise GSAP's revert
+  // lands *after* that correction and overwrites it with a stale cached scroll.
+  // Safe here specifically because CinematicStoryLazy imports this with
+  // dynamic(..., { ssr: false }), so it never runs through the server renderer.
+  useLayoutEffect(() => {
     const section = sectionRef.current
     if (!section) return
 

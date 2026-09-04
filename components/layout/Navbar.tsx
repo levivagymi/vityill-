@@ -225,6 +225,13 @@ export default function Navbar() {
         </div>
 
         <nav className="flex flex-col p-5 gap-1 flex-1">
+          <button
+            onClick={() => { setMenuOpen(false); setCommandOpen(true) }}
+            className="drawer-item flex items-center gap-2.5 text-left py-3 px-3 mb-2 text-foreground/70 hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer border-b border-foreground/[0.08]"
+          >
+            <Search size={16} aria-hidden />
+            {dict.command.title}
+          </button>
           {MAIN_NAV.map(({ dictKey, key, hash }) => (
             <Link
               key={dictKey}
