@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
-import { useLenis } from '@/components/engine/LenisProvider'
+import { useLenis, scrollToAnchor } from '@/components/engine/LenisProvider'
 import { useDict } from '@/components/providers/DictProvider'
 import { prefersReducedMotion } from '@/lib/utils'
 
@@ -81,7 +81,9 @@ export default function ScrollProgress() {
       document.getElementById(id)?.scrollIntoView()
       return
     }
-    lenis?.scrollTo(`#${id}`, { offset: -70 })
+    // Falls back to a native scroll when Lenis is absent (lite mode), so the
+    // rail's dots stay functional instead of becoming dead buttons.
+    scrollToAnchor(lenis, `#${id}`, -70)
   }
 
   return (

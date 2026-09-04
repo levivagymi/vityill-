@@ -46,3 +46,6 @@ next-env.d.ts
 # git worktrees / subagent-driven-development scratch
 /.worktrees
 /.superpowers
+
+# re-encoded media staged for manual upload to Supabase Storage
+/optimized-videos

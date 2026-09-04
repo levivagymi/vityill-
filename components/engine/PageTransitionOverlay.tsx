@@ -3,9 +3,10 @@ import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { prefersReducedMotion } from '@/lib/utils'
+import { fxFull } from '@/lib/fx'
 import { EASE } from '@/lib/motion'
 import { hasPendingFlip } from '@/lib/flip-transition'
-import { useLenis } from './LenisProvider'
+import { useLenis, scrollToTop } from './LenisProvider'
 
 /**
  * Palette-inverting route wipe: the curtain is the *inverse* surface of the
@@ -26,9 +27,13 @@ export default function PageTransitionOverlay() {
     const veil = veilRef.current
     if (!wipe || !veil) return
 
-    lenis?.scrollTo(0, { immediate: true })
+    scrollToTop(lenis)
 
-    if (prefersReducedMotion() || hasPendingFlip()) {
+    // Lite mode joins the reduced-motion path: this wipe covers the entire
+    // viewport with an opaque layer for ~1s on every single route load, which
+    // on a slow device means the visitor waits out an animation instead of
+    // reading the page that already painted underneath it.
+    if (prefersReducedMotion() || !fxFull() || hasPendingFlip()) {
       gsap.set([wipe, veil], { clipPath: 'inset(0 0 100% 0)' })
       ScrollTrigger.refresh()
       return

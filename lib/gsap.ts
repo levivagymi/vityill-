@@ -1,10 +1,14 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Flip } from 'gsap/Flip'
 import { CustomEase } from 'gsap/CustomEase'
 
+// Flip is deliberately NOT registered here. This module is imported by every
+// client component on the site, so anything it pulls in is in the shared chunk
+// on every route - and Flip (~15 kB minified) is used by exactly one component,
+// on exactly one route. SharedElementFlip imports and registers it itself.
+
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, Flip, CustomEase)
+  gsap.registerPlugin(ScrollTrigger, CustomEase)
   // House ease — mirror of --ease-cinematic in app/globals.css so CSS
   // transitions and GSAP tweens share one motion signature.
   if (!CustomEase.get('cinematic')) {
@@ -18,5 +22,5 @@ if (typeof window !== 'undefined') {
   ScrollTrigger.config({ ignoreMobileResize: true })
 }
 
-export { ScrollTrigger, Flip }
+export { ScrollTrigger }
 export default gsap

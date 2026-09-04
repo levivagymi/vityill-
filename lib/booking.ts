@@ -1,4 +1,12 @@
-import { z } from 'zod'
+/**
+ * Rates, guest limits and stay maths for Vityillo.
+ *
+ * Deliberately zod-free: About, Rooms and AvailabilityStrip all import a
+ * constant or a formatter from here, so anything this module pulls in lands in
+ * the homepage's initial bundle. The request-validation schema - which does
+ * need zod, ~290 kB of it - lives in ./booking-schema and is imported only by
+ * the API route that actually validates a payload.
+ */
 import type { Locale } from './types'
 
 /** Set to true when the site is ready to accept real bookings. */
@@ -13,8 +21,6 @@ export const MIN_NIGHTS = 2
 /** Booking contact must be an adult; oldest accepted birth year is a sanity bound. */
 export const MIN_BIRTH_YEAR = 1900
 export const MAX_BIRTH_YEAR = new Date().getFullYear() - 18
-
-const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/
 
 /** Today as a yyyy-mm-dd string in local time. */
 export const todayISO = (): string => {
@@ -106,46 +112,6 @@ export function calculateStayPrice(input: StayInput): PriceEstimate {
   const total = breakdown.reduce((sum, g) => sum + g.subtotal, 0)
   return { nights, paidGuestCount, totalGuestCount, breakdown, total }
 }
-
-/** Server-side validation schema (locale-independent messages). */
-export const bookingServerSchema = z
-  .object({
-    name: z.string().trim().min(1).max(120),
-    email: z.string().trim().pipe(z.email()),
-    phone: z.string().trim().min(3).max(40),
-    checkIn: z.string().regex(ISO_DATE),
-    checkOut: z.string().regex(ISO_DATE),
-    adults: z.number().int().min(1).max(MAX_GUESTS),
-    childrenUnder4: z.number().int().min(0).max(MAX_GUESTS),
-    childrenOver4: z.number().int().min(0).max(MAX_GUESTS),
-    nationality: z.string().min(1),
-    residence: z.string().min(1),
-    postalCode: z.string().trim().min(1).max(20),
-    gender: z.enum(['male', 'female', 'other']),
-    birthYear: z.number().int().min(MIN_BIRTH_YEAR).max(MAX_BIRTH_YEAR),
-    channel: z.enum(['direct', 'airbnb', 'booking', 'facebook', 'other']),
-    requests: z.string().max(2000).optional().default(''),
-    locale: z.string().max(5).optional(),
-  })
-  // ISO yyyy-mm-dd strings compare correctly as plain strings.
-  .refine((d) => d.checkOut > d.checkIn, {
-    message: 'check-out must be after check-in',
-    path: ['checkOut'],
-  })
-  .refine((d) => nightsBetween(d.checkIn, d.checkOut) >= MIN_NIGHTS, {
-    message: `minimum stay is ${MIN_NIGHTS} nights`,
-    path: ['checkOut'],
-  })
-  .refine((d) => d.checkIn >= todayISO(), {
-    message: 'check-in must not be in the past',
-    path: ['checkIn'],
-  })
-  .refine((d) => d.adults + d.childrenUnder4 + d.childrenOver4 <= MAX_GUESTS, {
-    message: 'too many guests',
-    path: ['adults'],
-  })
-
-export type BookingPayload = z.infer<typeof bookingServerSchema>
 
 export const COUNTRIES = [
   'Magyarország', 'Ausztria', 'Németország', 'Szlovákia', 'Románia', 'Csehország',

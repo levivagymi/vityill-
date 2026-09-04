@@ -68,11 +68,21 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
     const section = sectionRef.current
     if (!section) return
 
-    // iOS Safari ignores currentTime seeks on a video that has never started
-    // a play cycle; a muted play->immediate-pause "wakes" the decoder so the
-    // PH2 scroll-scrub tween below actually repaints on later seeks.
+    // PH2's flythrough is several MB and is not on screen until ~10% into the
+    // 12 000px scrub, so it ships with preload="none" and is fetched only once
+    // the visitor is actually moving through PH1 (see the master trigger's
+    // onUpdate). Anyone who reads the hero and leaves never pays for it.
     const ph2Video = ph2VideoRef.current
-    if (ph2Video) {
+    let ph2Requested = false
+    const ensurePh2Video = () => {
+      if (ph2Requested || !ph2Video) return
+      ph2Requested = true
+      // preload="none" means the element has no media loaded at all; load()
+      // starts the fetch that the seeks below depend on.
+      ph2Video.load()
+      // iOS Safari ignores currentTime seeks on a video that has never started
+      // a play cycle; a muted play->immediate-pause "wakes" the decoder so the
+      // PH2 scroll-scrub tween below actually repaints on later seeks.
       ph2Video.muted = true
       ph2Video.play().then(() => ph2Video.pause()).catch(() => {})
     }
@@ -219,7 +229,13 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
             // Only hide the cursor once the user actually starts scrolling (progress > 0).
             // At progress=0 (page load, before any scroll) the cursor stays visible so the
             // cookie banner and cinematic-prompt card are still navigable.
-            onUpdate: (self) => setCinematic(self.progress > 0.002),
+            onUpdate: (self) => {
+              setCinematic(self.progress > 0.002)
+              // ~2% of 12 000px is ~240px of scroll, against a layer that does
+              // not fade in until timeline position 9 of ~90 - enough lead time
+              // to buffer, late enough that a bounce costs nothing.
+              if (self.progress > 0.02) ensurePh2Video()
+            },
             onLeave:     () => { setCinematic(false); hideSequenceLayers(); onFinish?.() },
             onLeaveBack: () => setCinematic(false),
             onEnterBack: () => showSequenceLayers(),
@@ -540,13 +556,17 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
       <div className="ce-hero-echo absolute inset-0" style={{ zIndex: 1 }}>
         <div className="absolute inset-0 bg-[#0a1a10]" />
         <div className="absolute inset-0 w-full h-[130%] -top-[15%]" style={{ willChange: 'transform' }}>
+          {/* preload is "metadata", not "auto": autoplay already pulls in as
+              much as playback needs, progressively, whereas "auto" tells the
+              browser to race the whole file ahead of the page's own critical
+              resources. */}
           <video
             src={videoUrl('ph1-hero-loop')}
             autoPlay
             loop
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             disablePictureInPicture
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover"
@@ -604,12 +624,14 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         style={{ zIndex: 3, clipPath: 'polygon(0% 0%,100% 0%,100% 100%,0% 100%)', overflow: 'hidden', willChange: 'opacity,clip-path' }}>
         <div className="absolute inset-0 bg-[#040c07]" />
         <div className="ph2-video-wrap absolute inset-0 overflow-hidden" style={{ willChange: 'transform' }}>
+          {/* Not fetched on load at all - ensurePh2Video() calls load() once
+              the scrub is actually underway. */}
           <video
             ref={ph2VideoRef}
             src={videoUrl('ph2-forest-flythrough')}
             muted
             playsInline
-            preload="auto"
+            preload="none"
             disablePictureInPicture
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover"

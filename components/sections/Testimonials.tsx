@@ -3,6 +3,7 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { Star, Quote } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { ScrollTrigger } from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { prefersReducedMotion } from '@/lib/utils'
@@ -127,6 +128,11 @@ export default function Testimonials() {
 
   useEffect(() => {
     void ScrollTrigger
+      // Scroll-reveal is decoration. In lite mode the elements keep their
+      // natural opacity (globals.css only applies .fx-reveal under
+      // data-fx="full"), so skipping the timeline shows the content at once
+      // instead of leaving it blank behind a tween that never runs.
+      if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.utils.toArray<HTMLElement>('.gsap-fade-up', sectionRef.current!).forEach((el, i) => {
         gsap.fromTo(el,

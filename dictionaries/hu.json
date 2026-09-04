@@ -340,7 +340,8 @@
     "budapestdesc": "60 km — Főváros",
     "esztergom": "Esztergom",
     "esztergomdesc": "30 km — Bazilika és Duna-part",
-    "note": "Autóval számított megközelítési idők"
+    "note": "Autóval számított megközelítési idők",
+    "loadMap": "Térkép betöltése"
   },
   "contact": {
     "label": "Kapcsolat",

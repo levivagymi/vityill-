@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import gsap from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import Magnetic from '@/components/ui/Magnetic'
 import { EmblemMark } from '@/components/brand/Logo'
@@ -19,6 +20,11 @@ export default function BookingCta() {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+      // Scroll-reveal is decoration. In lite mode the elements keep their
+      // natural opacity (globals.css only applies .fx-reveal under
+      // data-fx="full"), so skipping the timeline shows the content at once
+      // instead of leaving it blank behind a tween that never runs.
+      if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ref.current!.querySelectorAll('.cta-el'),

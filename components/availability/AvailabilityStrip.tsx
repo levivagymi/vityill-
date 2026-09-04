@@ -9,6 +9,7 @@ import Magnetic from '@/components/ui/Magnetic'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { href } from '@/lib/nav'
 import { prefersReducedMotion } from '@/lib/utils'
+import { fxFull } from '@/lib/fx'
 import {
   nextOpenWindows, openNightCount, weeksGrid, seasonOf,
   type OpenWindow, type DayStatus, type Season,
@@ -59,7 +60,10 @@ export default function AvailabilityStrip({ compact = false }: { compact?: boole
     if (!data || !sectionRef.current) return
     const target = data.openNights
     const el = countRef.current
-    if (prefersReducedMotion()) {
+    // Same branch serves lite mode: the count-up and cell cascade are pure
+    // decoration, and the counter has to be written out or the strip would
+    // show an empty figure.
+    if (prefersReducedMotion() || !fxFull()) {
       if (el) el.textContent = String(target)
       return
     }

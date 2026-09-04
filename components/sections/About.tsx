@@ -7,12 +7,18 @@ import { useDict } from '@/components/providers/DictProvider'
 import { EmblemMark } from '@/components/brand/Logo'
 import { imageUrl } from '@/lib/content'
 import { MAX_GUESTS } from '@/lib/booking'
+import { fxFull } from '@/lib/fx'
 
 export default function About() {
   const dict = useDict()
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+      // Scroll-reveal is decoration. In lite mode the elements keep their
+      // natural opacity (globals.css only applies .fx-reveal under
+      // data-fx="full"), so skipping the timeline shows the content at once
+      // instead of leaving it blank behind a tween that never runs.
+      if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo('.about-left', { opacity: 0, x: -60 }, {
         opacity: 1, x: 0, duration: 1.1, ease: 'power3.out',
@@ -43,7 +49,7 @@ export default function About() {
       <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.04] via-transparent to-foreground/[0.06]" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="about-left relative" style={{ opacity: 0 }}>
+          <div className="about-left fx-reveal relative">
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               <Image
                 src={imageUrl('house-exterior-portrait')}
@@ -55,8 +61,7 @@ export default function About() {
               <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
             </div>
             <div
-              className="about-card absolute -bottom-6 -right-4 lg:-right-8 bg-card/95 backdrop-blur-md border border-foreground/[0.15] rounded-xl p-4 lg:p-5 shadow-xl"
-              style={{ opacity: 0 }}
+              className="about-card fx-reveal absolute -bottom-6 -right-4 lg:-right-8 bg-card/95 backdrop-blur-md border border-foreground/[0.15] rounded-xl p-4 lg:p-5 shadow-xl"
             >
               <div className="text-3xl lg:text-4xl font-heading font-bold text-foreground leading-none">{MAX_GUESTS}</div>
               <div className="text-xs font-sans text-foreground/50 mt-1 uppercase tracking-wider">{dict.about.maxGuestsLabel}</div>
@@ -67,23 +72,23 @@ export default function About() {
           </div>
 
           <div className="lg:pl-6">
-            <div className="about-right-el mb-4" style={{ opacity: 0 }}>
+            <div className="about-right-el fx-reveal mb-4">
               <EmblemMark height={30} className="opacity-90" />
             </div>
-            <div className="about-right-el flex items-center gap-3 mb-5" style={{ opacity: 0 }}>
+            <div className="about-right-el fx-reveal flex items-center gap-3 mb-5">
               <div className="h-px w-10 bg-foreground/30" />
               <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.3em]">{dict.about.label}</span>
             </div>
-            <h2 className="about-right-el font-heading text-3xl sm:text-4xl lg:text-5xl leading-tight mb-6" style={{ opacity: 0 }}>
+            <h2 className="about-right-el fx-reveal font-heading text-3xl sm:text-4xl lg:text-5xl leading-tight mb-6">
               {dict.about.title}
             </h2>
-            <p className="about-right-el font-sans text-foreground/70 leading-[1.85] text-base mb-5" style={{ opacity: 0 }}>
+            <p className="about-right-el fx-reveal font-sans text-foreground/70 leading-[1.85] text-base mb-5">
               {dict.about.p1}
             </p>
-            <p className="about-right-el font-sans text-foreground/70 leading-[1.85] text-base mb-8" style={{ opacity: 0 }}>
+            <p className="about-right-el fx-reveal font-sans text-foreground/70 leading-[1.85] text-base mb-8">
               {dict.about.p2}
             </p>
-            <div className="about-right-el flex flex-wrap gap-3" style={{ opacity: 0 }}>
+            <div className="about-right-el fx-reveal flex flex-wrap gap-3">
               {badges.map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-2 bg-foreground/[0.04] border border-foreground/10 rounded-full px-4 py-2">
                   <Icon size={14} className="text-foreground/70" />

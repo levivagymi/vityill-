@@ -5,7 +5,8 @@ import CinematicSkipPrompt from './CinematicSkipPrompt'
 import RewatchCinematicButton from './RewatchCinematicButton'
 import { useLenis } from './LenisProvider'
 import { ScrollTrigger } from '@/lib/gsap'
-import { CINEMATIC_STORAGE_KEY } from '@/lib/cinematic'
+import { fxFull } from '@/lib/fx'
+import { CINEMATIC_STORAGE_KEY, CINEMATIC_FORCE_KEY } from '@/lib/cinematic'
 
 type Phase = 'checking' | 'intro' | 'leaving' | 'watched' | 'done'
 
@@ -28,10 +29,27 @@ export default function CinematicGate() {
 
   useEffect(() => {
     let watched = false
+    let forced = false
     try {
       watched = localStorage.getItem(CINEMATIC_STORAGE_KEY) === 'true'
+      forced = sessionStorage.getItem(CINEMATIC_FORCE_KEY) === '1'
+      // One reload only: leaving it set would pin the device to the heavy path.
+      if (forced) sessionStorage.removeItem(CINEMATIC_FORCE_KEY)
     } catch { /* ignore */ }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+
+    // The cinematic is the single most expensive thing on the site: ~8 MB of
+    // video, a ~12 800 px pinned scrub timeline and two particle canvases. A
+    // device in lite mode skips straight to the state a returning visitor
+    // already sees - a fully supported, first-class rendering of the page -
+    // unless the visitor explicitly asked for it via the rewatch button.
+    // Note this deliberately does NOT write CINEMATIC_STORAGE_KEY: nothing was
+    // watched, so the same browser on a faster connection still gets the intro.
+    if (!forced && !fxFull()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPhase('done')
+      return
+    }
+
     setPhase(watched ? 'done' : 'intro')
   }, [])
 

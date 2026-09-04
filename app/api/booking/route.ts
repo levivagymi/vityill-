@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import { promises as fs } from 'fs'
 import path from 'path'
 import { randomUUID } from 'crypto'
-import { BOOKING_ENABLED, bookingServerSchema, type BookingPayload } from '@/lib/booking'
+import { BOOKING_ENABLED } from '@/lib/booking'
+import { bookingServerSchema, type BookingPayload } from '@/lib/booking-schema'
 
 type BookingRecord = BookingPayload & { id: string; receivedAt: string }
 

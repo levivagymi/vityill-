@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { Menu, X, Sun, Moon, Search } from 'lucide-react'
 import gsap from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import { useCommand } from '@/components/command/command-context'
@@ -29,6 +30,10 @@ export default function Navbar() {
   const menuBtnRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
+    // The header carries .fx-reveal, which only resolves to opacity:0 under
+    // data-fx="full" - in lite mode it is already visible and this drop-in is
+    // skipped entirely.
+    if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo(headerRef.current,
         { opacity: 0, y: -40 },
@@ -105,16 +110,15 @@ export default function Navbar() {
     <>
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fx-reveal fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-background/95 backdrop-blur-md border-b border-foreground/[0.08] shadow-xl shadow-black/20'
             : 'bg-transparent'
         }`}
-        style={{ opacity: 0 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            <Logo variant="lockup" height={scrolled ? 34 : 38} tone={scrolled ? 'auto' : 'light'} priority />
+            <Logo variant="lockup" height={scrolled ? 34 : 38} tone={scrolled ? 'auto' : 'light'} />
 
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
               {MAIN_NAV.map(({ dictKey, key, hash }) => (

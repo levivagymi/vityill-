@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import type { Locale } from '@/lib/types'
@@ -10,41 +9,29 @@ const EMBLEM_RATIO = 1254 / 790 // width / height
 
 /**
  * Brand mark for Vityilló.
- * - tone="auto"  → cream on dark theme, forest on light theme (Tailwind `dark:` swap)
+ * - tone="auto"  → cream on dark theme, forest on light theme
  * - tone="light" → always cream (use over dark imagery / hero banners)
  * - tone="dark"  → always forest (use over cream surfaces)
+ *
+ * Rendered as a CSS mask tinted with `color` rather than an <img>; see the
+ * `.brand-mark` block in globals.css for why. The three tints below are the
+ * literal values --foreground resolves to in each theme, so tone="auto"
+ * following the theme token and the two fixed tones stay in step.
  */
-function Emblem({ height, tone, priority }: { height: number; tone: Tone; priority?: boolean }) {
+const toneColor: Record<Tone, string> = {
+  auto: 'var(--foreground)',
+  light: '#FFF4CC',
+  dark: '#1A4731',
+}
+
+function Emblem({ height, tone }: { height: number; tone: Tone }) {
   const width = Math.round(height * EMBLEM_RATIO)
-  const cream = (
-    <Image
-      src="/brand/emblem-cream.png"
-      alt=""
-      aria-hidden
-      width={1254}
-      height={790}
-      priority={priority}
-      style={{ height, width }}
-      className={tone === 'auto' ? 'hidden dark:block' : tone === 'light' ? 'block' : 'hidden'}
-    />
-  )
-  const forest = (
-    <Image
-      src="/brand/emblem-forest.png"
-      alt=""
-      aria-hidden
-      width={1254}
-      height={790}
-      priority={priority}
-      style={{ height, width }}
-      className={tone === 'auto' ? 'block dark:hidden' : tone === 'dark' ? 'block' : 'hidden'}
-    />
-  )
   return (
-    <span className="inline-flex shrink-0 items-center" style={{ height }}>
-      {cream}
-      {forest}
-    </span>
+    <span
+      aria-hidden
+      className="brand-mark brand-emblem"
+      style={{ width, height, color: toneColor[tone] }}
+    />
   )
 }
 
@@ -58,28 +45,13 @@ export function EmblemMark({ height = 28, tone = 'auto', className = '' }: { hei
 }
 
 /** The complete designed logo (emblem + VITYILLÓ wordmark) as a square raster mark. */
-function FullMark({ height, tone, priority }: { height: number; tone: Tone; priority?: boolean }) {
+function FullMark({ height, tone }: { height: number; tone: Tone }) {
   return (
     <span className="inline-flex shrink-0 items-center" style={{ height, width: height }}>
-      <Image
-        src="/brand/logo-cream.png"
-        alt=""
+      <span
         aria-hidden
-        width={1254}
-        height={1254}
-        priority={priority}
-        style={{ height, width: height }}
-        className={tone === 'auto' ? 'hidden dark:block' : tone === 'light' ? 'block' : 'hidden'}
-      />
-      <Image
-        src="/brand/logo-forest.png"
-        alt=""
-        aria-hidden
-        width={1254}
-        height={1254}
-        priority={priority}
-        style={{ height, width: height }}
-        className={tone === 'auto' ? 'block dark:hidden' : tone === 'dark' ? 'block' : 'hidden'}
+        className="brand-mark brand-logo"
+        style={{ width: height, height, color: toneColor[tone] }}
       />
     </span>
   )
@@ -101,7 +73,6 @@ export default function Logo({
   height = 36,
   tone = 'auto',
   href: linkHref,
-  priority = false,
   className = '',
   ariaLabel = 'Vityilló Vendégház',
 }: {
@@ -109,7 +80,6 @@ export default function Logo({
   height?: number
   tone?: Tone
   href?: string
-  priority?: boolean
   className?: string
   ariaLabel?: string
 }) {
@@ -119,12 +89,12 @@ export default function Logo({
 
   const content =
     variant === 'full' ? (
-      <FullMark height={height} tone={tone} priority={priority} />
+      <FullMark height={height} tone={tone} />
     ) : variant === 'emblem' ? (
-      <Emblem height={height} tone={tone} priority={priority} />
+      <Emblem height={height} tone={tone} />
     ) : (
       <span className="inline-flex items-center gap-2.5">
-        <Emblem height={height} tone={tone} priority={priority} />
+        <Emblem height={height} tone={tone} />
         <span className="flex flex-col leading-none">
           <span
             className={`font-heading font-semibold tracking-wide ${toneText[tone]}`}

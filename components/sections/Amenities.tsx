@@ -7,6 +7,7 @@ import {
   Tv, ChefHat, UtensilsCrossed, ArrowUpRight,
 } from 'lucide-react'
 import gsap from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
 import type { AmenityKey } from '@/lib/content'
@@ -28,6 +29,11 @@ export default function Amenities() {
   const cardsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+      // Scroll-reveal is decoration. In lite mode the elements keep their
+      // natural opacity (globals.css only applies .fx-reveal under
+      // data-fx="full"), so skipping the timeline shows the content at once
+      // instead of leaving it blank behind a tween that never runs.
+      if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo('.amenities-header', { opacity: 0, y: 40 }, {
         opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
@@ -46,7 +52,7 @@ export default function Amenities() {
       <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.03] via-transparent to-foreground/[0.05]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="amenities-header mb-16 lg:mb-20" style={{ opacity: 0 }}>
+        <div className="amenities-header fx-reveal mb-16 lg:mb-20">
           <SectionHeading label={dict.amenities.label} title={dict.amenities.title} subtitle={dict.amenities.subtitle} />
         </div>
 
@@ -58,10 +64,9 @@ export default function Amenities() {
                 key={key}
                 href={experienceHref(lang, EXPERIENCE_SLUG_BY_AMENITY[key])}
                 data-cursor="view"
-                className="amenity-card group relative block bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 lg:p-7
+                className="amenity-card fx-reveal group relative block bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 lg:p-7
                            hover:border-foreground/15 hover:bg-foreground/[0.06] transition-all duration-300
                            hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/10 cursor-pointer"
-                style={{ opacity: 0 }}
               >
                 <div className="w-12 h-12 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center mb-5
                                 group-hover:bg-foreground/[0.12] group-hover:border-foreground/20 transition-all duration-300">

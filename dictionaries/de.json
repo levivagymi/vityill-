@@ -340,7 +340,8 @@
     "budapestdesc": "60 km — Hauptstadt",
     "esztergom": "Esztergom",
     "esztergomdesc": "30 km — Basilika & Donauufer",
-    "note": "Entfernungen mit dem Auto berechnet"
+    "note": "Entfernungen mit dem Auto berechnet",
+    "loadMap": "Karte laden"
   },
   "contact": {
     "label": "Kontakt",

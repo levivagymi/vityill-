@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import gsap from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import Logo from '@/components/brand/Logo'
 import { MAIN_NAV, href } from '@/lib/nav'
@@ -28,6 +29,11 @@ export default function Footer() {
   const footerRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
+      // Scroll-reveal is decoration. In lite mode the elements keep their
+      // natural opacity (globals.css only applies .fx-reveal under
+      // data-fx="full"), so skipping the timeline shows the content at once
+      // instead of leaving it blank behind a tween that never runs.
+      if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo(
         footerRef.current!.querySelectorAll('.footer-col'),

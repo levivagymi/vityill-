@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import gsap from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 import { EmblemMark } from '@/components/brand/Logo'
 
 export type Crumb = { label: string; href?: string }
@@ -27,6 +28,11 @@ export default function PageHero({
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+      // Scroll-reveal is decoration. In lite mode the elements keep their
+      // natural opacity (globals.css only applies .fx-reveal under
+      // data-fx="full"), so skipping the timeline shows the content at once
+      // instead of leaving it blank behind a tween that never runs.
+      if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ref.current!.querySelectorAll('.ph-el'),

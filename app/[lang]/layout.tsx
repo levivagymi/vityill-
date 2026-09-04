@@ -3,8 +3,7 @@ import { LangUpdater } from '@/components/LangUpdater'
 import { getDictionary, hasLocale } from './dictionaries'
 import { notFound } from 'next/navigation'
 import LenisProvider from '@/components/engine/LenisProvider'
-import CustomCursor from '@/components/engine/CustomCursor'
-import AmbientGlow from '@/components/engine/AmbientGlow'
+import PointerFx from '@/components/engine/PointerFx'
 import ScrollProgress from '@/components/engine/ScrollProgress'
 import PageTransitionOverlay from '@/components/engine/PageTransitionOverlay'
 import ThemeProvider from '@/components/providers/ThemeProvider'
@@ -63,8 +62,7 @@ export default async function LangLayout({ children, params }: Props) {
             <DevNoticeModal />
             <LangUpdater lang={lang} />
             <PageTransitionOverlay />
-            <CustomCursor />
-            <AmbientGlow />
+            <PointerFx />
             <ScrollProgress />
             <Navbar />
             {children}

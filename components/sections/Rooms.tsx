@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import gsap from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { ROOM_MEDIA } from '@/lib/content'
@@ -20,7 +21,7 @@ function HouseCard({ lang, dict }: { lang: Locale; dict: ReturnType<typeof useDi
   const lowerHref = roomHref(lang, 'also-szint')
 
   return (
-    <div className="room-card grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-foreground/[0.08] bg-foreground/[0.03]" style={{ opacity: 0 }}>
+    <div className="room-card fx-reveal grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-foreground/[0.08] bg-foreground/[0.03]">
       <Link
         href={upperHref}
         data-cursor="view"
@@ -88,6 +89,11 @@ export default function Rooms({ withHeading = true }: { withHeading?: boolean })
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+      // Scroll-reveal is decoration. In lite mode the elements keep their
+      // natural opacity (globals.css only applies .fx-reveal under
+      // data-fx="full"), so skipping the timeline shows the content at once
+      // instead of leaving it blank behind a tween that never runs.
+      if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo('.rooms-header', { opacity: 0, y: 40 }, {
         opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
@@ -108,7 +114,7 @@ export default function Rooms({ withHeading = true }: { withHeading?: boolean })
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/[0.04] via-transparent to-foreground/[0.04]" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {withHeading && (
-          <div className="rooms-header mb-16 lg:mb-20" style={{ opacity: 0 }}>
+          <div className="rooms-header fx-reveal mb-16 lg:mb-20">
             <SectionHeading label={dict.rooms.label} title={dict.rooms.title} subtitle={dict.rooms.subtitle} />
             <p className="font-sans text-xs uppercase tracking-widest text-center text-foreground/40 mt-3">{dict.rooms.maxGuests}</p>
           </div>

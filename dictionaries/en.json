@@ -340,7 +340,8 @@
     "budapestdesc": "60 km — Capital city",
     "esztergom": "Esztergom",
     "esztergomdesc": "30 km — Basilica & Danube riverside",
-    "note": "Distances calculated by car"
+    "note": "Distances calculated by car",
+    "loadMap": "Load map"
   },
   "contact": {
     "label": "Contact",

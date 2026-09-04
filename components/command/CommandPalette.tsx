@@ -5,7 +5,7 @@ import { Dialog } from '@base-ui/react/dialog'
 import { CornerDownLeft, Search } from 'lucide-react'
 import { useDict } from '@/components/providers/DictProvider'
 import { useTheme } from '@/components/providers/ThemeProvider'
-import { useLenis } from '@/components/engine/LenisProvider'
+import { useLenis, scrollLock, scrollUnlock, scrollToAnchor } from '@/components/engine/LenisProvider'
 import { useCommand } from '@/components/command/command-context'
 import { buildCommands, filterCommands, type Command, type CommandCtx, type CommandGroup } from './commands'
 import type { Locale } from '@/lib/types'
@@ -20,8 +20,8 @@ export default function CommandPalette() {
   // Page scroll must not fight the palette while it is open.
   useEffect(() => {
     if (!open) return
-    lenis?.stop()
-    return () => lenis?.start()
+    scrollLock(lenis)
+    return () => scrollUnlock(lenis)
   }, [open, lenis])
 
   return (
@@ -82,7 +82,7 @@ function PaletteSurface({ close }: { close: () => void }) {
       jumpTo: (hash) => {
         const home = `/${lang}`
         if (pathname === home || pathname === `${home}/`) {
-          lenis?.scrollTo(`#${hash}`, { offset: -70 })
+          scrollToAnchor(lenis, `#${hash}`, -70)
         } else {
           router.push(`${home}#${hash}`)
         }

@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import gsap from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 
 /** Lightweight scroll-in fade/translate used across subpages. */
 export default function Reveal({
@@ -17,6 +18,9 @@ export default function Reveal({
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Lite mode: .fx-reveal never gets its opacity:0 start state, so the child
+    // is already on screen and there is nothing to animate.
+    if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ref.current,
@@ -35,7 +39,7 @@ export default function Reveal({
   }, [delay, y])
 
   return (
-    <div ref={ref} className={className} style={{ opacity: 0 }}>
+    <div ref={ref} className={`fx-reveal ${className}`}>
       {children}
     </div>
   )

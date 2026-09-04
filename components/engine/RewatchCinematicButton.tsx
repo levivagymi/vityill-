@@ -1,13 +1,19 @@
 'use client'
 import { RotateCcw } from 'lucide-react'
 import { useDict } from '@/components/providers/DictProvider'
-import { CINEMATIC_STORAGE_KEY } from '@/lib/cinematic'
+import { CINEMATIC_STORAGE_KEY, CINEMATIC_FORCE_KEY } from '@/lib/cinematic'
 
 export default function RewatchCinematicButton() {
   const dict = useDict()
 
   const handleClick = () => {
-    try { localStorage.setItem(CINEMATIC_STORAGE_KEY, 'false') } catch { /* ignore */ }
+    try {
+      localStorage.setItem(CINEMATIC_STORAGE_KEY, 'false')
+      // Explicit opt-in, honoured for this one reload: on a device the effects
+      // budget put in lite mode the gate would otherwise skip straight past the
+      // cinematic again and the button would look broken.
+      sessionStorage.setItem(CINEMATIC_FORCE_KEY, '1')
+    } catch { /* ignore */ }
     window.location.reload()
   }
 

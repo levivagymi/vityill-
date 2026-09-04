@@ -200,12 +200,15 @@
 }
 
 /* Custom cursor replaces the native one on precise pointers; form controls
-   and embedded frames keep their native cursor for usability. */
+   and embedded frames keep their native cursor for usability.
+   Gated on data-fx="full" because that is exactly when PointerFx mounts
+   CustomCursor - hiding the native cursor without its replacement on screen
+   would leave a lite-mode desktop visitor with no pointer at all. */
 @media (pointer: fine) {
-  * {
+  html[data-fx='full'] * {
     cursor: none !important;
   }
-  input, textarea, select, iframe {
+  html[data-fx='full'] :is(input, textarea, select, iframe) {
     cursor: auto !important;
   }
 }
@@ -282,4 +285,60 @@ button[data-cursor='view']:hover {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ── Effects budget ───────────────────────────────────────────────────────────
+   data-fx is written on <html> before first paint by FX_BOOTSTRAP (lib/fx.ts).
+   Keep every rule below in sync with the fxFull() checks in the components. */
+
+/* Scroll-reveal start state. Deliberately scoped to data-fx="full" rather than
+   set inline: in lite mode - and with JS disabled, where the attribute is never
+   written at all - the element must stay visible instead of waiting on a GSAP
+   tween that is never going to run. */
+html[data-fx='full'] .fx-reveal {
+  opacity: 0;
+}
+
+/* backdrop-filter makes the compositor re-sample everything behind a fixed or
+   sticky surface on every scrolled frame, which is the most expensive piece of
+   decoration on a weak GPU. Every blurred surface here sits on a background of
+   >=80% opacity or is a plain scrim, so dropping the blur costs no legibility. */
+html[data-fx='lite'] *,
+html[data-fx='lite'] *::before,
+html[data-fx='lite'] *::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Brand marks (components/brand/Logo.tsx). Both marks are flat single-colour
+   silhouettes, so each ships as one alpha-only WebP used as a CSS mask and
+   tinted with currentColor - the same pixels either theme produced before,
+   from half the files and none of the waste:
+     - <img> was the wrong tool: a tone="auto" mark needs both colourways in
+       the markup and the browser downloads the hidden one anyway.
+     - Two background-image declarations behind a `.dark` override do not help
+       either; Blink fetches every url() that applies to a matched element,
+       not just the winning one. A mask has nothing to choose between.
+     - next/image sized its srcset from the 1254px intrinsic width for a mark
+       drawn at 28-84px. These files are pre-scaled to ~3x their largest
+       on-screen size (13-16 kB, down from ~175-245 kB PNGs). */
+.brand-mark {
+  display: inline-block;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  mask-mode: alpha;
+}
+.brand-emblem {
+  -webkit-mask-image: url('/brand/emblem-mask.webp');
+          mask-image: url('/brand/emblem-mask.webp');
+}
+.brand-logo {
+  -webkit-mask-image: url('/brand/logo-mask.webp');
+          mask-image: url('/brand/logo-mask.webp');
 }

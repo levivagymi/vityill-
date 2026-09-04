@@ -1,12 +1,20 @@
 import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import Script from 'next/script'
+import { FX_BOOTSTRAP } from '@/lib/fx'
 import './globals.css'
 
+// No `weight` array: Google serves Playfair Display as a wght-axis variable
+// font, so the four pinned weights all resolved to the same file anyway and
+// only produced four redundant @font-face rules over it. Dropping the array
+// keeps the identical download and lets any weight in 400-900 be used.
+// NOTE: still latin-only, unchanged. Hungarian o-double-acute and
+// u-double-acute live in latin-ext, so those glyphs fall back to the system
+// serif mid-heading. Adding the subset fixes that but costs ~38 kB - a
+// legibility call, not a performance one, so it is left as it was.
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
-  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
@@ -36,6 +44,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
+        {/* Effects budget before first paint - see lib/fx.ts. Has to land in
+            the first style resolution, because globals.css keys the scroll-
+            reveal start state off [data-fx]: decided a frame later, every
+            revealed section would flash. */}
+        <Script
+          id="fx-bootstrap"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: FX_BOOTSTRAP }}
+        />
         {/* Theme bootstrap before first paint: stored choice wins, otherwise
             follow the OS. Keep in sync with ThemeProvider.resolveInitialTheme. */}
         <Script

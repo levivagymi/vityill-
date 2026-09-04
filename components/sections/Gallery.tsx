@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import { X, ChevronLeft, ChevronRight, ZoomIn, ArrowRight } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { ScrollTrigger } from '@/lib/gsap'
+import { fxFull } from '@/lib/fx'
 import { useLenis } from '@/components/engine/LenisProvider'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
@@ -33,6 +34,11 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
 
   useEffect(() => {
     void ScrollTrigger
+      // Scroll-reveal is decoration. In lite mode the elements keep their
+      // natural opacity (globals.css only applies .fx-reveal under
+      // data-fx="full"), so skipping the timeline shows the content at once
+      // instead of leaving it blank behind a tween that never runs.
+      if (!fxFull()) return
     const ctx = gsap.context(() => {
       gsap.fromTo('.gallery-header', { opacity: 0, y: 40 }, {
         opacity: 1, y: 0, duration: 1,
