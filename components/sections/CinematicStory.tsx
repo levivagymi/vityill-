@@ -24,12 +24,17 @@ const STARS = Array.from({ length: 90 }, (_, i) => ({
   size:  1 + (i % 3),
 }))
 
-// Everything except the Phase 1 hero backdrop (`.ce-hero-echo`, which holds the
-// looping background video) gets hidden once the visitor scrolls past the end
-// of the sequence. Kept as a flat selector list, not a per-phase loop, since
-// hiding is a single blunt cutover rather than a staged animation.
+// Everything, including the Phase 1 hero backdrop (`.ce-hero-echo`, which holds
+// the looping background video), gets hidden via display:none once the visitor
+// scrolls past the end of the sequence - never unmounted, so the video's own
+// playback is never interrupted/reset, it just isn't shown once the intro is
+// done. Kept as a flat selector list, not a per-phase loop, since hiding is a
+// single blunt cutover rather than a staged animation.
 const POST_SEQUENCE_HIDE_SELECTOR =
-  '.ph1-house-img, .ph2-layer, .ph3-layer, .ph4-layer, .ph5-layer, .ph6-layer, .ph7-layer, .ph8-layer, .ce-dot, .ce-flash'
+  '.ce-hero-echo, .ph1-house-img, .ph2-layer, .ph3-layer, .ph4-layer, .ph5-layer, .ph6-layer, .ph7-layer, .ph8-layer, .ce-dot, .ce-flash'
+
+// The master ScrollTrigger's `scrub` value below.
+const SCRUB_SECONDS = 1.5
 
 const PH8_IMGS = [
   { src: imageUrl('house-exterior-day'),        top: '8%',  left: '7%',  w: 128 },
@@ -89,6 +94,12 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
       on
         ? document.documentElement.setAttribute('data-cinematic', 'true')
         : document.documentElement.removeAttribute('data-cinematic')
+
+    // Assigned inside the no-preference matchMedia branch below (the reduced-motion
+    // branch has no pin/ScrollTrigger to sync against). Called from the
+    // ResizeObserver at the bottom of this effect too, since that's the other
+    // moment layout/scroll can have settled somewhere ScrollTrigger didn't catch.
+    let syncPostSequenceVisibility: (() => void) | null = null
 
     // ── Canvas loops ─────────────────────────────────────────────────────────
     // rafLoop start/stop are idempotent: scrubbing back and forth re-fires the
@@ -157,30 +168,44 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
         // mm.revert() and a live media-query flip both restore it.
         gsap.set('.ph4-path', { strokeDasharray: 1, strokeDashoffset: 1 })
 
-        // display:none (not React-unmounting) so the DOM nodes the tweens below
+        // display:none (not React-unmounting) so the DOM nodes the tweens above
         // already reference stay alive - removing them from React's tree would
         // orphan those tween references and permanently break reverse-scrubbing
-        // (onEnterBack) if the visitor scrolls back up after finishing.
+        // (onEnterBack) if the visitor scrolls back up after finishing. Pure
+        // display toggling is also immune to the scrub-catch-up race that a value
+        // restore (e.g. resetting the hero's own opacity/transform) would hit: with
+        // scrub:SCRUB_SECONDS the timeline can still be easing toward a boundary
+        // for up to SCRUB_SECONDS after onLeave/onEnterBack fires on the raw
+        // crossing, and any tween still catching up would silently overwrite a
+        // restored value on the next tick - display isn't one of the properties
+        // scrub ever touches, so hide/show here never fights it.
         const postSequenceEls = gsap.utils.toArray<HTMLElement>(POST_SEQUENCE_HIDE_SELECTOR, section)
-        const hideSequenceLayers = () => gsap.set(postSequenceEls, { display: 'none' })
-        const showSequenceLayers = () => gsap.set(postSequenceEls, { display: '' })
-
-        // The hero itself fades/scatters away by tl-position 7 of ~90, same as every
-        // other phase - hiding only the layers above it would just expose the empty
-        // section background, not the video. clearProps drops the tweens' inline
-        // transform/opacity so the hero (and its looping video) reappear exactly as
-        // they looked before any scrolling. Scrubbing back up overwrites this again
-        // on the next tick, since the same tweens keep writing those props once
-        // progress moves off 1 - no separate re-hide call is needed for it.
-        const heroEls = gsap.utils.toArray<HTMLElement>('.ce-hero-echo, .ce-hero-el', section)
-        const restoreHero = () => gsap.set(heroEls, { clearProps: 'all' })
+        // The section itself keeps its own h-lvh box (touching its size would resize
+        // it, which the ResizeObserver below is watching in order to call
+        // ScrollTrigger.refresh() - doing that while this trigger's own element is
+        // mid-collapse would re-measure it against a bogus size and corrupt the
+        // cached start/end pixels that onEnterBack depends on for the rest of the
+        // session). Its background color carries no layout weight though, so
+        // clearing just that - rather than the section's size - removes the last
+        // visible trace (the section's own #0a1a10 fill showing as a plain dark
+        // rectangle once every child is hidden) with zero risk to the pin geometry.
+        // <section>'s own bg has no matching CSS class to select, so it's set
+        // directly rather than folded into postSequenceEls.
+        const hideSequenceLayers = () => {
+          gsap.set(postSequenceEls, { display: 'none' })
+          gsap.set(section, { backgroundColor: 'transparent' })
+        }
+        const showSequenceLayers = () => {
+          gsap.set(postSequenceEls, { display: '' })
+          gsap.set(section, { backgroundColor: '#0a1a10' })
+        }
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
             start: 'top top',
             end: '+=12000',
-            scrub: 1.5,
+            scrub: SCRUB_SECONDS,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
@@ -188,11 +213,22 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
             // At progress=0 (page load, before any scroll) the cursor stays visible so the
             // cookie banner and cinematic-prompt card are still navigable.
             onUpdate: (self) => setCinematic(self.progress > 0.002),
-            onLeave:     () => { setCinematic(false); hideSequenceLayers(); restoreHero(); onFinish?.() },
+            onLeave:     () => { setCinematic(false); hideSequenceLayers(); onFinish?.() },
             onLeaveBack: () => setCinematic(false),
             onEnterBack: () => showSequenceLayers(),
           },
         })
+
+        // onLeave/onEnterBack only fire on a live boundary *crossing*. If this trigger
+        // is ever created while scroll is already past its end (e.g. a slow async
+        // chunk load racing a scroll restore), the edge event that would normally
+        // hide/show these elements never fires. Syncing once immediately after
+        // creation closes that gap regardless of root cause.
+        syncPostSequenceVisibility = () => {
+          const progress = tl.scrollTrigger?.progress ?? 0
+          if (progress >= 1) hideSequenceLayers(); else showSequenceLayers()
+        }
+        syncPostSequenceVisibility()
 
         // ════════════════════════════════════════════════════════════════════
         // PHASE 1 — HOUSE ARRIVAL  (0 → 12)
@@ -461,7 +497,10 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
       gsap.set('.ph1-window',                           { opacity: 1 })
     })
 
-    const ro = new ResizeObserver(() => ScrollTrigger.refresh())
+    const ro = new ResizeObserver(() => {
+      ScrollTrigger.refresh()
+      syncPostSequenceVisibility?.()
+    })
     ro.observe(section)
 
     return () => {

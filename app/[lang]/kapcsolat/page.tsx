@@ -67,7 +67,7 @@ export default async function ContactPage({ params }: Props) {
                 </li>
               </ul>
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=47.682,18.342"
+                href="https://www.google.com/maps/dir/?api=1&destination=47.696310,18.325239"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground hover:gap-3 transition-all"
@@ -78,11 +78,11 @@ export default async function ContactPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/[0.08]">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=18.30%2C47.66%2C18.38%2C47.70&layer=mapnik&marker=47.682%2C18.342"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4141.433965054247!2d18.325239263444374!3d47.696310253120345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476a4f3c8d51135d%3A0xb90cf9714fdda3b!2zVml0eWlsbMOzIFZlbmTDqWdow6F6!5e0!3m2!1shu!2shu!4v1788459810620!5m2!1shu!2shu"
                 width="100%"
                 height="100%"
                 style={{ border: 'none', filter: 'invert(85%) hue-rotate(165deg) brightness(0.8) contrast(0.9)' }}
-                title="Szomód, Hungary"
+                title="Vityilló Vendégház, Szomód"
                 loading="lazy"
                 className="absolute inset-0"
               />

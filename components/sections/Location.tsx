@@ -72,21 +72,21 @@ export default function Location() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <div className="location-fade-left relative">
+          <div className="location-fade-left">
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/[0.08]">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=18.30%2C47.66%2C18.38%2C47.70&layer=mapnik&marker=47.682%2C18.342"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4141.433965054247!2d18.325239263444374!3d47.696310253120345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476a4f3c8d51135d%3A0xb90cf9714fdda3b!2zVml0eWlsbMOzIFZlbmTDqWdow6F6!5e0!3m2!1shu!2shu!4v1788459810620!5m2!1shu!2shu"
                 width="100%"
                 height="100%"
                 style={{ border: 'none', filter: 'invert(85%) hue-rotate(165deg) brightness(0.8) contrast(0.9)' }}
-                title="Szomód, Hungary location"
+                title="Vityilló Vendégház, Szomód"
                 loading="lazy"
                 className="absolute inset-0"
               />
               <div className="absolute inset-0 pointer-events-none bg-background/10 rounded-2xl" />
             </div>
 
-            <div className="absolute -bottom-4 left-4 right-4 bg-card/90 backdrop-blur-md border border-foreground/[0.12] rounded-xl p-4 shadow-xl">
+            <div className="mt-4 bg-card/90 backdrop-blur-md border border-foreground/[0.12] rounded-xl p-4 shadow-xl">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-foreground/[0.08] border border-foreground/[0.12] flex items-center justify-center shrink-0">
                   <MapPin size={14} className="text-foreground" />
