@@ -177,7 +177,7 @@ export default function Navbar() {
 
               <Link
                 href={href(lang, 'booking')}
-                className={`hidden md:block text-sm font-sans font-semibold px-4 py-2 rounded-full transition-all duration-200 hover:shadow-lg cursor-pointer ${
+                className={`text-xs sm:text-sm font-sans font-semibold px-3 py-1.5 sm:px-4 sm:py-2 rounded-full transition-all duration-200 hover:shadow-lg cursor-pointer whitespace-nowrap ${
                   scrolled ? 'bg-foreground hover:bg-foreground/90 text-background' : 'bg-[#FFF4CC] hover:bg-[rgba(255,244,204,0.9)] text-[#1A4731]'
                 }`}
                 data-cursor="view"
@@ -274,14 +274,6 @@ export default function Navbar() {
             {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
             {theme === 'dark' ? dict.nav.themeLight : dict.nav.themeDark}
           </button>
-
-          <Link
-            href={href(lang, 'booking')}
-            onClick={() => setMenuOpen(false)}
-            className="drawer-item block text-center w-full bg-foreground hover:bg-foreground/90 text-background font-semibold py-3 rounded-full font-sans transition-colors cursor-pointer"
-          >
-            {dict.nav.bookNow}
-          </Link>
         </div>
       </div>
     </>
