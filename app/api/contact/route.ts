@@ -3,6 +3,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { randomUUID } from 'crypto'
 import { z } from 'zod'
+import { sendContactNotification } from '@/lib/email'
 
 const contactSchema = z.object({
   name: z.string().trim().min(1).max(120),
@@ -38,6 +39,8 @@ export async function POST(request: Request) {
     console.warn('[contact] could not persist to disk:', (err as Error).message)
   }
   console.info(`[contact] message ${record.id} from ${record.email}`)
+
+  await sendContactNotification(record)
 
   return NextResponse.json({ ok: true, id: record.id })
 }

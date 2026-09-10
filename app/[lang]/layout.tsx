@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import LenisProvider from '@/components/engine/LenisProvider'
 import PointerFx from '@/components/engine/PointerFx'
 import ScrollProgress from '@/components/engine/ScrollProgress'
+import ScrollToTopButton from '@/components/engine/ScrollToTopButton'
 import PageTransitionOverlay from '@/components/engine/PageTransitionOverlay'
 import ThemeProvider from '@/components/providers/ThemeProvider'
 import { DictProvider } from '@/components/providers/DictProvider'
@@ -64,6 +65,7 @@ export default async function LangLayout({ children, params }: Props) {
             <PageTransitionOverlay />
             <PointerFx />
             <ScrollProgress />
+            <ScrollToTopButton />
             <Navbar />
             {children}
             <Footer />

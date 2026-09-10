@@ -8,7 +8,7 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import { STORY_IMAGES } from '@/lib/content'
 import { allowAmbientMotion } from '@/lib/utils'
 import type { Dictionary } from '@/lib/types'
-import { useTrustindexReviews } from '@/lib/trustindex'
+import { useLiveReviews } from '@/lib/reviews'
 
 type Story = Dictionary['testimonials']['stories'][number] & { image: string }
 const MIN_LIVE_REVIEWS = 6
@@ -76,14 +76,14 @@ export default function GuestStories() {
   const wasLiveRef = useRef(false)
   const [marquee, setMarquee] = useState<boolean | null>(null)
 
-  const { status: trustindexStatus, reviews: liveReviews } = useTrustindexReviews()
-  const useLive = trustindexStatus === 'ready' && liveReviews.length >= MIN_LIVE_REVIEWS
+  const { status: reviewsStatus, reviews: liveReviews } = useLiveReviews()
+  const useLive = reviewsStatus === 'ready' && liveReviews.length >= MIN_LIVE_REVIEWS
 
   const stories: Story[] = useLive
     ? liveReviews.slice(0, 12).map((r, i) => ({
         name: r.name,
-        country: r.platform,
-        rating: Math.min(5, Math.max(0, Math.round((r.rating / (r.maxRating || 5)) * 5))),
+        country: 'Google',
+        rating: Math.min(5, Math.max(0, Math.round(r.rating))),
         quote: r.text,
         image: STORY_IMAGES[i % STORY_IMAGES.length],
       }))

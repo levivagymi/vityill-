@@ -6,7 +6,7 @@
   "nav": {
     "about": "About",
     "amenities": "Amenities",
-    "rooms": "Rooms",
+    "rooms": "Stay",
     "experiences": "Experiences",
     "gallery": "Gallery",
     "book": "Booking",
@@ -88,7 +88,7 @@
   },
   "rooms": {
     "label": "Our Rooms",
-    "title": "Choose Your Room",
+    "title": "Discover Our Accommodation",
     "subtitle": "Comfort and elegance on every level",
     "heroSubtitle": "A thoughtfully furnished guesthouse for up to 6 guests in total — with direct forest views.",
     "from": "From",
@@ -110,13 +110,13 @@
     "perPersonPerNight": "/person/night",
     "houseName": "Entire Guest House",
     "houseTagline": "A double-bed master room and a three-bed room — across two floors",
-    "houseDesc": "Vityilló is always booked as one: a master bedroom with a double bed and a living corner upstairs, and a three-bed room with its own bathroom downstairs — for up to 6 guests in total.",
-    "upperFloorNote": "For groups of 3–6, the upper floor is automatically included in the booking so everyone fits comfortably.",
+    "houseDesc": "Vityilló is always booked as one complete guest house — the two floors are never rented separately. Upstairs, a double-bed bedroom sits beneath a high, beamed vaulted ceiling with a wood-burning stove, while downstairs a three-bed room offers its own bathroom and direct garden access. Together, the two floors comfortably host up to 6 guests — ideal for groups of friends and multi-generational family getaways alike.",
+    "upperFloorNote": "For bookings of 3–6 guests, both floors — the double-bed bedroom and the three-bed room — are automatically included, so everyone has comfortable space.",
     "room1": {
       "name": "Upper Floor",
       "tagline": "Master bedroom & living area",
-      "desc": "Spacious master bedroom with a double bed, elegant living area and full bathroom with shower cabin. Direct forest panorama views.",
-      "long": "The upper floor is Vityilló's most spacious unit: a comfortable double bed, a separate living corner and a full bathroom with a generous shower cabin. Large windows open directly onto the surrounding forest, so every morning greets you with green canopies and birdsong.",
+      "desc": "Spacious double-bed bedroom with a beamed vaulted ceiling, a wood-burning stove, a full bathroom, and direct forest views.",
+      "long": "The upper floor is Vityilló's most striking space: a comfortable double bed sits beneath a high, beamed vaulted ceiling, with a separate living corner and a wood-burning stove that keeps things cozy on cooler evenings. A full bathroom with a shower cabin is attached, and large windows open onto direct forest views — greeting every morning with green treetops and birdsong. The space comfortably sleeps 2–4 guests: a romantic retreat for couples, or additional space for larger groups alongside the three-bed room below.",
       "beds": "Double bed",
       "size": "42 m²",
       "guests": "2–4 guests",
@@ -127,9 +127,11 @@
         "Forest View"
       ],
       "highlights": [
-        "Direct forest panorama",
-        "Separate living area",
+        "Double bed beneath a high beamed ceiling",
+        "Wood-burning stove for cozy evenings",
+        "Separate living corner",
         "Full bathroom with shower cabin",
+        "Direct forest views",
         "AC and Smart TV"
       ],
       "price": "120"
@@ -137,8 +139,8 @@
     "room2": {
       "name": "Lower Floor",
       "tagline": "Three single beds",
-      "desc": "Three-bed room with its own bathroom and shower cabin. Garden access directly from the room.",
-      "long": "The lower floor is ideal for friends or families: three comfortable single beds, a private bathroom and direct garden access. Through the garden door, the sauna, pool and bonfire terrace are just a few steps away.",
+      "desc": "Three-bed room with tiled floors, its own bathroom, and direct garden access — just steps from the sauna and pool.",
+      "long": "The lower floor's three single beds are ideal for groups of friends, siblings, or the younger members of a larger family. The bright, tiled-floor room has its own bathroom with a shower cabin, and a door opening straight onto the garden — just steps from the sauna, the outdoor pool, and the bogrács grill terrace. The room comfortably sleeps 2–3 guests, and for bookings of 3–6 people it combines with the upper floor so the whole group stays comfortably together.",
       "beds": "3 × Single beds",
       "size": "34 m²",
       "guests": "2–3 guests",
@@ -148,9 +150,11 @@
         "Garden Access"
       ],
       "highlights": [
+        "Three single beds",
+        "Tiled floor",
+        "Own bathroom with shower cabin",
         "Direct garden access",
-        "Private bathroom with shower cabin",
-        "Steps from the sauna",
+        "Steps from the sauna and pool",
         "AC and Smart TV"
       ],
       "price": "100"
@@ -406,6 +410,9 @@
     "accept": "Accept",
     "decline": "Decline",
     "more": "Privacy Policy"
+  },
+  "scrollTop": {
+    "label": "Back to top"
   },
   "legal": {
     "updated": "Last updated",
