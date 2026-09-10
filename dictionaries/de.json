@@ -378,6 +378,7 @@
     "goTo": "Bewertung",
     "wallTitle": "Geschichten unserer Gäste",
     "wallSubtitle": "Echte Momente von Menschen, die hier aufgetankt haben",
+    "ratingOnlyQuote": "Hat nur bewertet, ohne geschriebene Rezension.",
     "stories": [
       { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "Sauna und Außenpool waren perfekt. Jeden Morgen weckte uns Vogelgesang — pure Magie." },
       { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung in Szomód ist atemberaubend." },

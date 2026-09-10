@@ -46,13 +46,15 @@ type SerpApiReviewsResponse = {
 }
 
 /** Mirrors the old trustindex parser's defensive philosophy: skip individual
- *  bad/non-Google-sourced reviews, never fail the whole batch. */
+ *  bad/non-Google-sourced reviews, never fail the whole batch. Rating-only
+ *  reviews (no written text) are kept - `text` may be '' - GuestStories.tsx
+ *  substitutes a translated placeholder line for the quote in that case. */
 function parseReview(raw: SerpApiRawReview): GoogleReview | null {
   if (raw.source !== 'Google') return null
   const id = raw.review_id
   const name = raw.user?.name?.trim()
   const text = (raw.extracted_snippet?.original || raw.extracted_snippet?.translated || raw.snippet || '').trim()
-  if (!id || !name || !text) return null
+  if (!id || !name) return null
   return { id, name, rating: Number.isFinite(raw.rating) ? (raw.rating as number) : 0, text }
 }
 

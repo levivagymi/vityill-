@@ -378,6 +378,7 @@
     "goTo": "Review",
     "wallTitle": "Guest stories",
     "wallSubtitle": "Real moments from the people who recharged here",
+    "ratingOnlyQuote": "Left a rating only, without a written review.",
     "stories": [
       { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "The sauna and outdoor pool were perfect. We woke to birdsong every morning — pure magic." },
       { "name": "Thomas Müller", "country": "Vienna, AT", "rating": 5, "quote": "A beautiful place to unwind. The Szomód countryside setting is breathtaking." },

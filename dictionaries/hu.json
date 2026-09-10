@@ -378,6 +378,7 @@
     "goTo": "Vélemény",
     "wallTitle": "Vendégeink történetei",
     "wallSubtitle": "Valódi pillanatok azoktól, akik nálunk töltődtek fel",
+    "ratingOnlyQuote": "Csak értékelést hagyott, szöveges vélemény nélkül.",
     "stories": [
       { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "A szauna és a kültéri medence tökéletes volt. Reggel a madarak énekére ébredtünk — varázslatos." },
       { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung in Szomód ist atemberaubend." },

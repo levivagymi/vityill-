@@ -11,7 +11,7 @@ import type { Dictionary } from '@/lib/types'
 import { useLiveReviews } from '@/lib/reviews'
 
 type Story = Dictionary['testimonials']['stories'][number] & { image: string }
-const MIN_LIVE_REVIEWS = 6
+const MIN_LIVE_REVIEWS = 5
 
 function Stars({ count }: { count: number }) {
   return (
@@ -63,15 +63,14 @@ function StoryCard({ story }: { story: Story }) {
 }
 
 /**
- * Immersive guest wall: two counter-drifting marquee rows of photo-backed
- * quotes (x-transform only, paused on hover / off-screen). Reduced-motion
- * and save-data visitors get the same cards as a static wrapped grid.
+ * Immersive guest wall: a single drifting marquee row of photo-backed quotes
+ * (x-transform only, paused on hover / off-screen). Reduced-motion and
+ * save-data visitors get the same cards as a static wrapped grid.
  */
 export default function GuestStories() {
   const dict = useDict()
   const sectionRef = useRef<HTMLElement>(null)
   const rowARef = useRef<HTMLDivElement>(null)
-  const rowBRef = useRef<HTMLDivElement>(null)
   const storiesWrapRef = useRef<HTMLDivElement>(null)
   const wasLiveRef = useRef(false)
   const [marquee, setMarquee] = useState<boolean | null>(null)
@@ -84,15 +83,13 @@ export default function GuestStories() {
         name: r.name,
         country: 'Google',
         rating: Math.min(5, Math.max(0, Math.round(r.rating))),
-        quote: r.text,
+        quote: r.text || dict.testimonials.ratingOnlyQuote,
         image: STORY_IMAGES[i % STORY_IMAGES.length],
       }))
     : dict.testimonials.stories.map((s, i) => ({
         ...s,
         image: STORY_IMAGES[i % STORY_IMAGES.length],
       }))
-  const rowA = stories.filter((_, i) => i % 2 === 0)
-  const rowB = stories.filter((_, i) => i % 2 === 1)
 
   useEffect(() => {
     // One-time hydration of a browser-only media-query/save-data check.
@@ -124,7 +121,6 @@ export default function GuestStories() {
         return tween
       }
       drift(rowARef.current, 1, 48)
-      drift(rowBRef.current, -1, 60)
     }, sectionRef)
     return () => ctx.revert()
   }, [marquee])
@@ -165,17 +161,10 @@ export default function GuestStories() {
 
       <div ref={storiesWrapRef}>
         {marquee ? (
-          <div className="relative flex flex-col gap-5" role="region" aria-label={dict.testimonials.wallTitle}>
+          <div className="relative" role="region" aria-label={dict.testimonials.wallTitle}>
             <div className="overflow-hidden" style={{ maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)' }}>
               <div ref={rowARef} className="flex w-max gap-5" style={{ willChange: 'transform' }}>
-                {[...rowA, ...rowA].map((s, i) => (
-                  <StoryCard key={`${s.name}-${i}`} story={s} />
-                ))}
-              </div>
-            </div>
-            <div className="overflow-hidden" style={{ maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)' }}>
-              <div ref={rowBRef} className="flex w-max gap-5" style={{ willChange: 'transform' }}>
-                {[...rowB, ...rowB].map((s, i) => (
+                {[...stories, ...stories].map((s, i) => (
                   <StoryCard key={`${s.name}-${i}`} story={s} />
                 ))}
               </div>
