@@ -17,6 +17,7 @@ export default function PageHero({
   imageAlt,
   crumbs = [],
   emblem = true,
+  compact = false,
 }: {
   title: string
   subtitle?: string
@@ -24,6 +25,11 @@ export default function PageHero({
   imageAlt: string
   crumbs?: Crumb[]
   emblem?: boolean
+  /** Shrunk banner for when this hero has to share a viewport with other
+   *  content (e.g. pinned inside ExperiencesScroll's cycling card) - drops
+   *  the emblem/breadcrumb/subtitle and shrinks the title so the remaining
+   *  height budget goes to whatever it's sharing the screen with. */
+  compact?: boolean
 }) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -51,7 +57,7 @@ export default function PageHero({
   return (
     <section
       ref={ref}
-      className="relative min-h-[58svh] sm:min-h-[64svh] flex items-end overflow-hidden"
+      className={`relative flex items-end overflow-hidden ${compact ? 'min-h-[24svh] sm:min-h-[28svh]' : 'min-h-[58svh] sm:min-h-[64svh]'}`}
       aria-label={title}
     >
       <div className="ph-img absolute inset-0">
@@ -60,10 +66,10 @@ export default function PageHero({
       <div className="absolute inset-0 bg-[#0a1f14]/70" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#1A4731]/95 via-[#1A4731]/40 to-[#1A4731]/30" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 lg:pb-16 pt-28">
-        {emblem && <EmblemMark height={40} tone="light" className="ph-el mb-5" />}
+      <div className={`relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${compact ? 'pb-6 pt-16' : 'pb-12 lg:pb-16 pt-28'}`}>
+        {emblem && !compact && <EmblemMark height={40} tone="light" className="ph-el mb-5" />}
 
-        {crumbs.length > 0 && (
+        {crumbs.length > 0 && !compact && (
           <nav aria-label="Breadcrumb" className="ph-el mb-4">
             <ol className="flex flex-wrap items-center gap-1.5 text-xs font-sans text-[rgba(255,244,204,0.6)]">
               {crumbs.map((c, i) => (
@@ -80,10 +86,10 @@ export default function PageHero({
           </nav>
         )}
 
-        <h1 className="ph-el font-heading text-4xl sm:text-5xl lg:text-6xl text-[#FFF4CC] leading-[1.05] tracking-tight max-w-3xl">
+        <h1 className={`ph-el font-heading text-[#FFF4CC] leading-[1.05] tracking-tight max-w-3xl ${compact ? 'text-2xl sm:text-3xl' : 'text-4xl sm:text-5xl lg:text-6xl'}`}>
           {title}
         </h1>
-        {subtitle && (
+        {subtitle && !compact && (
           <p className="ph-el font-sans text-base sm:text-lg text-[rgba(255,244,204,0.7)] max-w-2xl mt-5 leading-relaxed">
             {subtitle}
           </p>

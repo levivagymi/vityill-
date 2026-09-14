@@ -299,6 +299,18 @@ html[data-fx='full'] .fx-reveal {
   opacity: 0;
 }
 
+/* Experiences scrollytelling: lite mode never builds the GSAP pin/timeline
+   (see ExperiencesScroll.tsx's fxFull() guard), so force the plain fallback
+   list even at desktop width - otherwise the cycling markup would be visible
+   per the lg:motion-safe: CSS gate but frozen on item 1 forever. Keep in sync
+   with ExperiencesScroll.tsx's guard, same as the .fx-reveal rule above. */
+html[data-fx='lite'] .exp-cycle-wrap {
+  display: none !important;
+}
+html[data-fx='lite'] .exp-fallback-wrap {
+  display: block !important;
+}
+
 /* backdrop-filter makes the compositor re-sample everything behind a fixed or
    sticky surface on every scrolled frame, which is the most expensive piece of
    decoration on a weak GPU. Every blurred surface here sits on a background of
