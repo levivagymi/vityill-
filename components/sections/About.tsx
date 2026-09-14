@@ -2,7 +2,7 @@
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { Trees, Users, MapPin } from 'lucide-react'
-import gsap from '@/lib/gsap'
+import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import { EmblemMark } from '@/components/brand/Logo'
 import { imageUrl } from '@/lib/content'
@@ -35,7 +35,42 @@ export default function About() {
         })
       })
     }, sectionRef)
-    return () => ctx.revert()
+
+    // Desktop-only: pin the portrait while the text column scrolls past it.
+    // Below lg the layout stacks into one column, where a pin would fight the
+    // natural flow instead of reading as a parallax effect.
+    const mm = gsap.matchMedia()
+    mm.add('(min-width: 1024px)', () => {
+      const pinCtx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          // No offset needed: the section's own lg:py-32 top padding already
+          // clears the fixed navbar (lg:h-20).
+          start: 'top top',
+          // A fixed distance rather than 'bottom bottom': the section's own
+          // height barely exceeds the viewport, which would give the pin only
+          // ~100px to hold before releasing - too brief to read as fixed.
+          end: '+=600',
+          pin: '.about-pin',
+          // .about-left (the pin target's own parent) carries the entrance
+          // slide-in's transform. A transform on an ancestor - even resolved
+          // to identity - makes it the containing block for a `position:
+          // fixed` descendant, so the default fixed pinType would anchor the
+          // pin to that box instead of the viewport. Transform-based pinning
+          // sidesteps that: it holds position via its own translate instead
+          // of escaping to `fixed`.
+          pinType: 'transform',
+          pinSpacing: true,
+          invalidateOnRefresh: true,
+        })
+      }, sectionRef)
+      return () => pinCtx.revert()
+    })
+
+    return () => {
+      ctx.revert()
+      mm.revert()
+    }
   }, [])
 
   const badges = [
@@ -50,25 +85,32 @@ export default function About() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="about-left fx-reveal relative">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
-              <Image
-                src={imageUrl('house-exterior-portrait')}
-                alt="A Vityilló Vendégház kertje és terasza, erdővel körülvéve"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+            {/* Separate node from .about-left: pinning and the entrance
+                slide-in both drive `transform`, and sharing one element
+                between a ScrollTrigger pin and a scroll-triggered tween
+                corrupts the resolved transform once the pin releases. */}
+            <div className="about-pin relative">
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
+                <Image
+
+                  src={imageUrl('house-exterior-portrait')}
+                  alt="A Vityilló Vendégház kertje és terasza, erdővel körülvéve"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              </div>
+              <div
+                className="about-card fx-reveal absolute -bottom-6 -right-4 lg:-right-8 bg-card/95 backdrop-blur-md border border-foreground/[0.15] rounded-xl p-4 lg:p-5 shadow-xl"
+              >
+                <div className="text-3xl lg:text-4xl font-heading font-bold text-foreground leading-none">{MAX_GUESTS}</div>
+                <div className="text-xs font-sans text-foreground/50 mt-1 uppercase tracking-wider">{dict.about.maxGuestsLabel}</div>
+                <div className="text-xs font-sans text-foreground/35 mt-0.5">Szomód</div>
+              </div>
+              <div className="absolute -top-4 -left-4 w-24 h-px bg-gradient-to-r from-foreground/30 to-transparent" />
+              <div className="absolute -top-4 -left-4 w-px h-24 bg-gradient-to-b from-foreground/30 to-transparent" />
             </div>
-            <div
-              className="about-card fx-reveal absolute -bottom-6 -right-4 lg:-right-8 bg-card/95 backdrop-blur-md border border-foreground/[0.15] rounded-xl p-4 lg:p-5 shadow-xl"
-            >
-              <div className="text-3xl lg:text-4xl font-heading font-bold text-foreground leading-none">{MAX_GUESTS}</div>
-              <div className="text-xs font-sans text-foreground/50 mt-1 uppercase tracking-wider">{dict.about.maxGuestsLabel}</div>
-              <div className="text-xs font-sans text-foreground/35 mt-0.5">Szomód</div>
-            </div>
-            <div className="absolute -top-4 -left-4 w-24 h-px bg-gradient-to-r from-foreground/30 to-transparent" />
-            <div className="absolute -top-4 -left-4 w-px h-24 bg-gradient-to-b from-foreground/30 to-transparent" />
           </div>
 
           <div className="lg:pl-6">
