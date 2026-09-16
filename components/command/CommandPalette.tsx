@@ -28,7 +28,7 @@ export default function CommandPalette() {
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Portal>
         <Dialog.Backdrop
-          className="fixed inset-0 z-[80] bg-black/55 backdrop-blur-sm
+          className="fixed inset-0 z-[80] bg-[#0a1f14]/55 backdrop-blur-sm
                      transition-opacity duration-300
                      data-[starting-style]:opacity-0 data-[ending-style]:opacity-0"
         />
@@ -138,20 +138,20 @@ function PaletteSurface({ close }: { close: () => void }) {
   return (
     <>
       <div className="flex items-center gap-3 px-5 py-4 border-b border-foreground/[0.08]">
-        <Search size={16} className="text-foreground/40 shrink-0" aria-hidden />
+        <Search size={16} className="text-muted-foreground shrink-0" aria-hidden />
         <input
           autoFocus
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={onKeyDown}
           placeholder={dict.command.placeholder}
-          className="w-full bg-transparent font-sans text-sm text-foreground placeholder:text-foreground/35 outline-none"
+          className="w-full bg-transparent font-sans text-sm text-foreground placeholder:text-muted-foreground outline-none"
           role="combobox"
           aria-expanded="true"
           aria-controls="command-listbox"
           aria-activedescendant={results[activeIdx]?.id}
         />
-        <kbd className="hidden sm:block shrink-0 font-sans text-[10px] uppercase tracking-wider text-foreground/35 border border-foreground/15 rounded-md px-1.5 py-0.5">
+        <kbd className="hidden sm:block shrink-0 font-sans text-[10px] uppercase tracking-wider text-muted-foreground border border-foreground/15 rounded-md px-1.5 py-0.5">
           Esc
         </kbd>
       </div>
@@ -164,14 +164,14 @@ function PaletteSurface({ close }: { close: () => void }) {
         className="max-h-[46vh] overflow-y-auto overscroll-contain py-2"
       >
         {results.length === 0 && (
-          <p className="px-5 py-8 text-center font-sans text-sm text-foreground/40">
+          <p className="px-5 py-8 text-center font-sans text-sm text-muted-foreground">
             {dict.command.empty}
           </p>
         )}
         {grouped.map(({ group, items }) => (
           <div key={group}>
             {!query.trim() && (
-              <p className="px-5 pt-3 pb-1.5 font-sans text-[10px] uppercase tracking-[0.25em] text-foreground/35">
+              <p className="px-5 pt-3 pb-1.5 font-sans text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
                 {groupLabels[group]}
               </p>
             )}
@@ -190,7 +190,7 @@ function PaletteSurface({ close }: { close: () => void }) {
                   onMouseMove={() => setActiveIdx(idx)}
                   data-cursor="view"
                   className={`flex w-full items-center gap-3 px-5 py-2.5 text-left font-sans text-sm transition-colors duration-150 cursor-pointer ${
-                    active ? 'bg-foreground/[0.07] text-foreground' : 'text-foreground/65'
+                    active ? 'bg-foreground/[0.07] text-foreground' : 'text-muted-foreground'
                   }`}
                   style={
                     active
@@ -198,12 +198,12 @@ function PaletteSurface({ close }: { close: () => void }) {
                       : undefined
                   }
                 >
-                  <Icon size={15} className={active ? 'text-foreground' : 'text-foreground/40'} aria-hidden />
+                  <Icon size={15} className={active ? 'text-foreground' : 'text-muted-foreground'} aria-hidden />
                   <span className="flex-1 truncate">{cmd.label}</span>
                   {cmd.hint && (
-                    <span className="text-[10px] uppercase tracking-wider text-foreground/30">{cmd.hint}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{cmd.hint}</span>
                   )}
-                  {active && <CornerDownLeft size={13} className="text-foreground/35" aria-hidden />}
+                  {active && <CornerDownLeft size={13} className="text-muted-foreground" aria-hidden />}
                 </button>
               )
             })}
@@ -211,10 +211,10 @@ function PaletteSurface({ close }: { close: () => void }) {
         ))}
       </div>
 
-      <div className="flex items-center gap-4 px-5 py-2.5 border-t border-foreground/[0.08] font-sans text-[10px] text-foreground/35">
-        <span><kbd className="text-foreground/50">↑↓</kbd> {dict.command.hintNavigate}</span>
-        <span><kbd className="text-foreground/50">↵</kbd> {dict.command.hintRun}</span>
-        <span><kbd className="text-foreground/50">Esc</kbd> {dict.command.hintClose}</span>
+      <div className="flex items-center gap-4 px-5 py-2.5 border-t border-foreground/[0.08] font-sans text-[10px] text-muted-foreground">
+        <span><kbd className="text-muted-foreground">↑↓</kbd> {dict.command.hintNavigate}</span>
+        <span><kbd className="text-muted-foreground">↵</kbd> {dict.command.hintRun}</span>
+        <span><kbd className="text-muted-foreground">Esc</kbd> {dict.command.hintClose}</span>
       </div>
     </>
   )

@@ -59,43 +59,43 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           <div className="footer-col lg:col-span-1">
             <Logo variant="full" height={84} tone="auto" className="mb-2" />
-            <p className="text-sm text-foreground/45 font-sans leading-relaxed mt-4 max-w-xs">
+            <p className="text-sm text-muted-foreground font-sans leading-relaxed mt-4 max-w-xs">
               {dict.footer.tagline}
             </p>
             <div className="mt-6 inline-flex items-center gap-2 border border-foreground/20 rounded-full px-3 py-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
-              <span className="text-[11px] font-sans text-foreground/60 tracking-wider uppercase">
+              <span className="text-[11px] font-sans text-muted-foreground tracking-wider uppercase">
                 {dict.footer.ntak}
               </span>
             </div>
           </div>
 
           <div className="footer-col">
-            <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-foreground/40 mb-5">
+            <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-muted-foreground mb-5">
               {dict.footer.contact}
             </h4>
             <ul className="space-y-3">
-              <li className="flex items-center gap-3 text-sm text-foreground/55 font-sans">
-                <Phone size={14} className="text-foreground/60 shrink-0" />
+              <li className="flex items-center gap-3 text-sm text-muted-foreground font-sans">
+                <Phone size={14} className="text-muted-foreground shrink-0" />
                 <a href={`tel:${dict.footer.phone.replace(/\s/g, '')}`} className="hover:text-foreground transition-colors">
                   {dict.footer.phone}
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-sm text-foreground/55 font-sans">
-                <Mail size={14} className="text-foreground/60 shrink-0" />
+              <li className="flex items-center gap-3 text-sm text-muted-foreground font-sans">
+                <Mail size={14} className="text-muted-foreground shrink-0" />
                 <a href={`mailto:${dict.footer.email}`} className="hover:text-foreground transition-colors">
                   {dict.footer.email}
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-sm text-foreground/55 font-sans">
-                <MapPin size={14} className="text-foreground/60 shrink-0 mt-0.5" />
+              <li className="flex items-start gap-3 text-sm text-muted-foreground font-sans">
+                <MapPin size={14} className="text-muted-foreground shrink-0 mt-0.5" />
                 <span>{dict.footer.address}</span>
               </li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-foreground/40 mb-5">
+            <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-muted-foreground mb-5">
               {dict.footer.navTitle}
             </h4>
             <ul className="space-y-2">
@@ -103,7 +103,7 @@ export default function Footer() {
                 <li key={dictKey}>
                   <Link
                     href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)}
-                    className="text-sm text-foreground/55 hover:text-foreground font-sans transition-colors cursor-pointer"
+                    className="text-sm text-muted-foreground hover:text-foreground font-sans transition-colors cursor-pointer"
                   >
                     {dict.nav[dictKey]}
                   </Link>
@@ -112,7 +112,7 @@ export default function Footer() {
               <li>
                 <Link
                   href={href(lang, 'booking')}
-                  className="text-sm text-foreground/55 hover:text-foreground font-sans transition-colors cursor-pointer"
+                  className="text-sm text-muted-foreground hover:text-foreground font-sans transition-colors cursor-pointer"
                 >
                   {dict.nav.book}
                 </Link>
@@ -121,7 +121,7 @@ export default function Footer() {
           </div>
 
           <div className="footer-col">
-            <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-foreground/40 mb-5">
+            <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-muted-foreground mb-5">
               {dict.footer.legal}
             </h4>
             <ul className="space-y-2 mb-7">
@@ -129,7 +129,7 @@ export default function Footer() {
                 <li key={key}>
                   <Link
                     href={href(lang, key)}
-                    className="text-sm text-foreground/55 hover:text-foreground font-sans transition-colors cursor-pointer"
+                    className="text-sm text-muted-foreground hover:text-foreground font-sans transition-colors cursor-pointer"
                   >
                     {label}
                   </Link>
@@ -137,7 +137,7 @@ export default function Footer() {
               ))}
             </ul>
 
-            <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-foreground/40 mb-3">
+            <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">
               {dict.footer.social}
             </h4>
             <div className="flex gap-3">
@@ -146,7 +146,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-9 h-9 rounded-full border border-foreground/[0.12] flex items-center justify-center text-foreground/50 hover:text-foreground hover:border-foreground/40 transition-all"
+                className="w-9 h-9 rounded-full border border-foreground/[0.12] flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-all"
               >
                 <FacebookIcon />
               </a>
@@ -155,7 +155,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="w-9 h-9 rounded-full border border-foreground/[0.12] flex items-center justify-center text-foreground/50 hover:text-foreground hover:border-foreground/40 transition-all"
+                className="w-9 h-9 rounded-full border border-foreground/[0.12] flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-all"
               >
                 <InstagramIcon />
               </a>
@@ -164,12 +164,12 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-foreground/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-foreground/40 font-sans">
+          <p className="text-xs text-muted-foreground font-sans">
             © {new Date().getFullYear()} Vityilló Vendégház. {dict.footer.rights}
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             {legalLinks.map(({ key, label }) => (
-              <Link key={key} href={href(lang, key)} className="text-xs text-foreground/40 hover:text-foreground/70 font-sans transition-colors">
+              <Link key={key} href={href(lang, key)} className="text-xs text-muted-foreground hover:text-foreground font-sans transition-colors">
                 {label}
               </Link>
             ))}

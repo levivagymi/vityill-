@@ -73,7 +73,7 @@ export default function Amenities() {
                   <Icon size={22} className="text-foreground" />
                 </div>
                 <h3 className="font-heading text-lg mb-2">{dict.amenities[key].name}</h3>
-                <p className="font-sans text-sm text-foreground/60 leading-relaxed">{dict.amenities[key].desc}</p>
+                <p className="font-sans text-sm text-muted-foreground leading-relaxed">{dict.amenities[key].desc}</p>
                 <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-foreground/10 border border-foreground/15
                                 flex items-center justify-center opacity-0 translate-x-1 -translate-y-1
                                 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300">

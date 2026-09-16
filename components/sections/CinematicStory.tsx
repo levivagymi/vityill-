@@ -573,27 +573,35 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A4731]/40 via-transparent to-[#0a1a10]/80" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+        {/* text-shadow (inherited by all children below) is a deliberate
+            robustness measure: this text sits over a live, scrubbing video
+            with only a via-transparent gradient at the vertical center, so
+            a flat overlay percentage can't guarantee contrast against an
+            arbitrary frame. A tight, low-blur shadow keeps legibility
+            independent of the video's instantaneous brightness without
+            reading as glow/halation. */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+          style={{ textShadow: '0 1px 3px rgba(0,0,0,0.55), 0 3px 14px rgba(0,0,0,0.3)' }}>
           <div className="ce-hero-el flex items-center gap-3 mb-6" style={{ willChange: 'transform' }}>
             <div className="h-px w-12 bg-[rgba(255,244,204,.35)]" />
-            <span className="font-sans text-[rgba(255,244,204,.7)] text-xs uppercase tracking-[.35em]">Szomód · Magyarország</span>
+            <span className="font-sans text-on-dark-strong text-xs uppercase tracking-[.35em]">Szomód · Magyarország</span>
             <div className="h-px w-12 bg-[rgba(255,244,204,.35)]" />
           </div>
-          <h2 className="ce-hero-el font-heading text-5xl sm:text-7xl lg:text-8xl text-[#FFF4CC] leading-none tracking-tight mb-3"
+          <h2 className="ce-hero-el font-heading text-5xl sm:text-7xl lg:text-8xl text-on-dark-strong leading-none tracking-tight mb-3"
             style={{ willChange: 'transform' }}>
             Vityilló
           </h2>
-          <p className="ce-hero-el font-heading text-2xl sm:text-3xl text-[rgba(255,244,204,.72)] italic mb-5"
+          <p className="ce-hero-el font-heading text-2xl sm:text-3xl text-on-dark-strong italic mb-5"
             style={{ willChange: 'transform' }}>
             Vendégház
           </p>
-          <p className="ce-hero-el font-sans text-sm sm:text-base text-[rgba(255,244,204,.52)] max-w-md leading-relaxed mb-10"
+          <p className="ce-hero-el font-sans text-sm sm:text-base text-on-dark-muted max-w-md leading-relaxed mb-10"
             style={{ willChange: 'transform' }}>
             {dict.cinematic.tagline}
           </p>
           <div className="ce-hero-el w-44 h-12 rounded-full border border-[rgba(255,244,204,.28)] flex items-center justify-center"
             style={{ willChange: 'transform' }}>
-            <span className="font-sans text-sm text-[rgba(255,244,204,.55)] tracking-wide">{dict.cinematic.explore}</span>
+            <span className="font-sans text-sm text-on-dark-strong tracking-wide">{dict.cinematic.explore}</span>
           </div>
         </div>
       </div>
@@ -602,7 +610,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
       <div className="ph1-house-img absolute inset-0" style={{ zIndex: 2, willChange: 'transform,opacity,filter' }}>
         <Image
           src={imageUrl('cinematic-house-facade')}
-          alt="" fill className="object-cover" sizes="100vw" priority
+          alt="" fill className="object-cover" sizes="100vw" preload
         />
         <div className="ph1-window absolute" style={{
           top: '36%', left: '33%', width: '11%', height: '7%', borderRadius: 4, willChange: 'opacity',
@@ -654,8 +662,8 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
               alt="" fill className="object-cover" sizes="430px" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#060f08]/88 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4">
-              <p className="font-heading text-[#FFF4CC] text-xl sm:text-2xl">{dict.cinematic.jacuzzi}</p>
-              <p className="font-sans text-[rgba(255,244,204,.48)] text-xs mt-1">{dict.cinematic.jacuzziDesc}</p>
+              <p className="font-heading text-on-dark-strong text-xl sm:text-2xl">{dict.cinematic.jacuzzi}</p>
+              <p className="font-sans text-on-dark-muted text-xs mt-1">{dict.cinematic.jacuzziDesc}</p>
             </div>
           </div>
           <div className="ph3-sauna relative flex-1 rounded-2xl overflow-hidden"
@@ -664,8 +672,8 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
               alt="" fill className="object-cover" sizes="430px" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#060f08]/88 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4">
-              <p className="font-heading text-[#FFF4CC] text-xl sm:text-2xl">{dict.cinematic.sauna}</p>
-              <p className="font-sans text-[rgba(255,244,204,.48)] text-xs mt-1">{dict.cinematic.saunaDesc}</p>
+              <p className="font-heading text-on-dark-strong text-xl sm:text-2xl">{dict.cinematic.sauna}</p>
+              <p className="font-sans text-on-dark-muted text-xs mt-1">{dict.cinematic.saunaDesc}</p>
             </div>
           </div>
         </div>
@@ -684,7 +692,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           style={{ willChange: 'opacity' }}>
           <div className="ph4-l1 flex items-baseline overflow-hidden" aria-label={dict.cinematic.floors}>
             {typo1.map((ch, i) => (
-              <span key={i} className="ph4-letter font-heading text-[#FFF4CC] inline-block"
+              <span key={i} className="ph4-letter font-heading text-on-dark-strong inline-block"
                 style={{ fontSize: 'clamp(44px,8vw,88px)', lineHeight: 1, letterSpacing: '-0.02em', willChange: 'transform,opacity' }}>
                 {ch === ' ' ? ' ' : ch}
               </span>
@@ -692,7 +700,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           </div>
           <div className="ph4-l2 flex items-baseline overflow-hidden" aria-label={dict.cinematic.guests}>
             {typo2.map((ch, i) => (
-              <span key={i} className="ph4-letter font-sans text-[rgba(255,244,204,.38)] inline-block uppercase tracking-[.22em]"
+              <span key={i} className="ph4-letter font-sans text-on-dark-muted inline-block uppercase tracking-[.22em]"
                 style={{ fontSize: 'clamp(13px,2.1vw,22px)', willChange: 'transform,opacity' }}>
                 {ch === ' ' ? ' ' : ch}
               </span>
@@ -720,13 +728,16 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a1a10]/38 to-[#0a1a10]/58" />
         </div>
+        {/* Same video/photo-backdrop robustness shadow as the PH1 hero
+            cluster: the gradient behind this text tops out at 58% opacity
+            over real interior photos, not a guaranteed-dark solid. */}
         <div className="ph5-text absolute inset-0 flex flex-col items-start justify-center pl-[54%]"
-          style={{ willChange: 'transform,opacity' }}>
-          <p className="font-sans text-[rgba(255,244,204,.36)] uppercase tracking-[.35em] mb-3"
+          style={{ willChange: 'transform,opacity', textShadow: '0 1px 3px rgba(0,0,0,0.5), 0 3px 14px rgba(0,0,0,0.3)' }}>
+          <p className="font-sans text-on-dark-muted uppercase tracking-[.35em] mb-3"
             style={{ fontSize: 10 }}>
             {dict.cinematic.materialsLabel}
           </p>
-          <h2 className="font-heading text-[#FFF4CC] leading-tight whitespace-pre-line" style={{ fontSize: 'clamp(24px,3.8vw,50px)' }}>
+          <h2 className="font-heading text-on-dark-strong leading-tight whitespace-pre-line" style={{ fontSize: 'clamp(24px,3.8vw,50px)' }}>
             {dict.cinematic.materialsTitle}
           </h2>
         </div>
@@ -748,10 +759,10 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           background: 'radial-gradient(ellipse 70% 100% at 50% 100%,rgba(255,88,0,.52) 0%,rgba(255,45,0,.26) 45%,transparent 100%)',
         }} />
         <div className="absolute top-[22%] left-0 right-0 text-center" style={{ zIndex: 4 }}>
-          <p className="font-sans text-[rgba(255,244,204,.3)] uppercase tracking-[.4em] mb-3" style={{ fontSize: 10 }}>
+          <p className="font-sans text-on-dark-muted uppercase tracking-[.4em] mb-3" style={{ fontSize: 10 }}>
             {dict.cinematic.gastroLabel}
           </p>
-          <h2 className="font-heading text-[#FFF4CC]" style={{ fontSize: 'clamp(28px,5vw,60px)' }}>
+          <h2 className="font-heading text-on-dark-strong" style={{ fontSize: 'clamp(28px,5vw,60px)' }}>
             {dict.cinematic.gastroTitle}
           </h2>
         </div>
@@ -783,7 +794,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           filter: 'blur(22px)', willChange: 'transform,opacity',
         }} />
         <div className="absolute bottom-14 left-1/2 -translate-x-1/2 text-center" style={{ zIndex: 10 }}>
-          <p className="font-sans text-[rgba(255,244,204,.26)] uppercase tracking-[.45em]" style={{ fontSize: 10 }}>
+          <p className="font-sans text-on-dark-muted uppercase tracking-[.45em]" style={{ fontSize: 10 }}>
             {dict.cinematic.nightLabel}
           </p>
         </div>
@@ -799,7 +810,7 @@ export default function CinematicStory({ onFinish }: { onFinish?: () => void }) 
           </div>
         ))}
         {dict.cinematic.words.map((word, i) => (
-          <div key={i} className="ph8-asset absolute font-heading text-[#FFF4CC] pointer-events-none select-none"
+          <div key={i} className="ph8-asset absolute font-heading text-on-dark-strong pointer-events-none select-none"
             style={{
               top:  `${12 + i * 13}%`,
               left: `${18 + (i % 3) * 28}%`,

@@ -53,16 +53,16 @@ export default function SubpageShell({
 
         <div className="absolute inset-x-0 bottom-0 z-[4] px-4 sm:px-6 lg:px-8 pb-14 sm:pb-16">
           <div className="max-w-7xl mx-auto">
-            <p className="font-sans uppercase tracking-[0.3em] text-foreground/50 mb-3" style={{ fontSize: 'var(--step--1)' }}>
+            <p className="font-sans uppercase tracking-[0.3em] text-muted-foreground mb-3" style={{ fontSize: 'var(--step--1)' }}>
               {eyebrow}
             </p>
             <h1 className="font-heading text-foreground leading-[1.02] tracking-tight max-w-3xl" style={{ fontSize: 'var(--step-5)' }}>
               {title}
             </h1>
-            <p className="font-sans text-foreground/60 leading-relaxed max-w-xl mt-4" style={{ fontSize: 'var(--step-0)' }}>
+            <p className="font-sans text-muted-foreground leading-relaxed max-w-xl mt-4" style={{ fontSize: 'var(--step-0)' }}>
               {desc}
             </p>
-            <p className="mt-8 flex items-center gap-2 font-sans text-[11px] uppercase tracking-[0.25em] text-foreground/35">
+            <p className="mt-8 flex items-center gap-2 font-sans text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
               <ChevronDown size={13} aria-hidden /> {dict.experiences.scrollHint}
             </p>
           </div>
@@ -74,7 +74,7 @@ export default function SubpageShell({
         <div className="max-w-7xl mx-auto">
           <Reveal className="max-w-2xl">
             <div className="bg-background/80 backdrop-blur-md border border-foreground/10 rounded-2xl p-7 lg:p-10 shadow-2xl shadow-black/20">
-              <p className="editorial-measure font-sans text-foreground/70 leading-[1.85]" style={{ fontSize: 'var(--step-0)' }}>
+              <p className="editorial-measure font-sans text-foreground leading-[1.85]" style={{ fontSize: 'var(--step-0)' }}>
                 {detail}
               </p>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-8">
@@ -89,7 +89,7 @@ export default function SubpageShell({
                 </Magnetic>
                 <Link
                   href={href(lang, 'experiences')}
-                  className="inline-flex items-center gap-2 font-sans text-sm text-foreground/55 hover:text-foreground transition-colors duration-200 cursor-pointer"
+                  className="inline-flex items-center gap-2 font-sans text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer"
                   data-cursor="view"
                 >
                   <ArrowLeft size={14} aria-hidden /> {dict.experiences.back}
@@ -104,7 +104,7 @@ export default function SubpageShell({
                 <Link
                   key={s}
                   href={experienceHref(lang, s)}
-                  className="inline-flex items-center gap-2 bg-background/70 backdrop-blur border border-foreground/15 hover:border-foreground/40 text-foreground/70 hover:text-foreground font-sans text-sm px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-background/70 backdrop-blur border border-foreground/15 hover:border-foreground/40 text-foreground hover:text-foreground font-sans text-sm px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer"
                   data-cursor="view"
                 >
                   {dict.experiences[s].title} <ArrowRight size={13} aria-hidden />

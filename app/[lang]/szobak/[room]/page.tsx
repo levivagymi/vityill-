@@ -65,7 +65,7 @@ export default async function RoomDetailPage({ params }: Props) {
           <div className="lg:col-span-2 space-y-12">
             <Reveal>
               <h2 className="font-heading text-2xl sm:text-3xl mb-4">{dict.rooms.overviewTitle}</h2>
-              <p className="font-sans text-foreground/60 leading-[1.85] text-base">{r.long}</p>
+              <p className="font-sans text-muted-foreground leading-[1.85] text-base">{r.long}</p>
             </Reveal>
 
             <Reveal>
@@ -76,7 +76,7 @@ export default async function RoomDetailPage({ params }: Props) {
                     <span className="w-7 h-7 rounded-full bg-foreground/10 border border-foreground/15 flex items-center justify-center shrink-0">
                       <Check size={14} className="text-foreground" />
                     </span>
-                    <span className="font-sans text-sm text-foreground/75">{h}</span>
+                    <span className="font-sans text-sm text-foreground">{h}</span>
                   </li>
                 ))}
               </ul>
@@ -101,15 +101,15 @@ export default async function RoomDetailPage({ params }: Props) {
                 <span className="font-heading text-4xl font-semibold text-foreground">
                   {formatHUF(fromRatePerPerson(), lang)}
                 </span>
-                <span className="text-foreground/45 text-sm font-sans">{dict.rooms.perPersonPerNight}</span>
+                <span className="text-muted-foreground text-sm font-sans">{dict.rooms.perPersonPerNight}</span>
               </div>
-              <p className="text-xs font-sans text-foreground/40 mb-6">{dict.rooms.priceNote}</p>
+              <p className="text-xs font-sans text-muted-foreground mb-6">{dict.rooms.priceNote}</p>
 
               <ul className="space-y-3 mb-6">
                 {specs.map(({ icon: Icon, label, value }) => (
                   <li key={label} className="flex items-center justify-between text-sm font-sans">
-                    <span className="flex items-center gap-2 text-foreground/55"><Icon size={15} className="text-foreground/50" /> {label}</span>
-                    <span className="text-foreground/85">{value}</span>
+                    <span className="flex items-center gap-2 text-muted-foreground"><Icon size={15} className="text-muted-foreground" /> {label}</span>
+                    <span className="text-foreground">{value}</span>
                   </li>
                 ))}
               </ul>
@@ -123,7 +123,7 @@ export default async function RoomDetailPage({ params }: Props) {
               </Link>
               <Link
                 href={roomHref(lang, otherSlug)}
-                className="flex items-center justify-center gap-2 w-full border border-foreground/20 hover:border-foreground/45 text-foreground/70 hover:text-foreground font-sans text-sm py-3 rounded-xl transition-all cursor-pointer"
+                className="flex items-center justify-center gap-2 w-full border border-foreground/20 hover:border-foreground/45 text-foreground hover:text-foreground font-sans text-sm py-3 rounded-xl transition-all cursor-pointer"
                 data-cursor="view"
               >
                 <ArrowLeft size={14} /> {dict.rooms[otherKey].name}

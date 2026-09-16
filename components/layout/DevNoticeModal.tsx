@@ -106,7 +106,7 @@ export default function DevNoticeModal() {
     <>
       <div
         ref={overlayRef}
-        className="fixed inset-0 z-[9990] bg-black/70 backdrop-blur-sm"
+        className="fixed inset-0 z-[9990] bg-[#0a1f14]/70 backdrop-blur-sm"
         style={{ opacity: 0 }}
       />
       <div
@@ -129,10 +129,10 @@ export default function DevNoticeModal() {
           <h2 id="dev-notice-title" className="font-heading text-foreground text-xl leading-tight mb-4">
             {copy.title}
           </h2>
-          <p className="font-sans text-sm text-foreground/65 leading-relaxed mb-3">
+          <p className="font-sans text-sm text-foreground leading-relaxed mb-3">
             {copy.body}
           </p>
-          <p className="font-sans text-xs text-foreground/45 leading-relaxed mb-7 border-t border-foreground/[0.08] pt-3">
+          <p className="font-sans text-xs text-muted-foreground leading-relaxed mb-7 border-t border-foreground/[0.08] pt-3">
             {copy.sub}
           </p>
 

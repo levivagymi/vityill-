@@ -39,25 +39,25 @@ export default async function ContactPage({ params }: Props) {
             <div className="bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 sm:p-8">
               <h3 className="font-heading text-xl mb-6">{c.infoTitle}</h3>
               <ul className="space-y-4">
-                <li className="flex items-center gap-3 text-sm font-sans text-foreground/70">
+                <li className="flex items-center gap-3 text-sm font-sans text-foreground">
                   <span className="w-9 h-9 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center shrink-0">
                     <Phone size={15} className="text-foreground" />
                   </span>
                   <a href={`tel:${dict.footer.phone.replace(/\s/g, '')}`} className="hover:text-foreground transition-colors">{dict.footer.phone}</a>
                 </li>
-                <li className="flex items-center gap-3 text-sm font-sans text-foreground/70">
+                <li className="flex items-center gap-3 text-sm font-sans text-foreground">
                   <span className="w-9 h-9 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center shrink-0">
                     <Mail size={15} className="text-foreground" />
                   </span>
                   <a href={`mailto:${dict.footer.email}`} className="hover:text-foreground transition-colors">{dict.footer.email}</a>
                 </li>
-                <li className="flex items-start gap-3 text-sm font-sans text-foreground/70">
+                <li className="flex items-start gap-3 text-sm font-sans text-foreground">
                   <span className="w-9 h-9 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center shrink-0">
                     <MapPin size={15} className="text-foreground" />
                   </span>
                   <span>{dict.location.address}</span>
                 </li>
-                <li className="flex items-start gap-3 text-sm font-sans text-foreground/70">
+                <li className="flex items-start gap-3 text-sm font-sans text-foreground">
                   <span className="w-9 h-9 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center shrink-0">
                     <Clock size={15} className="text-foreground" />
                   </span>

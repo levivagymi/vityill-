@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { Quote, Star } from 'lucide-react'
+import { Quote, Star, ArrowUpRight } from 'lucide-react'
 import gsap, { ScrollTrigger } from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
+import Magnetic from '@/components/ui/Magnetic'
 import { STORY_IMAGES } from '@/lib/content'
 import { allowAmbientMotion } from '@/lib/utils'
 import type { Dictionary } from '@/lib/types'
@@ -12,6 +13,10 @@ import { useLiveReviews } from '@/lib/reviews'
 
 type Story = Dictionary['testimonials']['stories'][number] & { image: string }
 const MIN_LIVE_REVIEWS = 5
+/** Vityilló's Google Maps place - same business as GOOGLE_MAPS_DATA_ID in
+ *  lib/serpapi.ts, given here as the short link so guests land straight on
+ *  the listing (and its "Write a review" action) instead of an embed pin. */
+const GOOGLE_REVIEW_URL = 'https://maps.app.goo.gl/Kvpc7SHD3JPtGYfS9'
 
 function Stars({ count }: { count: number }) {
   return (
@@ -46,15 +51,15 @@ function StoryCard({ story }: { story: Story }) {
         <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
       </div>
       <blockquote className="p-5">
-        <Quote size={18} className="text-foreground/20 mb-2.5" aria-hidden />
-        <p className="font-sans text-sm text-foreground/65 leading-[1.75] line-clamp-4">
+        <Quote size={18} className="text-muted-foreground mb-2.5" aria-hidden />
+        <p className="font-sans text-sm text-foreground leading-[1.75] line-clamp-4">
           &ldquo;{story.quote}&rdquo;
         </p>
       </blockquote>
       <figcaption className="flex items-center justify-between px-5 pb-5">
         <div>
-          <div className="font-sans font-semibold text-sm text-foreground/90">{story.name}</div>
-          <div className="font-sans text-xs text-foreground/35">{story.country}</div>
+          <div className="font-sans font-semibold text-sm text-foreground">{story.name}</div>
+          <div className="font-sans text-xs text-muted-foreground">{story.country}</div>
         </div>
         <Stars count={story.rating} />
       </figcaption>
@@ -75,7 +80,7 @@ export default function GuestStories() {
   const wasLiveRef = useRef(false)
   const [marquee, setMarquee] = useState<boolean | null>(null)
 
-  const { status: reviewsStatus, reviews: liveReviews } = useLiveReviews()
+  const { status: reviewsStatus, reviews: liveReviews, totalCount: liveTotalCount, avgRating: liveAvgRating } = useLiveReviews()
   const useLive = reviewsStatus === 'ready' && liveReviews.length >= MIN_LIVE_REVIEWS
 
   const stories: Story[] = useLive
@@ -92,10 +97,17 @@ export default function GuestStories() {
       }))
 
   const ratingPool = useLive ? liveReviews.map((r) => r.rating) : dict.testimonials.stories.map((s) => s.rating)
-  const avgRating = ratingPool.length ? ratingPool.reduce((sum, r) => sum + r, 0) / ratingPool.length : 0
-  const satisfiedPercent = ratingPool.length
-    ? Math.round((ratingPool.filter((r) => r >= 4).length / ratingPool.length) * 100)
-    : 0
+  // liveTotalCount/liveAvgRating come from Google's place-level stats (SerpApi's
+  // place_info), covering every review Google has - not just the handful this
+  // page fetched for the quote wall. Prefer them whenever live data is in play;
+  // fall back to the fetched/curated sample only if SerpApi didn't report them.
+  const avgRating =
+    useLive && liveAvgRating !== null
+      ? liveAvgRating
+      : ratingPool.length
+        ? ratingPool.reduce((sum, r) => sum + r, 0) / ratingPool.length
+        : 0
+  const reviewCount = useLive && liveTotalCount !== null ? liveTotalCount : ratingPool.length
 
   useEffect(() => {
     // One-time hydration of a browser-only media-query/save-data check.
@@ -192,18 +204,32 @@ export default function GuestStories() {
             <div className="flex justify-center mt-1">
               <Stars count={Math.round(avgRating)} />
             </div>
-            <div className="text-xs font-sans text-foreground/30 mt-1 uppercase tracking-wider">{dict.testimonials.avgLabel}</div>
+            <div className="text-xs font-sans text-muted-foreground mt-1 uppercase tracking-wider">{dict.testimonials.avgLabel}</div>
           </div>
           <div className="w-px h-12 bg-foreground/[0.08]" />
           <div className="text-center">
-            <div className="font-heading text-3xl text-foreground font-semibold">{satisfiedPercent}%</div>
-            <div className="text-xs font-sans text-foreground/30 mt-2 uppercase tracking-wider">{dict.testimonials.satisfiedLabel}</div>
+            <div className="font-heading text-3xl text-foreground font-semibold">{reviewCount}</div>
+            <div className="text-xs font-sans text-muted-foreground mt-2 uppercase tracking-wider">{dict.testimonials.reviewCountLabel}</div>
           </div>
           <div className="w-px h-12 bg-foreground/[0.08]" />
           <div className="text-center">
             <div className="font-heading text-3xl text-foreground font-semibold">★★★</div>
-            <div className="text-xs font-sans text-foreground/30 mt-2 uppercase tracking-wider">{dict.testimonials.starsLabel}</div>
+            <div className="text-xs font-sans text-muted-foreground mt-2 uppercase tracking-wider">{dict.testimonials.starsLabel}</div>
           </div>
+        </div>
+
+        <div className="flex justify-center mt-10">
+          <Magnetic>
+            <a
+              href={GOOGLE_REVIEW_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 text-background font-sans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200 cursor-pointer"
+              data-cursor="view"
+            >
+              {dict.testimonials.leaveReviewCta} <ArrowUpRight size={15} aria-hidden />
+            </a>
+          </Magnetic>
         </div>
       </div>
     </section>

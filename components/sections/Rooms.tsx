@@ -34,7 +34,7 @@ function HouseCard({ lang, dict }: { lang: Locale; dict: ReturnType<typeof useDi
         <div className="absolute top-4 left-4 bg-background/85 backdrop-blur border border-foreground/15 rounded-xl px-4 py-2">
           <div className="flex items-baseline gap-1">
             <span className="text-foreground font-heading text-2xl font-semibold">{formatHUF(price, lang)}</span>
-            <span className="text-foreground/45 text-xs font-sans">{dict.rooms.perPersonPerNight}</span>
+            <span className="text-muted-foreground text-xs font-sans">{dict.rooms.perPersonPerNight}</span>
           </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
@@ -43,11 +43,11 @@ function HouseCard({ lang, dict }: { lang: Locale; dict: ReturnType<typeof useDi
       <div className="flex flex-col p-8 lg:p-10">
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px w-8 bg-foreground/30" />
-          <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.25em]">{dict.rooms.houseName}</span>
+          <span className="text-muted-foreground text-xs font-sans uppercase tracking-[0.25em]">{dict.rooms.houseName}</span>
         </div>
         <h3 className="font-heading text-2xl sm:text-3xl mb-3 leading-tight">{dict.rooms.houseTagline}</h3>
-        <p className="font-sans text-sm leading-relaxed mb-4 text-foreground/55">{dict.rooms.houseDesc}</p>
-        <p className="text-xs font-sans text-foreground/45 leading-relaxed flex items-start gap-2 mb-6">
+        <p className="font-sans text-sm leading-relaxed mb-4 text-muted-foreground">{dict.rooms.houseDesc}</p>
+        <p className="text-xs font-sans text-muted-foreground leading-relaxed flex items-start gap-2 mb-6">
           <span className="w-1.5 h-1.5 rounded-full bg-foreground/50 mt-1.5 shrink-0" />
           {dict.rooms.upperFloorNote}
         </p>
@@ -55,16 +55,16 @@ function HouseCard({ lang, dict }: { lang: Locale; dict: ReturnType<typeof useDi
           <Link
             href={upperHref}
             onClick={(e) => setPendingFlip(e.currentTarget, ROOM_MEDIA.room1.hero)}
-            className="text-foreground/65 hover:text-foreground underline underline-offset-2 transition-colors"
+            className="text-foreground hover:text-foreground underline underline-offset-2 transition-colors"
             data-cursor="view"
           >
             {dict.rooms.room1.name}
           </Link>
-          <span className="text-foreground/30">·</span>
+          <span className="text-muted-foreground">·</span>
           <Link
             href={lowerHref}
             onClick={(e) => setPendingFlip(e.currentTarget, ROOM_MEDIA.room2.hero)}
-            className="text-foreground/65 hover:text-foreground underline underline-offset-2 transition-colors"
+            className="text-foreground hover:text-foreground underline underline-offset-2 transition-colors"
             data-cursor="view"
           >
             {dict.rooms.room2.name}
@@ -116,7 +116,7 @@ export default function Rooms({ withHeading = true }: { withHeading?: boolean })
         {withHeading && (
           <div className="rooms-header fx-reveal mb-16 lg:mb-20">
             <SectionHeading label={dict.rooms.label} title={dict.rooms.title} subtitle={dict.rooms.subtitle} />
-            <p className="font-sans text-xs uppercase tracking-widest text-center text-foreground/40 mt-3">{dict.rooms.maxGuests}</p>
+            <p className="font-sans text-xs uppercase tracking-widest text-center text-muted-foreground mt-3">{dict.rooms.maxGuests}</p>
           </div>
         )}
 

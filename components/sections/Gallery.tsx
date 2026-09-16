@@ -123,7 +123,7 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
           <div className="text-center mt-10">
             <Link
               href={href(lang, 'gallery')}
-              className="inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/55 text-foreground/80 hover:text-foreground font-sans font-semibold text-sm px-6 py-3 rounded-full transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/55 text-foreground hover:text-foreground font-sans font-semibold text-sm px-6 py-3 rounded-full transition-all cursor-pointer"
               data-cursor="view"
             >
               {dict.common.viewAll} <ArrowRight size={15} />
@@ -134,7 +134,7 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
 
       {lightboxIdx !== null && (
         <div
-          className={`fixed inset-0 z-[70] bg-black/96 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-200 ${lightboxVisible ? 'opacity-100' : 'opacity-0'}`}
+          className={`fixed inset-0 z-[70] bg-[#0a1f14]/96 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-200 ${lightboxVisible ? 'opacity-100' : 'opacity-0'}`}
           onClick={closeLightbox}
           role="dialog"
           aria-modal="true"
@@ -147,16 +147,16 @@ export default function Gallery({ limit, withHeading = true }: { limit?: number;
           </div>
 
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-            <span className="text-sm font-sans text-white/50">{lightboxIdx + 1} {dict.gallery.of} {images.length}</span>
+            <span className="text-sm font-sans text-on-dark-muted">{lightboxIdx + 1} {dict.gallery.of} {images.length}</span>
           </div>
 
-          <button ref={closeBtnRef} onClick={closeLightbox} className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-white/80 hover:text-white transition-all cursor-pointer" aria-label={dict.gallery.close}>
+          <button ref={closeBtnRef} onClick={closeLightbox} className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-on-dark-muted hover:text-on-dark-strong transition-all cursor-pointer" aria-label={dict.gallery.close}>
             <X size={18} />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); prevImage() }} className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-white/80 hover:text-white transition-all cursor-pointer" aria-label={dict.gallery.prev}>
+          <button onClick={(e) => { e.stopPropagation(); prevImage() }} className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-on-dark-muted hover:text-on-dark-strong transition-all cursor-pointer" aria-label={dict.gallery.prev}>
             <ChevronLeft size={20} />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); nextImage() }} className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-white/80 hover:text-white transition-all cursor-pointer" aria-label={dict.gallery.next}>
+          <button onClick={(e) => { e.stopPropagation(); nextImage() }} className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/15 border border-white/15 flex items-center justify-center text-on-dark-muted hover:text-on-dark-strong transition-all cursor-pointer" aria-label={dict.gallery.next}>
             <ChevronRight size={20} />
           </button>
         </div>

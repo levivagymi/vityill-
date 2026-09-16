@@ -92,10 +92,10 @@ export default function About() {
             <div className="about-pin relative">
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
                 <Image
-
                   src={imageUrl('house-exterior-portrait')}
                   alt="A Vityilló Vendégház kertje és terasza, erdővel körülvéve"
                   fill
+                  preload
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
@@ -105,8 +105,8 @@ export default function About() {
                 className="about-card fx-reveal absolute -bottom-6 -right-4 lg:-right-8 bg-card/95 backdrop-blur-md border border-foreground/[0.15] rounded-xl p-4 lg:p-5 shadow-xl"
               >
                 <div className="text-3xl lg:text-4xl font-heading font-bold text-foreground leading-none">{MAX_GUESTS}</div>
-                <div className="text-xs font-sans text-foreground/50 mt-1 uppercase tracking-wider">{dict.about.maxGuestsLabel}</div>
-                <div className="text-xs font-sans text-foreground/35 mt-0.5">Szomód</div>
+                <div className="text-xs font-sans text-muted-foreground mt-1 uppercase tracking-wider">{dict.about.maxGuestsLabel}</div>
+                <div className="text-xs font-sans text-muted-foreground mt-0.5">Szomód</div>
               </div>
               <div className="absolute -top-4 -left-4 w-24 h-px bg-gradient-to-r from-foreground/30 to-transparent" />
               <div className="absolute -top-4 -left-4 w-px h-24 bg-gradient-to-b from-foreground/30 to-transparent" />
@@ -119,22 +119,22 @@ export default function About() {
             </div>
             <div className="about-right-el fx-reveal flex items-center gap-3 mb-5">
               <div className="h-px w-10 bg-foreground/30" />
-              <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.3em]">{dict.about.label}</span>
+              <span className="text-muted-foreground text-xs font-sans uppercase tracking-[0.3em]">{dict.about.label}</span>
             </div>
             <h2 className="about-right-el fx-reveal font-heading text-3xl sm:text-4xl lg:text-5xl leading-tight mb-6">
               {dict.about.title}
             </h2>
-            <p className="about-right-el fx-reveal font-sans text-foreground/70 leading-[1.85] text-base mb-5">
+            <p className="about-right-el fx-reveal font-sans text-foreground leading-[1.85] text-base mb-5">
               {dict.about.p1}
             </p>
-            <p className="about-right-el fx-reveal font-sans text-foreground/70 leading-[1.85] text-base mb-8">
+            <p className="about-right-el fx-reveal font-sans text-foreground leading-[1.85] text-base mb-8">
               {dict.about.p2}
             </p>
             <div className="about-right-el fx-reveal flex flex-wrap gap-3">
               {badges.map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-2 bg-foreground/[0.04] border border-foreground/10 rounded-full px-4 py-2">
-                  <Icon size={14} className="text-foreground/70" />
-                  <span className="text-sm font-sans text-foreground/65">{label}</span>
+                  <Icon size={14} className="text-foreground" />
+                  <span className="text-sm font-sans text-foreground">{label}</span>
                 </div>
               ))}
             </div>

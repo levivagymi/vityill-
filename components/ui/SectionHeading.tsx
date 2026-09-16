@@ -24,13 +24,13 @@ export default function SectionHeading({
       {label && (
         <div className={`flex items-center gap-3 mb-4 ${center ? 'justify-center' : ''}`}>
           <div className="h-px w-10 bg-foreground/40" />
-          <span className="text-foreground/60 text-xs font-sans uppercase tracking-[0.3em]">{label}</span>
+          <span className="text-muted-foreground text-xs font-sans uppercase tracking-[0.3em]">{label}</span>
           <div className="h-px w-10 bg-foreground/40" />
         </div>
       )}
       <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl leading-tight mb-4">{title}</h2>
       {subtitle && (
-        <p className={`font-sans text-base text-foreground/55 ${center ? 'max-w-xl mx-auto' : 'max-w-xl'}`}>{subtitle}</p>
+        <p className={`font-sans text-base text-muted-foreground ${center ? 'max-w-xl mx-auto' : 'max-w-xl'}`}>{subtitle}</p>
       )}
     </div>
   )

@@ -45,13 +45,13 @@ export default function BookingCta() {
 
           <div className="relative z-10 px-6 sm:px-10 lg:px-16 py-16 lg:py-24 text-center flex flex-col items-center">
             <EmblemMark height={46} tone="light" className="cta-el mb-6" />
-            <span className="cta-el text-[rgba(255,244,204,0.6)] text-xs font-sans uppercase tracking-[0.3em] mb-4">
+            <span className="cta-el text-on-dark-muted text-xs font-sans uppercase tracking-[0.3em] mb-4">
               {dict.bookingCta.label}
             </span>
-            <h2 className="cta-el font-heading text-3xl sm:text-4xl lg:text-5xl text-[#FFF4CC] leading-tight max-w-2xl mb-5">
+            <h2 className="cta-el font-heading text-3xl sm:text-4xl lg:text-5xl text-on-dark-strong leading-tight max-w-2xl mb-5">
               {dict.bookingCta.title}
             </h2>
-            <p className="cta-el font-sans text-base text-[rgba(255,244,204,0.7)] max-w-xl leading-relaxed mb-9">
+            <p className="cta-el font-sans text-base text-on-dark-muted max-w-xl leading-relaxed mb-9">
               {dict.bookingCta.text}
             </p>
             <div className="cta-el flex flex-col sm:flex-row gap-3">
@@ -66,7 +66,7 @@ export default function BookingCta() {
               </Magnetic>
               <Link
                 href={href(lang, 'contact')}
-                className="inline-flex items-center justify-center border border-[rgba(255,244,204,0.3)] hover:border-[rgba(255,244,204,0.6)] text-[#FFF4CC] font-sans font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 cursor-pointer"
+                className="inline-flex items-center justify-center border border-[rgba(255,244,204,0.3)] hover:border-[rgba(255,244,204,0.6)] text-on-dark-strong font-sans font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 cursor-pointer"
                 data-cursor="view"
               >
                 {dict.bookingCta.secondary}

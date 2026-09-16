@@ -123,16 +123,16 @@ export default function AvailabilityStrip({ compact = false }: { compact?: boole
         <div className="avail-el grid lg:grid-cols-[1fr_auto] gap-10 items-center bg-foreground/[0.03] border border-foreground/[0.08] rounded-2xl p-7 lg:p-10">
           <div>
             <div className="flex flex-wrap items-center gap-3 mb-6">
-              <span className="inline-flex items-center gap-1.5 font-sans text-xs uppercase tracking-wider text-foreground/60 bg-foreground/[0.06] border border-foreground/10 rounded-full px-3 py-1.5">
+              <span className="inline-flex items-center gap-1.5 font-sans text-xs uppercase tracking-wider text-muted-foreground bg-foreground/[0.06] border border-foreground/10 rounded-full px-3 py-1.5">
                 <CalendarDays size={12} aria-hidden />
                 {data ? seasonLabel[data.season] : '—'}
               </span>
-              <span className="font-sans text-xs uppercase tracking-wider text-foreground/45 bg-foreground/[0.04] border border-foreground/[0.08] rounded-full px-3 py-1.5">
+              <span className="font-sans text-xs uppercase tracking-wider text-muted-foreground bg-foreground/[0.04] border border-foreground/[0.08] rounded-full px-3 py-1.5">
                 {dict.availability.minNights}
               </span>
             </div>
 
-            <p className="font-sans text-sm text-foreground/55 mb-1">
+            <p className="font-sans text-sm text-muted-foreground mb-1">
               <span
                 ref={countRef}
                 className="font-heading text-4xl lg:text-5xl text-foreground font-semibold tabular-nums align-middle mr-2"
@@ -142,7 +142,7 @@ export default function AvailabilityStrip({ compact = false }: { compact?: boole
               {dict.availability.openNightsLabel}
             </p>
 
-            <p className="font-sans text-xs uppercase tracking-[0.25em] text-foreground/35 mt-6 mb-3">
+            <p className="font-sans text-xs uppercase tracking-[0.25em] text-muted-foreground mt-6 mb-3">
               {dict.availability.windowsTitle}
             </p>
             <div className="flex flex-wrap gap-2.5">
@@ -153,10 +153,10 @@ export default function AvailabilityStrip({ compact = false }: { compact?: boole
                   data-cursor="view"
                   className="group inline-flex items-baseline gap-2 border border-foreground/15 hover:border-foreground/45 bg-background/50 rounded-full px-4 py-2 transition-colors duration-200 cursor-pointer"
                 >
-                  <span className="font-sans text-sm text-foreground/85">
+                  <span className="font-sans text-sm text-foreground">
                     {fmt(w.start)} → {fmt(w.end)}
                   </span>
-                  <span className="font-sans text-xs text-foreground/40">
+                  <span className="font-sans text-xs text-muted-foreground">
                     {w.nights} {dict.availability.night}
                   </span>
                 </Link>
@@ -170,7 +170,7 @@ export default function AvailabilityStrip({ compact = false }: { compact?: boole
 
           <div className="flex flex-col items-start lg:items-end gap-5">
             <div>
-              <p className="font-sans text-[10px] uppercase tracking-[0.25em] text-foreground/35 mb-2 lg:text-right">
+              <p className="font-sans text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2 lg:text-right">
                 {dict.availability.weeksTitle}
               </p>
               <div className="avail-grid grid grid-flow-col grid-rows-7 gap-[3px]" aria-hidden>
@@ -184,7 +184,7 @@ export default function AvailabilityStrip({ compact = false }: { compact?: boole
               </div>
               <div className="flex gap-4 mt-3 lg:justify-end">
                 {(['open', 'held', 'booked'] as DayStatus[]).map((s) => (
-                  <span key={s} className="inline-flex items-center gap-1.5 font-sans text-[10px] text-foreground/45">
+                  <span key={s} className="inline-flex items-center gap-1.5 font-sans text-[10px] text-muted-foreground">
                     <span className={`w-2 h-2 rounded-[2px] ${CELL_STYLE[s]}`} aria-hidden />
                     {s === 'open' ? dict.availability.legendOpen : s === 'held' ? dict.availability.legendHeld : dict.availability.legendBooked}
                   </span>

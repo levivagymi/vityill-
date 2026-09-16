@@ -100,11 +100,11 @@ export default function Navbar() {
   // At the very top the navbar floats over a dark hero → light tone.
   // Once scrolled it sits on a solid theme surface → theme-aware tone.
   const linkColor = scrolled
-    ? 'text-foreground/70 hover:text-foreground'
-    : 'text-[rgba(255,244,204,0.8)] hover:text-[#FFF4CC]'
+    ? 'text-muted-foreground hover:text-foreground'
+    : 'text-on-dark-muted hover:text-on-dark-strong'
   const iconBtn = scrolled
-    ? 'bg-foreground/[0.06] border-foreground/10 text-foreground/70 hover:text-foreground hover:bg-foreground/[0.12]'
-    : 'bg-white/[0.08] border-white/15 text-[rgba(255,244,204,0.8)] hover:text-[#FFF4CC] hover:bg-white/[0.15]'
+    ? 'bg-foreground/[0.06] border-foreground/10 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.12]'
+    : 'bg-white/[0.08] border-white/15 text-on-dark-muted hover:text-on-dark-strong hover:bg-white/[0.15]'
 
   return (
     <>
@@ -145,7 +145,7 @@ export default function Navbar() {
                     className={`text-[11px] font-sans px-2 py-0.5 rounded-full uppercase tracking-wider transition-all duration-200 ${
                       lang === l
                         ? scrolled ? 'bg-foreground text-background font-semibold' : 'bg-[#FFF4CC] text-[#1A4731] font-semibold'
-                        : scrolled ? 'text-foreground/50 hover:text-foreground/80' : 'text-[rgba(255,244,204,0.6)] hover:text-[#FFF4CC]'
+                        : scrolled ? 'text-muted-foreground hover:text-foreground' : 'text-on-dark-muted hover:text-on-dark-strong'
                     }`}
                   >
                     {l}
@@ -161,7 +161,7 @@ export default function Navbar() {
                 data-cursor="view"
               >
                 <Search size={13} aria-hidden />
-                <kbd className="font-sans text-[10px] tracking-wider border border-current/25 rounded px-1 py-px opacity-70">
+                <kbd className="font-sans text-[10px] tracking-wider border border-current/25 rounded px-1 py-px">
                   ⌘K
                 </kbd>
               </button>
@@ -188,7 +188,7 @@ export default function Navbar() {
               <button
                 ref={menuBtnRef}
                 onClick={() => setMenuOpen((o) => !o)}
-                className={`md:hidden p-2 transition-colors cursor-pointer ${scrolled ? 'text-foreground/70 hover:text-foreground' : 'text-[rgba(255,244,204,0.85)] hover:text-[#FFF4CC]'}`}
+                className={`md:hidden p-2 transition-colors cursor-pointer ${scrolled ? 'text-muted-foreground hover:text-foreground' : 'text-on-dark-muted hover:text-on-dark-strong'}`}
                 aria-label={menuOpen ? dict.nav.menuClose : dict.nav.menuOpen}
                 aria-expanded={menuOpen}
                 aria-controls="mobile-drawer"
@@ -202,7 +202,7 @@ export default function Navbar() {
 
       <div
         ref={backdropRef}
-        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-[#0a1f14]/60 backdrop-blur-sm"
         style={{ display: 'none' }}
         onClick={() => setMenuOpen(false)}
       />
@@ -221,7 +221,7 @@ export default function Navbar() {
           <button
             ref={closeBtnRef}
             onClick={() => setMenuOpen(false)}
-            className="p-1.5 text-foreground/50 hover:text-foreground transition-colors cursor-pointer"
+            className="p-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             aria-label={dict.nav.menuClose}
           >
             <X size={20} />
@@ -231,7 +231,7 @@ export default function Navbar() {
         <nav className="flex flex-col p-5 gap-1 flex-1">
           <button
             onClick={() => { setMenuOpen(false); setCommandOpen(true) }}
-            className="drawer-item flex items-center gap-2.5 text-left py-3 px-3 mb-2 text-foreground/70 hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer border-b border-foreground/[0.08]"
+            className="drawer-item flex items-center gap-2.5 text-left py-3 px-3 mb-2 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer border-b border-foreground/[0.08]"
           >
             <Search size={16} aria-hidden />
             {dict.command.title}
@@ -241,7 +241,7 @@ export default function Navbar() {
               key={dictKey}
               href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)}
               onClick={() => setMenuOpen(false)}
-              className="drawer-item text-left py-3 px-3 text-foreground/70 hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer"
+              className="drawer-item text-left py-3 px-3 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer"
             >
               {dict.nav[dictKey]}
             </Link>
@@ -259,7 +259,7 @@ export default function Navbar() {
                 className={`drawer-item flex-1 text-center text-sm py-2 rounded-lg uppercase tracking-wider font-sans transition-all ${
                   lang === l
                     ? 'bg-foreground text-background font-bold'
-                    : 'bg-foreground/[0.06] text-foreground/50 hover:text-foreground/80'
+                    : 'bg-foreground/[0.06] text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {l}
@@ -269,7 +269,7 @@ export default function Navbar() {
 
           <button
             onClick={toggle}
-            className="drawer-item w-full flex items-center justify-center gap-2 bg-foreground/[0.06] border border-foreground/10 text-foreground/70 hover:text-foreground py-2.5 rounded-full font-sans text-sm transition-all mb-3 cursor-pointer"
+            className="drawer-item w-full flex items-center justify-center gap-2 bg-foreground/[0.06] border border-foreground/10 text-muted-foreground hover:text-foreground py-2.5 rounded-full font-sans text-sm transition-all mb-3 cursor-pointer"
           >
             {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
             {theme === 'dark' ? dict.nav.themeLight : dict.nav.themeDark}

@@ -5,3 +5,8 @@ export const CINEMATIC_STORAGE_KEY = 'hasWatchedCinematic'
  *  of video plus a pinned, scrubbed GSAP timeline, so lite mode skips it by
  *  default (lib/fx.ts) — but a visitor who asks for it by name gets it. */
 export const CINEMATIC_FORCE_KEY = 'cinematic-force'
+
+/** Per-tab: CinematicSkipPrompt won't re-mount itself once dismissed, so the
+ *  rewatch button must clear this too or the choice screen stays suppressed
+ *  for the rest of the session. */
+export const CINEMATIC_PROMPT_SEEN_KEY = 'cinematic-prompt-seen'

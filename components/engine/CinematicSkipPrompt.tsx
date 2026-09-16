@@ -1,15 +1,23 @@
 'use client'
 import { useRef, useEffect, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import { CalendarCheck, Play } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { useLenis } from '@/components/engine/LenisProvider'
 import { useDict } from '@/components/providers/DictProvider'
 import { DEV_NOTICE_DISMISSED_EVENT, devNoticeSeen } from '@/components/layout/DevNoticeModal'
 import { prefersReducedMotion } from '@/lib/utils'
+import { href } from '@/lib/nav'
+import { CINEMATIC_PROMPT_SEEN_KEY } from '@/lib/cinematic'
+import type { Locale } from '@/lib/types'
 
-const STORAGE_KEY = 'cinematic-prompt-seen'
+const STORAGE_KEY = CINEMATIC_PROMPT_SEEN_KEY
 
 export default function CinematicSkipPrompt({ onSkip }: { onSkip?: () => void }) {
   const dict = useDict()
+  const params = useParams()
+  const router = useRouter()
+  const lang = (params?.lang as Locale) ?? 'hu'
   const [visible, setVisible] = useState(false)
   const overlayRef   = useRef<HTMLDivElement>(null)
   const cardRef      = useRef<HTMLDivElement>(null)
@@ -74,8 +82,8 @@ export default function CinematicSkipPrompt({ onSkip }: { onSkip?: () => void })
       { opacity: 1, duration: 0.6, ease: 'power3.out' }
     )
     gsap.fromTo(card,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.08 }
+      { opacity: 0, y: 20, scale: 0.96 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power3.out', delay: 0.08 }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible])
@@ -101,6 +109,13 @@ export default function CinematicSkipPrompt({ onSkip }: { onSkip?: () => void })
   const handleWatch = () => dismiss()
 
   const handleSkip = () => dismiss(onSkip)
+
+  // Booking bypasses the cinematic entirely: it tears down like Skip does,
+  // then routes to the booking page once the fade-out completes.
+  const handleBook = () => dismiss(() => {
+    onSkip?.()
+    router.push(href(lang, 'booking'))
+  })
 
   // Escape behaves like "watch": close the prompt, stay at the top.
   useEffect(() => {
@@ -132,7 +147,7 @@ export default function CinematicSkipPrompt({ onSkip }: { onSkip?: () => void })
         }}
       />
 
-      {/* Bottom-center card */}
+      {/* Dead-center card: this prompt is the star of the first screen. */}
       <div
         ref={cardRef}
         role="dialog"
@@ -140,38 +155,46 @@ export default function CinematicSkipPrompt({ onSkip }: { onSkip?: () => void })
         aria-labelledby="cinematic-prompt-title"
         style={{
           position: 'fixed',
-          bottom: '2rem',
+          top: '50%',
           left: '50%',
-          transform: 'translateX(-50%)',
+          transform: 'translate(-50%, -50%)',
           zIndex: 9993,
           width: 'calc(100% - 2rem)',
-          maxWidth: 400,
+          maxWidth: 420,
           background: '#0a1a10',
           border: '1px solid rgba(255,244,204,0.15)',
-          borderRadius: 14,
-          padding: '1.5rem',
+          borderRadius: 16,
+          padding: '2rem 1.75rem',
           opacity: 0,
         }}
       >
-        <p id="cinematic-prompt-title" className="font-heading text-[#FFF4CC] text-lg leading-snug mb-1">
+        <p
+          id="cinematic-prompt-title"
+          className="font-heading text-on-dark-strong text-xl sm:text-2xl leading-snug text-center mb-7"
+        >
           {dict.cinematic.skipTitle}
         </p>
-        <p className="font-sans text-[rgba(255,244,204,0.5)] text-xs leading-relaxed mb-5">
-          {dict.cinematic.skipText}
-        </p>
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-2.5">
           <button
-            onClick={handleSkip}
-            className="flex-1 py-2.5 rounded-full border border-[rgba(255,244,204,0.35)] text-[rgba(255,244,204,0.6)] font-sans text-sm hover:bg-[rgba(255,244,204,0.08)] transition-colors"
+            onClick={handleBook}
+            className="flex items-center justify-center gap-2 py-3 rounded-full border border-[rgba(255,244,204,0.35)] text-on-dark-strong font-sans font-medium text-sm hover:bg-[rgba(255,244,204,0.08)] transition-colors"
           >
-            {dict.cinematic.skipBtn}
+            <CalendarCheck size={16} aria-hidden />
+            {dict.cinematic.bookBtn}
           </button>
           <button
             ref={watchRef}
             onClick={handleWatch}
-            className="flex-1 py-2.5 rounded-full bg-[#FFF4CC] text-[#1A4731] font-sans font-semibold text-sm hover:scale-[1.03] transition-transform"
+            className="flex items-center justify-center gap-2 py-3 rounded-full bg-[#FFF4CC] text-[#1A4731] font-sans font-semibold text-sm hover:scale-[1.03] transition-transform"
           >
+            <Play size={16} aria-hidden fill="currentColor" />
             {dict.cinematic.watchBtn}
+          </button>
+          <button
+            onClick={handleSkip}
+            className="py-2 text-on-dark-muted font-sans text-xs hover:text-on-dark-strong transition-colors"
+          >
+            {dict.cinematic.skipBtn}
           </button>
         </div>
       </div>

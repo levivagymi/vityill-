@@ -15,6 +15,13 @@
   --color-forest: #1A4731;
   --color-cream: #FFF4CC;
 
+  /* Always-light-on-dark text, for surfaces that stay dark regardless of
+     site theme (PageHero, unscrolled Navbar over the hero photo, Gallery
+     lightbox, CinematicStory) — must not flip with .dark, so these are
+     registered separately from --color-foreground/--color-muted-foreground. */
+  --color-on-dark-strong: var(--on-dark-strong);
+  --color-on-dark-muted: var(--on-dark-muted);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -61,6 +68,16 @@
   --text-step-4: var(--step-4);
   --text-step-5: var(--step-5);
   --text-step-6: var(--step-6);
+
+  /* Micro-typography floor for small print: generous line-height (exceeds
+     WCAG 1.4.8's AAA >=1.5x guidance) + slight letter-spacing for crisp
+     rendering on low-DPI screens, and a weight floor so text-xs/text-sm
+     never render thinner than medium. */
+  --text-xs--line-height: 1.55;
+  --text-xs--letter-spacing: 0.01em;
+  --text-xs--font-weight: 500;
+  --text-sm--line-height: 1.6;
+  --text-sm--letter-spacing: 0.005em;
 }
 
 /* Light mode */
@@ -77,10 +94,12 @@
   --secondary: rgba(26,71,49,0.08);
   --secondary-foreground: #1A4731;
   --muted: rgba(26,71,49,0.06);
-  --muted-foreground: rgba(26,71,49,0.55);
+  /* Solid, not alpha-faded: WCAG-verified ~7.7:1 against #FFF4CC (AAA). */
+  --muted-foreground: #2C553D;
   --accent: rgba(26,71,49,0.08);
   --accent-foreground: #1A4731;
-  --destructive: oklch(0.577 0.245 27.325);
+  /* WCAG-verified ~8.2:1 against #FFF4CC (AAA) — typical UI reds fail here. */
+  --destructive: #8B2020;
   --border: rgba(26,71,49,0.12);
   --input: rgba(26,71,49,0.12);
   --ring: #1A4731;
@@ -115,10 +134,13 @@
   --secondary: rgba(255,244,204,0.06);
   --secondary-foreground: #FFF4CC;
   --muted: rgba(255,244,204,0.05);
-  --muted-foreground: rgba(255,244,204,0.5);
+  /* Same literal color as --on-dark-muted (declared once in :root below) —
+     dark mode's "muted text on dark" is exactly that always-dark case. */
+  --muted-foreground: var(--on-dark-muted);
   --accent: rgba(255,244,204,0.06);
   --accent-foreground: #FFF4CC;
-  --destructive: oklch(0.704 0.191 22.216);
+  /* WCAG-verified ~7.3:1 against #1A4731 (AAA) — typical UI reds fail here. */
+  --destructive: #FFC9C9;
   --border: rgba(255,244,204,0.08);
   --input: rgba(255,244,204,0.08);
   --ring: #FFF4CC;
@@ -142,6 +164,14 @@
    cream-leaning aurora in dark mode, forest-leaning in light mode. Glow is
    reserved for focus/hover/active states — never used as a surface fill. */
 :root {
+  /* Text on surfaces that are always dark regardless of site theme (hero
+     photo scrims, the Gallery lightbox, CinematicStory) — deliberately NOT
+     declared inside .dark/[data-theme], so light mode doesn't flip them.
+     Both are solid (never alpha-faded) and WCAG-verified against #1A4731:
+     --on-dark-strong ~9.6:1, --on-dark-muted ~7.4:1 (AAA). */
+  --on-dark-strong: #FFF4CC;
+  --on-dark-muted: #DDDAB5;
+
   --glow: color-mix(in oklch, var(--foreground) 82%, #7CF0B4);
   --glow-soft: color-mix(in oklch, var(--glow) 18%, transparent);
   --glow-ring: color-mix(in oklch, var(--glow) 55%, transparent);
@@ -158,26 +188,6 @@
   --step-4: clamp(2.44rem, 2.07rem + 1.86vw, 3.55rem);
   --step-5: clamp(3.05rem, 2.49rem + 2.82vw, 4.74rem);
   --step-6: clamp(3.81rem, 2.98rem + 4.19vw, 6.31rem);
-}
-
-[data-theme="light"] {
-  --background: #FFF4CC;
-  --foreground: #1A4731;
-  --card: #FFF4CC;
-  --card-foreground: #1A4731;
-  --popover: #FFF4CC;
-  --popover-foreground: #1A4731;
-  --primary: #1A4731;
-  --primary-foreground: #FFF4CC;
-  --secondary: rgba(26,71,49,0.08);
-  --secondary-foreground: #1A4731;
-  --muted: rgba(26,71,49,0.06);
-  --muted-foreground: rgba(26,71,49,0.55);
-  --accent: rgba(26,71,49,0.08);
-  --accent-foreground: #1A4731;
-  --border: rgba(26,71,49,0.12);
-  --input: rgba(26,71,49,0.12);
-  --ring: #1A4731;
 }
 
 @layer base {
@@ -215,8 +225,7 @@
 
 /* Hide custom cursor rings while the cinematic section is active.
    data-cinematic is toggled on <html> by CinematicStory ScrollTrigger callbacks. */
-[data-cinematic="true"] .ce-cursor-outer,
-[data-cinematic="true"] .ce-cursor-inner {
+[data-cinematic="true"] .ce-cursor-dot {
   opacity: 0 !important;
   transition: opacity 0.25s ease;
 }

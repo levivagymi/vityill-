@@ -69,8 +69,8 @@ function ReviewCard({ review, isActive }: { review: typeof REVIEWS[0]; isActive:
           : 'border-foreground/[0.07] opacity-50 scale-95'
       }`}
     >
-      <Quote size={24} className="text-foreground/20 mb-4" />
-      <p className="font-sans text-sm text-foreground/60 leading-[1.8] mb-5 line-clamp-4">
+      <Quote size={24} className="text-muted-foreground mb-4" />
+      <p className="font-sans text-sm text-muted-foreground leading-[1.8] mb-5 line-clamp-4">
         &ldquo;{review.text}&rdquo;
       </p>
       <div className="flex items-center justify-between">
@@ -79,8 +79,8 @@ function ReviewCard({ review, isActive }: { review: typeof REVIEWS[0]; isActive:
             {review.flag}
           </div>
           <div>
-            <div className="font-sans font-semibold text-sm text-foreground/90">{review.name}</div>
-            <div className="font-sans text-xs text-foreground/35">{review.location}</div>
+            <div className="font-sans font-semibold text-sm text-foreground">{review.name}</div>
+            <div className="font-sans text-xs text-muted-foreground">{review.location}</div>
           </div>
         </div>
         <Star5 count={review.rating} />
@@ -210,17 +210,17 @@ export default function Testimonials() {
             <div className="flex justify-center mt-1">
               <Star5 count={5} />
             </div>
-            <div className="text-xs font-sans text-foreground/30 mt-1 uppercase tracking-wider">{dict.testimonials.avgLabel}</div>
+            <div className="text-xs font-sans text-muted-foreground mt-1 uppercase tracking-wider">{dict.testimonials.avgLabel}</div>
           </div>
           <div className="w-px h-12 bg-foreground/[0.08]" />
           <div className="text-center">
             <div className="font-heading text-3xl text-foreground font-semibold">100%</div>
-            <div className="text-xs font-sans text-foreground/30 mt-2 uppercase tracking-wider">{dict.testimonials.satisfiedLabel}</div>
+            <div className="text-xs font-sans text-muted-foreground mt-2 uppercase tracking-wider">{dict.testimonials.satisfiedLabel}</div>
           </div>
           <div className="w-px h-12 bg-foreground/[0.08]" />
           <div className="text-center">
             <div className="font-heading text-3xl text-foreground font-semibold">★★★★★</div>
-            <div className="text-xs font-sans text-foreground/30 mt-2 uppercase tracking-wider">{dict.testimonials.starsLabel}</div>
+            <div className="text-xs font-sans text-muted-foreground mt-2 uppercase tracking-wider">{dict.testimonials.starsLabel}</div>
           </div>
         </div>
       </div>

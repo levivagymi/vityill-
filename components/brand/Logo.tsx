@@ -59,13 +59,17 @@ function FullMark({ height, tone }: { height: number; tone: Tone }) {
 
 const toneText: Record<Tone, string> = {
   auto: 'text-foreground',
-  light: 'text-[#FFF4CC]',
+  light: 'text-on-dark-strong',
   dark: 'text-[#1A4731]',
 }
+// "light"/"dark" are theme-invariant (always cream-on-dark / always
+// forest-on-cream regardless of site theme), so they use the same solid,
+// AAA-verified hex as --on-dark-muted / light-mode --muted-foreground
+// rather than a theme-reactive token.
 const toneSub: Record<Tone, string> = {
-  auto: 'text-foreground/45',
-  light: 'text-[rgba(255,244,204,0.6)]',
-  dark: 'text-[rgba(26,71,49,0.55)]',
+  auto: 'text-muted-foreground',
+  light: 'text-on-dark-muted',
+  dark: 'text-[#2C553D]',
 }
 
 export default function Logo({

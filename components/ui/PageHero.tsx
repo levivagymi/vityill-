@@ -61,7 +61,7 @@ export default function PageHero({
       aria-label={title}
     >
       <div className="ph-img absolute inset-0">
-        <Image src={image} alt={imageAlt} fill priority className="object-cover" sizes="100vw" />
+        <Image src={image} alt={imageAlt} fill preload className="object-cover" sizes="100vw" />
       </div>
       <div className="absolute inset-0 bg-[#0a1f14]/70" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#1A4731]/95 via-[#1A4731]/40 to-[#1A4731]/30" />
@@ -71,26 +71,26 @@ export default function PageHero({
 
         {crumbs.length > 0 && !compact && (
           <nav aria-label="Breadcrumb" className="ph-el mb-4">
-            <ol className="flex flex-wrap items-center gap-1.5 text-xs font-sans text-[rgba(255,244,204,0.6)]">
+            <ol className="flex flex-wrap items-center gap-1.5 text-xs font-sans text-on-dark-muted">
               {crumbs.map((c, i) => (
                 <li key={i} className="flex items-center gap-1.5">
                   {c.href ? (
-                    <Link href={c.href} className="hover:text-[#FFF4CC] transition-colors">{c.label}</Link>
+                    <Link href={c.href} className="hover:text-on-dark-strong transition-colors">{c.label}</Link>
                   ) : (
-                    <span className="text-[rgba(255,244,204,0.9)]">{c.label}</span>
+                    <span className="text-on-dark-strong">{c.label}</span>
                   )}
-                  {i < crumbs.length - 1 && <ChevronRight size={12} className="text-[rgba(255,244,204,0.35)]" />}
+                  {i < crumbs.length - 1 && <ChevronRight size={12} className="text-on-dark-muted" />}
                 </li>
               ))}
             </ol>
           </nav>
         )}
 
-        <h1 className={`ph-el font-heading text-[#FFF4CC] leading-[1.05] tracking-tight max-w-3xl ${compact ? 'text-2xl sm:text-3xl' : 'text-4xl sm:text-5xl lg:text-6xl'}`}>
+        <h1 className={`ph-el font-heading text-on-dark-strong leading-[1.05] tracking-tight max-w-3xl ${compact ? 'text-2xl sm:text-3xl' : 'text-4xl sm:text-5xl lg:text-6xl'}`}>
           {title}
         </h1>
         {subtitle && !compact && (
-          <p className="ph-el font-sans text-base sm:text-lg text-[rgba(255,244,204,0.7)] max-w-2xl mt-5 leading-relaxed">
+          <p className="ph-el font-sans text-base sm:text-lg text-on-dark-muted max-w-2xl mt-5 leading-relaxed">
             {subtitle}
           </p>
         )}

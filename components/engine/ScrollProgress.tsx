@@ -128,7 +128,7 @@ export default function ScrollProgress() {
                   }`}
                   style={active ? { boxShadow: '0 0 12px -2px var(--glow-soft)' } : undefined}
                 />
-                <span className="absolute right-6 whitespace-nowrap rounded-md border border-foreground/10 bg-background/90 px-2 py-1 font-sans text-[10px] uppercase tracking-wider text-foreground/70 opacity-0 translate-x-1 pointer-events-none transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100">
+                <span className="absolute right-6 whitespace-nowrap rounded-md border border-foreground/10 bg-background/90 px-2 py-1 font-sans text-[10px] uppercase tracking-wider text-foreground opacity-0 translate-x-1 pointer-events-none transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100">
                   {label}
                 </span>
               </button>

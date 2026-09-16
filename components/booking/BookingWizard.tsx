@@ -31,7 +31,7 @@ type FormData = {
 
 const inputClass =
   'w-full bg-foreground/[0.04] border border-foreground/[0.10] text-foreground placeholder-foreground/25 rounded-xl px-4 py-3 font-sans text-sm focus:outline-none focus:border-foreground/40 focus:ring-2 focus:ring-foreground/10 focus:bg-foreground/[0.06] transition-all duration-200'
-const labelClass = 'block text-xs font-sans text-foreground/50 uppercase tracking-wider mb-1.5'
+const labelClass = 'block text-xs font-sans text-muted-foreground uppercase tracking-wider mb-1.5'
 
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
@@ -42,7 +42,7 @@ function Field({ label, error, children }: { label: string; error?: string; chil
         {children}
       </label>
       {error && (
-        <p role="alert" className="mt-1 text-xs font-sans text-red-400 flex items-center gap-1">
+        <p role="alert" className="mt-1 text-xs font-sans text-destructive flex items-center gap-1">
           <AlertCircle size={11} /> {error}
         </p>
       )}
@@ -168,10 +168,10 @@ export default function BookingWizard() {
       <div ref={panelRef} className="bg-foreground/[0.03] border border-foreground/[0.12] rounded-2xl p-10 text-center max-w-2xl mx-auto">
         <CheckCircle size={56} className="text-foreground mx-auto mb-5" />
         <h3 className="font-heading text-2xl mb-3">{d.successTitle}</h3>
-        <p className="font-sans text-foreground/60 text-sm leading-relaxed mb-6">{d.successMsg}</p>
+        <p className="font-sans text-muted-foreground text-sm leading-relaxed mb-6">{d.successMsg}</p>
         <button
           onClick={() => { setStatus('idle'); setStep(0) }}
-          className="inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/50 text-foreground/80 hover:text-foreground font-sans text-sm px-5 py-2.5 rounded-full transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/50 text-foreground hover:text-foreground font-sans text-sm px-5 py-2.5 rounded-full transition-colors cursor-pointer"
         >
           <RotateCcw size={14} /> {d.newBooking}
         </button>
@@ -195,11 +195,11 @@ export default function BookingWizard() {
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all duration-300 ${
                     active ? 'bg-foreground text-background border-foreground'
                       : done ? 'bg-foreground/15 text-foreground border-foreground/30'
-                      : 'bg-foreground/[0.04] text-foreground/40 border-foreground/15'
+                      : 'bg-foreground/[0.04] text-muted-foreground border-foreground/15'
                   }`}>
                     {done ? <Check size={16} /> : <Icon size={16} />}
                   </div>
-                  <span className={`text-[11px] font-sans uppercase tracking-wider text-center ${active ? 'text-foreground' : 'text-foreground/40'}`}>
+                  <span className={`text-[11px] font-sans uppercase tracking-wider text-center ${active ? 'text-foreground' : 'text-muted-foreground'}`}>
                     {s.label}
                   </span>
                 </div>
@@ -215,7 +215,7 @@ export default function BookingWizard() {
           <div ref={panelRef}>
             {step === 0 && (
               <div className="space-y-5">
-                <p className="text-foreground/40 text-xs font-sans uppercase tracking-[0.2em]">01 — {d.stepStay}</p>
+                <p className="text-muted-foreground text-xs font-sans uppercase tracking-[0.2em]">01 — {d.stepStay}</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Field label={d.checkIn} error={errors.checkIn?.message}>
                     <input {...register('checkIn')} type="date" min={todayISO()} className={inputClass} />
@@ -240,7 +240,7 @@ export default function BookingWizard() {
 
             {step === 1 && (
               <div className="space-y-5">
-                <p className="text-foreground/40 text-xs font-sans uppercase tracking-[0.2em]">02 — {d.stepGuest}</p>
+                <p className="text-muted-foreground text-xs font-sans uppercase tracking-[0.2em]">02 — {d.stepGuest}</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Field label={d.name} error={errors.name?.message}>
                     <input {...register('name')} type="text" placeholder="Kovács János" className={inputClass} autoComplete="name" />
@@ -278,7 +278,7 @@ export default function BookingWizard() {
                     </select>
                   </Field>
                 </div>
-                <p className="text-xs font-sans text-foreground/40 leading-relaxed flex items-start gap-2 pt-1">
+                <p className="text-xs font-sans text-muted-foreground leading-relaxed flex items-start gap-2 pt-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-foreground/50 mt-1.5 shrink-0" />
                   {d.ntak}
                 </p>
@@ -287,7 +287,7 @@ export default function BookingWizard() {
 
             {step === 2 && (
               <div className="space-y-5">
-                <p className="text-foreground/40 text-xs font-sans uppercase tracking-[0.2em]">03 — {d.stepReview}</p>
+                <p className="text-muted-foreground text-xs font-sans uppercase tracking-[0.2em]">03 — {d.stepReview}</p>
 
                 <div className="rounded-xl border border-foreground/[0.1] divide-y divide-foreground/[0.06]">
                   {[
@@ -296,8 +296,8 @@ export default function BookingWizard() {
                     { label: d.summaryContact, value: `${getValues('name') || '—'} · ${getValues('email') || ''}` },
                   ].map((r) => (
                     <div key={r.label} className="flex items-center justify-between gap-4 px-4 py-3">
-                      <span className="text-xs font-sans uppercase tracking-wider text-foreground/45">{r.label}</span>
-                      <span className="text-sm font-sans text-foreground/80 text-right">{r.value}</span>
+                      <span className="text-xs font-sans uppercase tracking-wider text-muted-foreground">{r.label}</span>
+                      <span className="text-sm font-sans text-foreground text-right">{r.value}</span>
                     </div>
                   ))}
                 </div>
@@ -320,7 +320,7 @@ export default function BookingWizard() {
                 <div>
                   <label className="flex items-start gap-3 cursor-pointer group">
                     <input {...register('agree')} type="checkbox" className="mt-0.5 w-4 h-4 accent-[color:var(--foreground)] cursor-pointer" />
-                    <span className="text-sm font-sans text-foreground/65 leading-snug">
+                    <span className="text-sm font-sans text-foreground leading-snug">
                       {d.agree}{' '}
                       <Link href={href(lang, 'terms')} target="_blank" className="underline underline-offset-2 hover:text-foreground">{dict.footer.terms}</Link>
                       {' · '}
@@ -328,7 +328,7 @@ export default function BookingWizard() {
                     </span>
                   </label>
                   {errors.agree && (
-                    <p role="alert" className="mt-1 text-xs font-sans text-red-400 flex items-center gap-1">
+                    <p role="alert" className="mt-1 text-xs font-sans text-destructive flex items-center gap-1">
                       <AlertCircle size={11} /> {errors.agree.message as string}
                     </p>
                   )}
@@ -343,11 +343,11 @@ export default function BookingWizard() {
                 )}
 
                 {status === 'error' && (
-                  <div role="alert" className="rounded-xl border border-red-400/30 bg-red-400/10 p-4">
-                    <p className="text-sm font-sans text-red-300 font-semibold mb-1 flex items-center gap-2">
+                  <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/10 p-4">
+                    <p className="text-sm font-sans text-destructive font-semibold mb-1 flex items-center gap-2">
                       <AlertCircle size={14} /> {d.errorTitle}
                     </p>
-                    <p className="text-xs font-sans text-red-200/80">{d.errorMsg}</p>
+                    <p className="text-xs font-sans text-destructive">{d.errorMsg}</p>
                   </div>
                 )}
               </div>
@@ -360,7 +360,7 @@ export default function BookingWizard() {
               type="button"
               onClick={goBack}
               disabled={step === 0}
-              className="inline-flex items-center gap-2 text-sm font-sans text-foreground/60 hover:text-foreground disabled:opacity-0 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 text-sm font-sans text-muted-foreground hover:text-foreground disabled:opacity-0 transition-colors cursor-pointer"
             >
               <ArrowLeft size={15} /> {d.back}
             </button>
@@ -395,18 +395,18 @@ export default function BookingWizard() {
 
           <div className="space-y-3 text-sm font-sans">
             <div className="flex items-center justify-between">
-              <span className="text-foreground/55">{d.summaryStay}</span>
-              <span className="text-foreground/85 text-right">{nights > 0 ? `${nights} ${d.nights}` : '—'}</span>
+              <span className="text-muted-foreground">{d.summaryStay}</span>
+              <span className="text-foreground text-right">{nights > 0 ? `${nights} ${d.nights}` : '—'}</span>
             </div>
             {estimate.breakdown.length > 0 && (
               <div className="space-y-1.5 pt-1">
-                <p className="text-[11px] font-sans uppercase tracking-wider text-foreground/40">{d.breakdownTitle}</p>
+                <p className="text-[11px] font-sans uppercase tracking-wider text-muted-foreground">{d.breakdownTitle}</p>
                 {estimate.breakdown.map((g) => (
                   <div key={g.type} className="flex items-center justify-between gap-3 text-xs">
-                    <span className="text-foreground/55">
+                    <span className="text-muted-foreground">
                       {g.type === 'weekend' ? d.weekendLabel : d.weekdayLabel} · {g.nights} {g.nights === 1 ? d.nightLabelShort : d.nights} × {fmt(g.ratePerPerson)}/{d.ratePerPersonPerNight} × {g.guestCount}
                     </span>
-                    <span className="text-foreground/80 shrink-0">{fmt(g.subtotal)}</span>
+                    <span className="text-foreground shrink-0">{fmt(g.subtotal)}</span>
                   </div>
                 ))}
               </div>
@@ -417,12 +417,12 @@ export default function BookingWizard() {
             </div>
           </div>
 
-          <p className="text-[11px] font-sans text-foreground/40 leading-relaxed mt-5 pt-4 border-t border-foreground/[0.06]">
+          <p className="text-[11px] font-sans text-muted-foreground leading-relaxed mt-5 pt-4 border-t border-foreground/[0.06]">
             {d.taxNote}
           </p>
           <div className="mt-4 inline-flex items-center gap-2 border border-foreground/15 rounded-full px-3 py-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
-            <span className="text-[10px] font-sans text-foreground/55 tracking-wider uppercase">{dict.footer.ntak}</span>
+            <span className="text-[10px] font-sans text-muted-foreground tracking-wider uppercase">{dict.footer.ntak}</span>
           </div>
         </div>
       </aside>

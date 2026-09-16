@@ -43,7 +43,7 @@ export default function ScrollToTopButton() {
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
       data-cursor="view"
-      className={`fixed bottom-6 right-4 sm:right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full border border-foreground/10 bg-background/90 backdrop-blur-md text-foreground/70 shadow-lg shadow-black/10 transition-all duration-300 hover:text-foreground hover:bg-background cursor-pointer ${
+      className={`fixed bottom-6 right-4 sm:right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full border border-foreground/10 bg-background/90 backdrop-blur-md text-foreground shadow-lg shadow-black/10 transition-all duration-300 hover:text-foreground hover:bg-background cursor-pointer ${
         visible
           ? 'opacity-100 translate-y-0 pointer-events-auto'
           : 'opacity-0 translate-y-3 pointer-events-none'

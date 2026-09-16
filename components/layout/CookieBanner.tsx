@@ -62,9 +62,9 @@ export default function CookieBanner() {
             <h3 className="font-heading text-base text-foreground leading-tight">{dict.cookie.title}</h3>
           </div>
         </div>
-        <p className="text-sm font-sans text-foreground/55 leading-relaxed mb-4">
+        <p className="text-sm font-sans text-muted-foreground leading-relaxed mb-4">
           {dict.cookie.text}{' '}
-          <Link href={href(lang, 'privacy')} className="text-foreground/80 underline underline-offset-2 hover:text-foreground transition-colors">
+          <Link href={href(lang, 'privacy')} className="text-foreground underline underline-offset-2 hover:text-foreground transition-colors">
             {dict.cookie.more}
           </Link>
         </p>
@@ -77,7 +77,7 @@ export default function CookieBanner() {
           </button>
           <button
             onClick={() => decide('declined')}
-            className="flex-1 border border-foreground/20 hover:border-foreground/40 text-foreground/70 hover:text-foreground font-sans text-sm py-2.5 rounded-full transition-colors cursor-pointer"
+            className="flex-1 border border-foreground/20 hover:border-foreground/40 text-foreground hover:text-foreground font-sans text-sm py-2.5 rounded-full transition-colors cursor-pointer"
           >
             {dict.cookie.decline}
           </button>

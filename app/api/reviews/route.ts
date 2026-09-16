@@ -10,9 +10,9 @@ function toLocale(value: string | null): Locale {
 
 export async function GET(request: NextRequest) {
   const hl = toLocale(request.nextUrl.searchParams.get('hl'))
-  const reviews = await fetchGoogleReviews(hl)
+  const { reviews, summary } = await fetchGoogleReviews(hl)
   return NextResponse.json(
-    { reviews },
+    { reviews, ...summary },
     { headers: { 'Cache-Control': 'public, max-age=0, s-maxage=21600, stale-while-revalidate=86400' } },
   )
 }

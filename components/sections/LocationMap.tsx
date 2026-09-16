@@ -66,13 +66,13 @@ export default function LocationMap({ title, loadLabel }: { title: string; loadL
         />
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-foreground/[0.05]">
-          <MapPin size={22} className="text-foreground/35" aria-hidden />
+          <MapPin size={22} className="text-muted-foreground" aria-hidden />
           {needsTap && (
             <button
               type="button"
               onClick={() => setShow(true)}
               data-cursor="view"
-              className="rounded-full border border-foreground/15 bg-background/70 px-4 py-2 font-sans text-xs text-foreground/70 transition-colors duration-200 hover:border-foreground/40 hover:text-foreground cursor-pointer"
+              className="rounded-full border border-foreground/15 bg-background/70 px-4 py-2 font-sans text-xs text-foreground transition-colors duration-200 hover:border-foreground/40 hover:text-foreground cursor-pointer"
             >
               {loadLabel}
             </button>

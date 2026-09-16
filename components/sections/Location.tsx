@@ -72,8 +72,8 @@ export default function Location() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="gsap-fade-up mb-14 lg:mb-16">
           <SectionHeading label={dict.location.label} title={dict.location.title} />
-          <div className="flex items-center justify-center gap-2 text-foreground/50 font-sans text-sm mt-3">
-            <MapPin size={14} className="text-foreground/55" />
+          <div className="flex items-center justify-center gap-2 text-muted-foreground font-sans text-sm mt-3">
+            <MapPin size={14} className="text-muted-foreground" />
             <span>{dict.location.address}</span>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function Location() {
                 </div>
                 <div>
                   <div className="font-sans font-semibold text-sm text-foreground">Vityilló Vendégház</div>
-                  <div className="font-sans text-xs text-foreground/50">{dict.location.address}</div>
+                  <div className="font-sans text-xs text-muted-foreground">{dict.location.address}</div>
                 </div>
               </div>
             </div>
@@ -115,15 +115,15 @@ export default function Location() {
                     <Icon size={18} style={{ color }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-sans font-semibold text-sm text-foreground/85 group-hover:text-foreground transition-colors">
+                    <div className="font-sans font-semibold text-sm text-foreground group-hover:text-foreground transition-colors">
                       {dict.location[key]}
                       {dist && (
-                        <span className="ml-2 text-xs font-normal bg-foreground/[0.08] text-foreground/70 px-2 py-0.5 rounded-full">
+                        <span className="ml-2 text-xs font-normal bg-foreground/[0.08] text-foreground px-2 py-0.5 rounded-full">
                           {dist}
                         </span>
                       )}
                     </div>
-                    <div className="font-sans text-xs text-foreground/40 mt-0.5">
+                    <div className="font-sans text-xs text-muted-foreground mt-0.5">
                       {dict.location[`${key}desc`]}
                     </div>
                   </div>
@@ -131,12 +131,12 @@ export default function Location() {
               ))}
             </div>
 
-            <p className="mt-6 text-xs font-sans text-foreground/30 leading-relaxed">
+            <p className="mt-6 text-xs font-sans text-muted-foreground leading-relaxed">
               * {dict.location.note}
             </p>
             <Link
               href={href(lang, 'contact')}
-              className="mt-6 inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/55 text-foreground/80 hover:text-foreground font-sans font-semibold text-sm px-5 py-2.5 rounded-full transition-all cursor-pointer"
+              className="mt-6 inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/55 text-foreground hover:text-foreground font-sans font-semibold text-sm px-5 py-2.5 rounded-full transition-all cursor-pointer"
               data-cursor="view"
             >
               {dict.nav.contact}

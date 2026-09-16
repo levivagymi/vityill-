@@ -31,6 +31,16 @@ export type GoogleReview = {
   text: string
 }
 
+/** The place's true stats across every review Google has for it - not just
+ *  the page(s) of individual reviews we happen to fetch/parse below. This is
+ *  what GuestStories.tsx's guest-count and average-rating stats should show,
+ *  since TARGET_USABLE_REVIEWS/MAX_PAGES intentionally caps how many
+ *  individual reviews we pull for the quote wall. */
+export type ReviewsSummary = {
+  totalCount: number | null
+  avgRating: number | null
+}
+
 type SerpApiRawReview = {
   review_id?: string
   source?: string
@@ -41,6 +51,7 @@ type SerpApiRawReview = {
 }
 type SerpApiReviewsResponse = {
   reviews?: SerpApiRawReview[]
+  place_info?: { reviews?: number; rating?: number }
   error?: string
   serpapi_pagination?: { next_page_token?: string }
 }
@@ -92,23 +103,35 @@ async function fetchPage(hl: Locale, apiKey: string, nextPageToken?: string): Pr
 }
 
 /** Server-only. Every failure mode (no key, request failure, too few
- *  results even after pagination) resolves to [] rather than throwing -
- *  GuestStories.tsx's MIN_LIVE_REVIEWS already treats "too few live reviews"
- *  as "show curated testimonials", so "zero" needs no separate error UI. */
-export async function fetchGoogleReviews(hl: Locale): Promise<GoogleReview[]> {
+ *  results even after pagination) resolves to [] / nulls rather than
+ *  throwing - GuestStories.tsx's MIN_LIVE_REVIEWS already treats "too few
+ *  live reviews" as "show curated testimonials", so "zero" needs no separate
+ *  error UI. */
+export async function fetchGoogleReviews(
+  hl: Locale,
+): Promise<{ reviews: GoogleReview[]; summary: ReviewsSummary }> {
   const apiKey = process.env.SERPAPI_API_KEY
   if (!apiKey) {
     console.info('[reviews] SERPAPI_API_KEY not set - skipping live reviews')
-    return []
+    return { reviews: [], summary: { totalCount: null, avgRating: null } }
   }
 
   const found = new Map<string, GoogleReview>()
   let nextPageToken: string | undefined
   let page = 0
+  const summary: ReviewsSummary = { totalCount: null, avgRating: null }
 
   do {
     const data = await fetchPage(hl, apiKey, nextPageToken)
     if (!data) break
+    // place_info carries the place's stats across ALL of Google's reviews,
+    // not just the ones parsed below - grab it once, from whichever page has it.
+    if (summary.totalCount === null && Number.isFinite(data.place_info?.reviews)) {
+      summary.totalCount = data.place_info!.reviews as number
+    }
+    if (summary.avgRating === null && Number.isFinite(data.place_info?.rating)) {
+      summary.avgRating = data.place_info!.rating as number
+    }
     for (const raw of data.reviews ?? []) {
       const parsed = parseReview(raw)
       if (parsed) found.set(parsed.id, parsed)
@@ -117,5 +140,5 @@ export async function fetchGoogleReviews(hl: Locale): Promise<GoogleReview[]> {
     page += 1
   } while (found.size < TARGET_USABLE_REVIEWS && nextPageToken && page < MAX_PAGES)
 
-  return Array.from(found.values())
+  return { reviews: Array.from(found.values()), summary }
 }

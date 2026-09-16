@@ -12,7 +12,7 @@ type FormData = { name: string; email: string; phone?: string; subject?: string;
 
 const inputClass =
   'w-full bg-foreground/[0.04] border border-foreground/[0.10] text-foreground placeholder-foreground/25 rounded-xl px-4 py-3 font-sans text-sm focus:outline-none focus:border-foreground/40 focus:ring-2 focus:ring-foreground/10 focus:bg-foreground/[0.06] transition-all duration-200'
-const labelClass = 'block text-xs font-sans text-foreground/50 uppercase tracking-wider mb-1.5'
+const labelClass = 'block text-xs font-sans text-muted-foreground uppercase tracking-wider mb-1.5'
 
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
@@ -23,7 +23,7 @@ function Field({ label, error, children }: { label: string; error?: string; chil
         {children}
       </label>
       {error && (
-        <p role="alert" className="mt-1 text-xs text-red-400 flex items-center gap-1">
+        <p role="alert" className="mt-1 text-xs text-destructive flex items-center gap-1">
           <AlertCircle size={11} /> {error}
         </p>
       )}
@@ -71,10 +71,10 @@ export default function ContactForm() {
       <div className="bg-foreground/[0.03] border border-foreground/[0.12] rounded-2xl p-10 text-center">
         <CheckCircle size={48} className="text-foreground mx-auto mb-4" />
         <h3 className="font-heading text-xl mb-2">{c.successTitle}</h3>
-        <p className="font-sans text-foreground/60 text-sm mb-6">{c.successMsg}</p>
+        <p className="font-sans text-muted-foreground text-sm mb-6">{c.successMsg}</p>
         <button
           onClick={() => setStatus('idle')}
-          className="inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/50 text-foreground/80 hover:text-foreground font-sans text-sm px-5 py-2.5 rounded-full transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 border border-foreground/25 hover:border-foreground/50 text-foreground hover:text-foreground font-sans text-sm px-5 py-2.5 rounded-full transition-colors cursor-pointer"
         >
           <RotateCcw size={14} /> {c.newMessage}
         </button>
@@ -104,7 +104,7 @@ export default function ContactForm() {
       </Field>
 
       {status === 'error' && (
-        <div role="alert" className="rounded-xl border border-red-400/30 bg-red-400/10 p-4 text-sm font-sans text-red-300 flex items-center gap-2">
+        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-sm font-sans text-destructive flex items-center gap-2">
           <AlertCircle size={14} /> {dict.booking.errorMsg}
         </div>
       )}

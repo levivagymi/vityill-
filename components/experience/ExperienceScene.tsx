@@ -64,7 +64,7 @@ export default function ExperienceScene({
           src={fallbackImage}
           alt={fallbackAlt}
           fill
-          priority
+          preload
           className="object-cover"
           sizes="100vw"
           style={live ? { opacity: 0.35, filter: 'saturate(0.7)' } : undefined}

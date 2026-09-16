@@ -138,7 +138,7 @@ export default function ExperiencesScroll({
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
             <Reveal className="max-w-2xl mx-auto text-center mb-8 lg:mb-10">
-              <p className="font-heading text-2xl sm:text-3xl leading-snug text-foreground/85">{intro}</p>
+              <p className="font-heading text-2xl sm:text-3xl leading-snug text-foreground">{intro}</p>
             </Reveal>
 
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-stretch">
@@ -152,7 +152,7 @@ export default function ExperiencesScroll({
                       fill
                       className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      priority={i === 0}
+                      preload={i === 0}
                       loading={i === 0 ? undefined : 'eager'}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
@@ -169,9 +169,9 @@ export default function ExperiencesScroll({
                     data-idx={i}
                   >
                     <div className="w-12 h-12 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center mb-5">{item.icon}</div>
-                    <p className="font-sans uppercase tracking-[0.3em] text-foreground/50 text-xs mb-3">{item.eyebrow}</p>
+                    <p className="font-sans uppercase tracking-[0.3em] text-muted-foreground text-xs mb-3">{item.eyebrow}</p>
                     <h2 className="font-heading text-2xl sm:text-3xl mb-4">{item.title}</h2>
-                    <p className="font-sans text-foreground/60 leading-[1.85] text-base mb-6">{item.detail}</p>
+                    <p className="font-sans text-muted-foreground leading-[1.85] text-base mb-6">{item.detail}</p>
                     <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
                       <Link
                         href={item.exploreHref}
@@ -201,7 +201,7 @@ export default function ExperiencesScroll({
         <PageHero title={heroTitle} subtitle={heroSubtitle} image={heroImage} imageAlt={heroImageAlt} crumbs={heroCrumbs} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <Reveal className="max-w-2xl mx-auto text-center mb-20">
-            <p className="font-heading text-2xl sm:text-3xl leading-snug text-foreground/85">{intro}</p>
+            <p className="font-heading text-2xl sm:text-3xl leading-snug text-foreground">{intro}</p>
           </Reveal>
           <div className="space-y-20 lg:space-y-28">
             {items.map((item, i) => (
