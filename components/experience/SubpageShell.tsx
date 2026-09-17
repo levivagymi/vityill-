@@ -73,7 +73,7 @@ export default function SubpageShell({
       <section className="relative z-10 px-4 sm:px-6 lg:px-8 pb-24 lg:pb-32">
         <div className="max-w-7xl mx-auto">
           <Reveal className="max-w-2xl">
-            <div className="bg-background/80 backdrop-blur-md border border-foreground/10 rounded-2xl p-7 lg:p-10 shadow-2xl shadow-black/20">
+            <div className="bg-card/90 backdrop-blur-md border border-foreground/10 rounded-2xl p-7 lg:p-10 shadow-2xl shadow-black/20">
               <p className="editorial-measure font-sans text-foreground leading-[1.85]" style={{ fontSize: 'var(--step-0)' }}>
                 {detail}
               </p>
@@ -104,7 +104,7 @@ export default function SubpageShell({
                 <Link
                   key={s}
                   href={experienceHref(lang, s)}
-                  className="inline-flex items-center gap-2 bg-background/70 backdrop-blur border border-foreground/15 hover:border-foreground/40 text-foreground hover:text-foreground font-sans text-sm px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-card/70 backdrop-blur border border-foreground/15 hover:border-foreground/40 text-foreground hover:text-foreground font-sans text-sm px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer"
                   data-cursor="view"
                 >
                   {dict.experiences[s].title} <ArrowRight size={13} aria-hidden />

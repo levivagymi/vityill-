@@ -99,25 +99,30 @@ export const videoUrl = (name: string) => {
 
 export type RoomKey = 'room1' | 'room2'
 
+/** The 'room-upper-*'/'room-lower-*' IMAGE_NUMBERS keys above are historical
+ *  (they reflect an earlier, incorrect floor assignment) — room1 is the
+ *  three-bed room (now confirmed upstairs) and room2 is the French-bed
+ *  master bedroom (now confirmed downstairs), so the mapping below
+ *  intentionally does not match those key names. */
 export const ROOM_MEDIA: Record<RoomKey, { slug: string; hero: string; gallery: string[] }> = {
   room1: {
     slug: 'felso-szint',
-    hero: imageUrl('room-upper-hero'),
-    gallery: [
-      imageUrl('room-upper-hero'),
-      imageUrl('room-upper-bed-window'),
-      imageUrl('room-upper-stove-detail'),
-      imageUrl('room-upper-alt-angle'),
-    ],
-  },
-  room2: {
-    slug: 'also-szint',
     hero: imageUrl('room-lower-hero'),
     gallery: [
       imageUrl('room-lower-hero'),
       imageUrl('room-lower-beds-wardrobe'),
       imageUrl('room-lower-beds-closeup'),
       imageUrl('room-lower-desk-window'),
+    ],
+  },
+  room2: {
+    slug: 'also-szint',
+    hero: imageUrl('room-upper-hero'),
+    gallery: [
+      imageUrl('room-upper-hero'),
+      imageUrl('room-upper-bed-window'),
+      imageUrl('room-upper-stove-detail'),
+      imageUrl('room-upper-alt-angle'),
     ],
   },
 }
@@ -141,6 +146,14 @@ export const GALLERY_IMAGES: { src: string; alt: string; aspect: 'landscape' | '
 export const HERO_BANNER = imageUrl('hero-banner-wide')
 
 export type AmenityKey = 'sauna' | 'pool' | 'forest' | 'lighting' | 'view' | 'ac' | 'tv' | 'kitchen' | 'grill'
+
+/** Per-room amenity facts shown on the room-detail subpage — identical in both rooms. */
+export type RoomAmenityKey =
+  | 'wifi' | 'ac' | 'heating' | 'hairdryer' | 'bathroom' | 'linens' | 'smarttv' | 'charging' | 'dishwasher'
+
+export const ROOM_AMENITY_KEYS: RoomAmenityKey[] = [
+  'wifi', 'ac', 'heating', 'hairdryer', 'bathroom', 'linens', 'smarttv', 'charging', 'dishwasher',
+]
 
 /** Imagery paired by index with dict.testimonials.stories for the guest wall. */
 export const STORY_IMAGES: string[] = [

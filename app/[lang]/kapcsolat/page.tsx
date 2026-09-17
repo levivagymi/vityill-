@@ -36,7 +36,7 @@ export default async function ContactPage({ params }: Props) {
           <ContactForm />
 
           <div className="space-y-6">
-            <div className="bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 sm:p-8">
+            <div className="bg-card border border-foreground/[0.07] rounded-2xl p-6 sm:p-8">
               <h3 className="font-heading text-xl mb-6">{c.infoTitle}</h3>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3 text-sm font-sans text-foreground">

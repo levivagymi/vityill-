@@ -63,7 +63,7 @@ function Star5({ count }: { count: number }) {
 function ReviewCard({ review, isActive }: { review: typeof REVIEWS[0]; isActive: boolean }) {
   return (
     <div
-      className={`flex-shrink-0 w-full sm:w-[380px] lg:w-[420px] bg-foreground/[0.03] border rounded-2xl p-6 lg:p-7 transition-all duration-500 ${
+      className={`flex-shrink-0 w-full sm:w-[380px] lg:w-[420px] bg-card border rounded-2xl p-6 lg:p-7 transition-all duration-500 ${
         isActive
           ? 'border-foreground/20 shadow-xl shadow-black/10'
           : 'border-foreground/[0.07] opacity-50 scale-95'

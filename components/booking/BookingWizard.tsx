@@ -165,7 +165,7 @@ export default function BookingWizard() {
 
   if (status === 'success') {
     return (
-      <div ref={panelRef} className="bg-foreground/[0.03] border border-foreground/[0.12] rounded-2xl p-10 text-center max-w-2xl mx-auto">
+      <div ref={panelRef} className="bg-card border border-foreground/[0.12] rounded-2xl p-10 text-center max-w-2xl mx-auto">
         <CheckCircle size={56} className="text-foreground mx-auto mb-5" />
         <h3 className="font-heading text-2xl mb-3">{d.successTitle}</h3>
         <p className="font-sans text-muted-foreground text-sm leading-relaxed mb-6">{d.successMsg}</p>
@@ -211,7 +211,7 @@ export default function BookingWizard() {
           })}
         </ol>
 
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 sm:p-8">
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="bg-card border border-foreground/[0.07] rounded-2xl p-6 sm:p-8">
           <div ref={panelRef}>
             {step === 0 && (
               <div className="space-y-5">
@@ -390,7 +390,7 @@ export default function BookingWizard() {
 
       {/* Summary column */}
       <aside className="lg:col-span-2 lg:sticky lg:top-28">
-        <div className="bg-foreground/[0.04] border border-foreground/[0.1] rounded-2xl p-6">
+        <div className="bg-card border border-foreground/[0.1] rounded-2xl p-6">
           <h3 className="font-heading text-xl mb-5">{d.summaryTitle}</h3>
 
           <div className="space-y-3 text-sm font-sans">

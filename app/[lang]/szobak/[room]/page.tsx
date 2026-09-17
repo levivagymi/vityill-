@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Check, BedDouble, Ruler, Users, ArrowRight, ArrowLeft } from 'lucide-react'
+import { Check, BedDouble, Ruler, Users, ArrowRight, ArrowLeft, Home, KeyRound } from 'lucide-react'
 import { getDictionary, hasLocale } from '../../dictionaries'
 import PageHero from '@/components/ui/PageHero'
 import Reveal from '@/components/ui/Reveal'
 import BookingCta from '@/components/sections/BookingCta'
+import RoomAmenities from '@/components/sections/RoomAmenities'
 import SharedElementFlip from '@/components/engine/SharedElementFlip'
 import { ROOM_MEDIA } from '@/lib/content'
 import { href, roomHref, ROOM_SLUGS, ROOM_KEY_BY_SLUG, type RoomSlug } from '@/lib/nav'
@@ -60,19 +61,36 @@ export default async function RoomDetailPage({ params }: Props) {
       />
 
       <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
-        <div className="grid lg:grid-cols-3 gap-10 lg:gap-14 items-start">
+        <Reveal>
+          <div className="flex flex-wrap gap-3">
+            {r.badges.map((b) => (
+              <span
+                key={b}
+                className="bg-foreground/[0.04] border border-foreground/10 rounded-full px-4 py-2 text-sm font-sans text-foreground"
+              >
+                {b}
+              </span>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-10">
+          <h2 className="font-heading text-2xl sm:text-3xl mb-4">{dict.rooms.overviewTitle}</h2>
+          <p className="editorial-measure font-sans text-muted-foreground leading-[1.85] text-base">{r.long}</p>
+        </Reveal>
+
+        <Reveal className="mt-14">
+          <RoomAmenities title={dict.rooms.roomAmenitiesTitle} items={dict.rooms.roomAmenities} />
+        </Reveal>
+
+        <div className="grid lg:grid-cols-3 gap-10 lg:gap-14 items-start mt-14">
           {/* Content */}
           <div className="lg:col-span-2 space-y-12">
-            <Reveal>
-              <h2 className="font-heading text-2xl sm:text-3xl mb-4">{dict.rooms.overviewTitle}</h2>
-              <p className="font-sans text-muted-foreground leading-[1.85] text-base">{r.long}</p>
-            </Reveal>
-
             <Reveal>
               <h3 className="font-heading text-xl mb-5">{dict.rooms.featuresTitle}</h3>
               <ul className="grid sm:grid-cols-2 gap-3">
                 {r.highlights.map((h) => (
-                  <li key={h} className="flex items-center gap-3 bg-foreground/[0.03] border border-foreground/[0.07] rounded-xl px-4 py-3">
+                  <li key={h} className="flex items-center gap-3 bg-card border border-foreground/[0.07] rounded-xl px-4 py-3">
                     <span className="w-7 h-7 rounded-full bg-foreground/10 border border-foreground/15 flex items-center justify-center shrink-0">
                       <Check size={14} className="text-foreground" />
                     </span>
@@ -80,6 +98,19 @@ export default async function RoomDetailPage({ params }: Props) {
                   </li>
                 ))}
               </ul>
+            </Reveal>
+
+            <Reveal>
+              <div className="bg-card border border-foreground/[0.07] rounded-xl p-5 space-y-3">
+                <div className="flex items-start gap-3">
+                  <Home size={16} className="text-foreground shrink-0 mt-0.5" />
+                  <p className="font-sans text-sm text-foreground leading-relaxed">{dict.rooms.upperFloorNote}</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <KeyRound size={16} className="text-foreground shrink-0 mt-0.5" />
+                  <p className="font-sans text-sm text-foreground leading-relaxed">{dict.rooms.selfCheckInNote}</p>
+                </div>
+              </div>
             </Reveal>
 
             <Reveal>
@@ -96,14 +127,18 @@ export default async function RoomDetailPage({ params }: Props) {
 
           {/* Sticky booking card */}
           <aside className="lg:sticky lg:top-28">
-            <div className="bg-foreground/[0.04] border border-foreground/[0.1] rounded-2xl p-6">
+            <div className="bg-card border border-foreground/[0.1] rounded-2xl p-6">
               <div className="flex items-baseline gap-1.5 mb-1">
                 <span className="font-heading text-4xl font-semibold text-foreground">
                   {formatHUF(fromRatePerPerson(), lang)}
                 </span>
                 <span className="text-muted-foreground text-sm font-sans">{dict.rooms.perPersonPerNight}</span>
               </div>
-              <p className="text-xs font-sans text-muted-foreground mb-6">{dict.rooms.priceNote}</p>
+              <p className="text-xs font-sans text-muted-foreground mb-4">{dict.rooms.priceNote}</p>
+              <div className="flex items-start gap-2 bg-foreground/[0.05] border border-foreground/10 rounded-lg px-3 py-2.5 mb-6">
+                <Home size={14} className="text-foreground shrink-0 mt-0.5" />
+                <p className="text-xs font-sans text-foreground leading-relaxed">{dict.rooms.wholeHouseNote}</p>
+              </div>
 
               <ul className="space-y-3 mb-6">
                 {specs.map(({ icon: Icon, label, value }) => (

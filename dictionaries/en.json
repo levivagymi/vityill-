@@ -99,10 +99,23 @@
     "book": "Reserve",
     "allRooms": "All rooms",
     "viewDetails": "View details",
-    "bookThis": "Reserve this room",
+    "bookThis": "Reserve the guest house",
+    "wholeHouseNote": "Vityilló is always booked as one complete guest house — individual rooms can't be rented separately.",
     "overviewTitle": "Overview",
     "featuresTitle": "Features",
     "galleryTitle": "Photos",
+    "roomAmenitiesTitle": "What every room has",
+    "roomAmenities": {
+      "wifi": { "name": "Free WiFi", "desc": "Fast, free internet throughout the house, available on both floors." },
+      "ac": { "name": "Air conditioning", "desc": "AC in both rooms, keeping things comfortable even in the summer months." },
+      "heating": { "name": "Heating", "desc": "Heated rooms keep things comfortable through the cooler months too." },
+      "hairdryer": { "name": "Hairdryer", "desc": "A hairdryer in every room, so you can travel lighter." },
+      "bathroom": { "name": "Private bathroom", "desc": "An en-suite bathroom with a shower cabin and toilet in every room." },
+      "linens": { "name": "Towels & bed linens", "desc": "Fresh towels and bed linens provided for every stay." },
+      "smarttv": { "name": "Smart TV", "desc": "A Smart TV with cable channels plus Netflix and YouTube access." },
+      "charging": { "name": "Bedside charging", "desc": "A power outlet and USB charging port right next to the bed." },
+      "dishwasher": { "name": "Dishwasher", "desc": "A dishwasher in the shared kitchen, handy for longer stays." }
+    },
     "sizeLabel": "Floor area",
     "guestsLabel": "Capacity",
     "bedsLabel": "Beds",
@@ -110,37 +123,14 @@
     "perPersonPerNight": "/person/night",
     "houseName": "Entire Guest House",
     "houseTagline": "A double-bed master room and a three-bed room — across two floors",
-    "houseDesc": "Vityilló is always booked as one complete guest house — the two floors are never rented separately. Upstairs, a double-bed bedroom sits beneath a high, beamed vaulted ceiling with a wood-burning stove, while downstairs a three-bed room offers its own bathroom and direct garden access. Together, the two floors comfortably host up to 6 guests — ideal for groups of friends and multi-generational family getaways alike.",
+    "houseDesc": "Vityilló is always booked as one complete guest house — the two floors are never rented separately. Upstairs, a three-bed room offers its own bathroom and direct garden access, while downstairs a double-bed bedroom sits beneath a high, beamed vaulted ceiling with a wood-burning stove. Together, the two floors comfortably host up to 6 guests — ideal for groups of friends and multi-generational family getaways alike.",
     "upperFloorNote": "For bookings of 3–6 guests, both floors — the double-bed bedroom and the three-bed room — are automatically included, so everyone has comfortable space.",
+    "selfCheckInNote": "There's no on-site reception — check-in and check-out are entirely self-service, arranged in advance.",
     "room1": {
       "name": "Upper Floor",
-      "tagline": "Master bedroom & living area",
-      "desc": "Spacious double-bed bedroom with a beamed vaulted ceiling, a wood-burning stove, a full bathroom, and direct forest views.",
-      "long": "The upper floor is Vityilló's most striking space: a comfortable double bed sits beneath a high, beamed vaulted ceiling, with a separate living corner and a wood-burning stove that keeps things cozy on cooler evenings. A full bathroom with a shower cabin is attached, and large windows open onto direct forest views — greeting every morning with green treetops and birdsong. The space comfortably sleeps 2–4 guests: a romantic retreat for couples, or additional space for larger groups alongside the three-bed room below.",
-      "beds": "Double bed",
-      "size": "42 m²",
-      "guests": "2–4 guests",
-      "badges": [
-        "Double Bed",
-        "Bathroom",
-        "Living Area",
-        "Forest View"
-      ],
-      "highlights": [
-        "Double bed beneath a high beamed ceiling",
-        "Wood-burning stove for cozy evenings",
-        "Separate living corner",
-        "Full bathroom with shower cabin",
-        "Direct forest views",
-        "AC and Smart TV"
-      ],
-      "price": "120"
-    },
-    "room2": {
-      "name": "Lower Floor",
       "tagline": "Three single beds",
       "desc": "Three-bed room with tiled floors, its own bathroom, and direct garden access — just steps from the sauna and pool.",
-      "long": "The lower floor's three single beds are ideal for groups of friends, siblings, or the younger members of a larger family. The bright, tiled-floor room has its own bathroom with a shower cabin, and a door opening straight onto the garden — just steps from the sauna, the outdoor pool, and the bogrács grill terrace. The room comfortably sleeps 2–3 guests, and for bookings of 3–6 people it combines with the upper floor so the whole group stays comfortably together.",
+      "long": "The upper floor's three single beds are ideal for groups of friends, siblings, or the younger members of a larger family. The bright, tiled-floor room has its own bathroom with a shower cabin, and a door opening straight onto the garden — just steps from the sauna, the outdoor pool, and the bogrács grill terrace. The room comfortably sleeps 2–3 guests, and for bookings of 3–6 people it combines with the lower floor so the whole group stays comfortably together.",
       "beds": "3 × Single beds",
       "size": "34 m²",
       "guests": "2–3 guests",
@@ -154,10 +144,32 @@
         "Tiled floor",
         "Own bathroom with shower cabin",
         "Direct garden access",
-        "Steps from the sauna and pool",
-        "AC and Smart TV"
+        "Steps from the sauna and pool"
       ],
       "price": "100"
+    },
+    "room2": {
+      "name": "Lower Floor",
+      "tagline": "Master bedroom & living area",
+      "desc": "Spacious double-bed bedroom with a beamed vaulted ceiling, a wood-burning stove, a full bathroom, and direct forest views.",
+      "long": "The lower floor is Vityilló's most striking space: a comfortable double bed sits beneath a high, beamed vaulted ceiling, with a cozy seating corner and a wood-burning stove that keeps things cozy on cooler evenings. A full bathroom with a shower cabin is attached, and large windows open onto direct forest views — greeting every morning with green treetops and birdsong. The space comfortably sleeps 2–4 guests: a romantic retreat for couples, or additional space for larger groups alongside the three-bed room above.",
+      "beds": "Double bed",
+      "size": "42 m²",
+      "guests": "2–4 guests",
+      "badges": [
+        "Double Bed",
+        "Bathroom",
+        "Living Area",
+        "Forest View"
+      ],
+      "highlights": [
+        "Double bed beneath a high beamed ceiling",
+        "Wood-burning stove for cozy evenings",
+        "Cozy seating corner in the bedroom",
+        "Full bathroom with shower cabin",
+        "Direct forest views"
+      ],
+      "price": "120"
     }
   },
   "experiences": {

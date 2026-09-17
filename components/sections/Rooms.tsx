@@ -3,12 +3,13 @@ import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { Ruler, Users, BedDouble, ArrowRight } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { ROOM_MEDIA } from '@/lib/content'
-import { href, roomHref } from '@/lib/nav'
+import { ROOM_MEDIA, type RoomKey } from '@/lib/content'
+import { href, roomHref, type RoomSlug } from '@/lib/nav'
 import { setPendingFlip } from '@/lib/flip-transition'
 import { fromRatePerPerson, formatHUF } from '@/lib/booking'
 import type { Locale } from '@/lib/types'
@@ -21,7 +22,7 @@ function HouseCard({ lang, dict }: { lang: Locale; dict: ReturnType<typeof useDi
   const lowerHref = roomHref(lang, 'also-szint')
 
   return (
-    <div className="room-card fx-reveal grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-foreground/[0.08] bg-foreground/[0.03]">
+    <div className="room-card fx-reveal grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-foreground/[0.08] bg-card">
       <Link
         href={upperHref}
         data-cursor="view"
@@ -82,6 +83,73 @@ function HouseCard({ lang, dict }: { lang: Locale; dict: ReturnType<typeof useDi
   )
 }
 
+/** A single room's own preview card — links through to its full detail page
+ *  (specs + amenities + gallery), which the house-level HouseCard above only
+ *  links to via plain text. Gives each room its own visual presence on the
+ *  listing page instead of leaving it a footnote inside one combined card. */
+function RoomPreviewCard({
+  lang,
+  dict,
+  roomKey,
+  slug,
+}: {
+  lang: Locale
+  dict: ReturnType<typeof useDict>
+  roomKey: RoomKey
+  slug: RoomSlug
+}) {
+  const r = dict.rooms[roomKey]
+  const media = ROOM_MEDIA[roomKey]
+  const roomLink = roomHref(lang, slug)
+  const specs = [
+    { icon: Ruler, value: r.size },
+    { icon: Users, value: r.guests },
+    { icon: BedDouble, value: r.beds },
+  ]
+
+  return (
+    <Link
+      href={roomLink}
+      data-cursor="view"
+      onClick={(e) => setPendingFlip(e.currentTarget, media.hero)}
+      className="room-card fx-reveal group flex flex-col rounded-2xl overflow-hidden border border-foreground/[0.08] bg-card hover:border-foreground/20 transition-colors duration-300"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="w-full h-full transition-transform duration-700 group-hover:scale-[1.04]">
+          <Image src={media.hero} alt={r.tagline} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent" />
+      </div>
+
+      <div className="flex flex-col flex-1 p-6 lg:p-7">
+        <span className="text-muted-foreground text-xs font-sans uppercase tracking-[0.25em] mb-2">{r.name}</span>
+        <h4 className="font-heading text-xl mb-2 leading-tight">{r.tagline}</h4>
+        <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-5">{r.desc}</p>
+
+        <div className="flex flex-wrap gap-2 mb-5">
+          {r.badges.map((b) => (
+            <span key={b} className="text-xs font-sans text-foreground bg-foreground/[0.04] border border-foreground/10 rounded-full px-3 py-1">
+              {b}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-4 mt-auto pt-4 border-t border-foreground/[0.07] text-xs font-sans text-muted-foreground">
+          {specs.map(({ icon: Icon, value }, i) => (
+            <span key={i} className="flex items-center gap-1.5">
+              <Icon size={13} /> {value}
+            </span>
+          ))}
+        </div>
+
+        <span className="inline-flex items-center gap-1.5 text-sm font-sans text-foreground mt-5 group-hover:gap-2.5 transition-all duration-300">
+          {dict.rooms.viewDetails} <ArrowRight size={14} />
+        </span>
+      </div>
+    </Link>
+  )
+}
+
 export default function Rooms({ withHeading = true }: { withHeading?: boolean }) {
   const dict = useDict()
   const params = useParams()
@@ -122,6 +190,11 @@ export default function Rooms({ withHeading = true }: { withHeading?: boolean })
 
         <div className="flex flex-col gap-6 lg:gap-8">
           <HouseCard lang={lang} dict={dict} />
+
+          <div className="grid sm:grid-cols-2 gap-6 lg:gap-8">
+            <RoomPreviewCard lang={lang} dict={dict} roomKey="room1" slug="felso-szint" />
+            <RoomPreviewCard lang={lang} dict={dict} roomKey="room2" slug="also-szint" />
+          </div>
         </div>
       </div>
     </section>

@@ -99,10 +99,23 @@
     "book": "Reservieren",
     "allRooms": "Alle Zimmer",
     "viewDetails": "Details ansehen",
-    "bookThis": "Dieses Zimmer reservieren",
+    "bookThis": "Gästehaus reservieren",
+    "wholeHouseNote": "Das Vityilló wird immer als komplettes Gästehaus gebucht — einzelne Zimmer können nicht separat gemietet werden.",
     "overviewTitle": "Überblick",
     "featuresTitle": "Ausstattung",
     "galleryTitle": "Fotos",
+    "roomAmenitiesTitle": "Was jedes Zimmer bietet",
+    "roomAmenities": {
+      "wifi": { "name": "Kostenloses WLAN", "desc": "Schnelles, kostenloses Internet im ganzen Haus, auf beiden Etagen verfügbar." },
+      "ac": { "name": "Klimaanlage", "desc": "Klimaanlage in beiden Zimmern, auch in den Sommermonaten angenehm temperiert." },
+      "heating": { "name": "Heizung", "desc": "Beheizte Räume sorgen auch in den kühleren Monaten für Komfort." },
+      "hairdryer": { "name": "Haartrockner", "desc": "Ein Haartrockner in jedem Zimmer, für leichteres Reisegepäck." },
+      "bathroom": { "name": "Eigenes Bad", "desc": "Ein eigenes Bad mit Duschkabine und WC in jedem Zimmer." },
+      "linens": { "name": "Handtücher & Bettwäsche", "desc": "Frische Handtücher und Bettwäsche für jeden Aufenthalt bereitgestellt." },
+      "smarttv": { "name": "Smart-TV", "desc": "Ein Smart-TV mit Kabelkanälen sowie Netflix- und YouTube-Zugang." },
+      "charging": { "name": "Lademöglichkeit am Bett", "desc": "Eine Steckdose und ein USB-Ladeanschluss direkt neben dem Bett." },
+      "dishwasher": { "name": "Geschirrspüler", "desc": "Ein Geschirrspüler in der gemeinsamen Küche, praktisch für längere Aufenthalte." }
+    },
     "sizeLabel": "Wohnfläche",
     "guestsLabel": "Kapazität",
     "bedsLabel": "Betten",
@@ -110,37 +123,14 @@
     "perPersonPerNight": "/Person/Nacht",
     "houseName": "Gesamtes Gästehaus",
     "houseTagline": "Ein Doppelbett-Hauptschlafzimmer und ein Dreibettzimmer — auf zwei Etagen",
-    "houseDesc": "Das Vityilló wird immer als komplettes Gästehaus gebucht — die beiden Etagen werden niemals getrennt vermietet. Im Obergeschoss erwartet Sie ein Doppelbettzimmer unter einem hohen, gebälkten Tonnengewölbe mit Holzofen, im Erdgeschoss ein Dreibettzimmer mit eigenem Bad und direktem Gartenzugang. Zusammen bieten die beiden Etagen komfortabel Platz für bis zu 6 Gäste — ideal für Freundesgruppen und generationenübergreifende Familienausflüge.",
+    "houseDesc": "Das Vityilló wird immer als komplettes Gästehaus gebucht — die beiden Etagen werden niemals getrennt vermietet. Im Obergeschoss erwartet Sie ein Dreibettzimmer mit eigenem Bad und direktem Gartenzugang, im Erdgeschoss ein Doppelbettzimmer unter einem hohen, gebälkten Tonnengewölbe mit Holzofen. Zusammen bieten die beiden Etagen komfortabel Platz für bis zu 6 Gäste — ideal für Freundesgruppen und generationenübergreifende Familienausflüge.",
     "upperFloorNote": "Bei Buchungen für 3–6 Gäste sind automatisch beide Etagen inbegriffen — das Doppelbettzimmer und das Dreibettzimmer —, sodass alle bequem Platz finden.",
+    "selfCheckInNote": "Es gibt keine Rezeption vor Ort — Check-in und Check-out erfolgen vollständig eigenständig, nach vorheriger Absprache.",
     "room1": {
       "name": "Obergeschoss",
-      "tagline": "Hauptschlafzimmer & Wohnbereich",
-      "desc": "Geräumiges Doppelbettzimmer mit Balkengewölbe, Holzofen, eigenem Bad und direktem Waldblick.",
-      "long": "Das Obergeschoss ist der eindrucksvollste Bereich des Vityilló: ein komfortables Doppelbett unter einem hohen, gebälkten Tonnengewölbe, eine separate Sitzecke und ein Holzofen sorgen an kühleren Abenden für Gemütlichkeit. Ein eigenes Bad mit Duschkabine gehört dazu, und große Fenster bieten direkten Blick auf den umliegenden Wald — jeder Morgen beginnt mit grünen Baumkronen und Vogelgesang. Der Raum bietet komfortabel Platz für 2–4 Gäste: ein romantischer Rückzugsort für Paare oder, kombiniert mit dem Dreibettzimmer im Erdgeschoss, zusätzlicher Platz für größere Gruppen.",
-      "beds": "Doppelbett",
-      "size": "42 m²",
-      "guests": "2–4 Gäste",
-      "badges": [
-        "Doppelbett",
-        "Badezimmer",
-        "Wohnbereich",
-        "Waldblick"
-      ],
-      "highlights": [
-        "Doppelbett unter hohem Balkengewölbe",
-        "Holzofen für gemütliche Abende",
-        "Separate Sitzecke",
-        "Eigenes Bad mit Duschkabine",
-        "Direkter Blick auf den Wald",
-        "Klimaanlage und Smart-TV"
-      ],
-      "price": "120"
-    },
-    "room2": {
-      "name": "Untergeschoss",
       "tagline": "Drei Einzelbetten",
       "desc": "Dreibettzimmer mit gefliestem Boden, eigenem Bad und direktem Gartenzugang — nur wenige Schritte von Sauna und Pool entfernt.",
-      "long": "Die drei Einzelbetten im Erdgeschoss eignen sich ideal für Freundesgruppen, Geschwister oder die jüngeren Mitglieder einer größeren Familie. Der helle Raum mit gefliestem Boden verfügt über ein eigenes Bad mit Duschkabine und eine Tür mit direktem Zugang zum Garten — nur wenige Schritte von der Sauna, dem Außenpool und der Bogrács-Grillterrasse entfernt. Das Zimmer bietet Platz für 2–3 Gäste, und bei Buchungen für 3–6 Personen kombiniert es sich mit dem Obergeschoss, sodass die ganze Gruppe bequem zusammenbleibt.",
+      "long": "Die drei Einzelbetten im Obergeschoss eignen sich ideal für Freundesgruppen, Geschwister oder die jüngeren Mitglieder einer größeren Familie. Der helle Raum mit gefliestem Boden verfügt über ein eigenes Bad mit Duschkabine und eine Tür mit direktem Zugang zum Garten — nur wenige Schritte von der Sauna, dem Außenpool und der Bogrács-Grillterrasse entfernt. Das Zimmer bietet Platz für 2–3 Gäste, und bei Buchungen für 3–6 Personen kombiniert es sich mit dem Erdgeschoss, sodass die ganze Gruppe bequem zusammenbleibt.",
       "beds": "3 × Einzelbetten",
       "size": "34 m²",
       "guests": "2–3 Gäste",
@@ -154,10 +144,32 @@
         "Gefliester Boden",
         "Eigenes Bad mit Duschkabine",
         "Direkter Gartenzugang",
-        "Wenige Schritte von Sauna und Pool",
-        "Klimaanlage und Smart-TV"
+        "Wenige Schritte von Sauna und Pool"
       ],
       "price": "100"
+    },
+    "room2": {
+      "name": "Untergeschoss",
+      "tagline": "Hauptschlafzimmer & Wohnbereich",
+      "desc": "Geräumiges Doppelbettzimmer mit Balkengewölbe, Holzofen, eigenem Bad und direktem Waldblick.",
+      "long": "Das Untergeschoss ist der eindrucksvollste Bereich des Vityilló: ein komfortables Doppelbett unter einem hohen, gebälkten Tonnengewölbe, eine gemütliche Sitzecke und ein Holzofen sorgen an kühleren Abenden für Gemütlichkeit. Ein eigenes Bad mit Duschkabine gehört dazu, und große Fenster bieten direkten Blick auf den umliegenden Wald — jeder Morgen beginnt mit grünen Baumkronen und Vogelgesang. Der Raum bietet komfortabel Platz für 2–4 Gäste: ein romantischer Rückzugsort für Paare oder, kombiniert mit dem Dreibettzimmer im Obergeschoss, zusätzlicher Platz für größere Gruppen.",
+      "beds": "Doppelbett",
+      "size": "42 m²",
+      "guests": "2–4 Gäste",
+      "badges": [
+        "Doppelbett",
+        "Badezimmer",
+        "Wohnbereich",
+        "Waldblick"
+      ],
+      "highlights": [
+        "Doppelbett unter hohem Balkengewölbe",
+        "Holzofen für gemütliche Abende",
+        "Gemütliche Sitzecke im Schlafbereich",
+        "Eigenes Bad mit Duschkabine",
+        "Direkter Blick auf den Wald"
+      ],
+      "price": "120"
     }
   },
   "experiences": {

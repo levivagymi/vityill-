@@ -64,8 +64,8 @@ export default function Amenities() {
                 key={key}
                 href={experienceHref(lang, EXPERIENCE_SLUG_BY_AMENITY[key])}
                 data-cursor="view"
-                className="amenity-card fx-reveal group relative block bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 lg:p-7
-                           hover:border-foreground/15 hover:bg-foreground/[0.06] transition-all duration-300
+                className="amenity-card fx-reveal group relative block bg-card border border-foreground/[0.07] rounded-2xl p-6 lg:p-7
+                           hover:border-foreground/15 transition-all duration-300
                            hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/10 cursor-pointer"
               >
                 <div className="w-12 h-12 rounded-xl bg-foreground/[0.06] border border-foreground/10 flex items-center justify-center mb-5

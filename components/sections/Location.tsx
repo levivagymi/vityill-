@@ -105,8 +105,8 @@ export default function Location() {
               {HIGHLIGHTS.map(({ key, icon: Icon, color, dist }) => (
                 <div
                   key={key}
-                  className="highlight-row flex items-center gap-4 p-4 bg-foreground/[0.03] border border-foreground/[0.06] rounded-xl
-                             hover:border-foreground/10 hover:bg-foreground/[0.05] transition-all duration-200 group"
+                  className="highlight-row flex items-center gap-4 p-4 bg-card border border-foreground/[0.06] rounded-xl
+                             hover:border-foreground/10 transition-all duration-200 group"
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"

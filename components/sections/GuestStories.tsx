@@ -36,7 +36,7 @@ function StoryCard({ story }: { story: Story }) {
   return (
     <figure
       data-cursor="view"
-      className="group relative flex-shrink-0 w-[280px] sm:w-[320px] overflow-hidden rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03]
+      className="group relative flex-shrink-0 w-[280px] sm:w-[320px] overflow-hidden rounded-2xl border border-foreground/[0.08] bg-card
                  transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1.5 hover:border-foreground/20
                  hover:shadow-[0_0_0_1px_var(--glow-ring),0_18px_40px_-18px_rgba(0,0,0,0.5)]"
     >

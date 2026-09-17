@@ -68,7 +68,7 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-foreground/[0.03] border border-foreground/[0.12] rounded-2xl p-10 text-center">
+      <div className="bg-card border border-foreground/[0.12] rounded-2xl p-10 text-center">
         <CheckCircle size={48} className="text-foreground mx-auto mb-4" />
         <h3 className="font-heading text-xl mb-2">{c.successTitle}</h3>
         <p className="font-sans text-muted-foreground text-sm mb-6">{c.successMsg}</p>
@@ -83,7 +83,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="bg-foreground/[0.03] border border-foreground/[0.07] rounded-2xl p-6 sm:p-8 space-y-5">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="bg-card border border-foreground/[0.07] rounded-2xl p-6 sm:p-8 space-y-5">
       <h3 className="font-heading text-xl mb-1">{c.formTitle}</h3>
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label={c.name} error={errors.name?.message}>

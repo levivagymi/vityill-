@@ -99,10 +99,23 @@
     "book": "Foglalja le",
     "allRooms": "Összes szoba",
     "viewDetails": "Részletek",
-    "bookThis": "Foglalja le ezt a szobát",
+    "bookThis": "Foglalja le a vendégházat",
+    "wholeHouseNote": "A Vityillót mindig egyben, teljes vendégházként foglalja — külön szobát nem lehet bérelni.",
     "overviewTitle": "Áttekintés",
     "featuresTitle": "Felszereltség",
     "galleryTitle": "Képek",
+    "roomAmenitiesTitle": "Amit minden szobában megtalál",
+    "roomAmenities": {
+      "wifi": { "name": "Ingyenes WiFi", "desc": "Gyors, ingyenes internet az egész házban, mindkét szinten elérhető." },
+      "ac": { "name": "Légkondicionáló", "desc": "Klíma mindkét szobában, a nyári hónapokban is kellemes hőmérsékletet biztosítva." },
+      "heating": { "name": "Fűtés", "desc": "Fűtött terek biztosítanak kényelmes tartózkodást a hűvösebb hónapokban is." },
+      "hairdryer": { "name": "Hajszárító", "desc": "Hajszárító minden szobában, útikészlet nélkül is útra kelhet." },
+      "bathroom": { "name": "Saját fürdőszoba", "desc": "Zuhanykabinos, önálló fürdőszoba WC-vel, szobánként külön." },
+      "linens": { "name": "Törölköző és ágynemű", "desc": "Friss törölköző és ágynemű minden foglaláshoz biztosítva." },
+      "smarttv": { "name": "Smart TV", "desc": "Okos televízió kábelcsatornákkal, Netflix- és YouTube-hozzáféréssel." },
+      "charging": { "name": "Töltő az ágy mellett", "desc": "Konnektor és USB-töltőhely közvetlenül az ágy mellett, kényelmes eléréssel." },
+      "dishwasher": { "name": "Mosogatógép", "desc": "Mosogatógép a közös konyhában, hosszabb tartózkodáshoz is kényelmes." }
+    },
     "sizeLabel": "Alapterület",
     "guestsLabel": "Férőhely",
     "bedsLabel": "Ágyak",
@@ -110,37 +123,14 @@
     "perPersonPerNight": "/fő/éj",
     "houseName": "Teljes vendégház",
     "houseTagline": "Franciaágyas hálószoba és háromágyas szoba — két szinten",
-    "houseDesc": "A Vityillót mindig egyben, teljes vendégházként foglalja — a két szintet nem lehet külön bérelni. Az emeleten egy franciaágyas hálószoba várja magas, gerendázott dongaboltozatos mennyezettel és fatüzelésű kályhával, a földszinten pedig egy háromágyas szoba kapott helyet saját fürdővel és közvetlen kertkapcsolattal. A két szint együtt legfeljebb 6 vendéget fogad kényelmesen — ideális baráti társaságoknak és több generációs családi kikapcsolódáshoz egyaránt.",
+    "houseDesc": "A Vityillót mindig egyben, teljes vendégházként foglalja — a két szintet nem lehet külön bérelni. Az emeleten egy háromágyas szoba kapott helyet saját fürdővel és közvetlen kertkapcsolattal, a földszinten pedig egy franciaágyas hálószoba várja magas, gerendázott dongaboltozatos mennyezettel és fatüzelésű kályhával. A két szint együtt legfeljebb 6 vendéget fogad kényelmesen — ideális baráti társaságoknak és több generációs családi kikapcsolódáshoz egyaránt.",
     "upperFloorNote": "3–6 fős foglalás esetén mindkét szint — a franciaágyas hálószoba és a háromágyas szoba is — automatikusan az Önök rendelkezésére áll, így mindenki kényelmesen elfér.",
+    "selfCheckInNote": "Nincs helyszíni recepció — a be- és kijelentkezés önállóan, előzetesen egyeztetett módon történik.",
     "room1": {
       "name": "Felső szint",
-      "tagline": "Mester hálószoba & nappali",
-      "desc": "Tágas franciaágyas hálószoba gerendázott dongaboltozatos mennyezettel, fatüzelésű kályhával, teli fürdőszobával és közvetlen erdei panorámával.",
-      "long": "A felső szint a Vityilló legimpozánsabb tere: magas, gerendázott dongaboltozatos mennyezet alatt kényelmes franciaágy, külön nappali sarok és egy fatüzelésű kályha teremt otthonos hangulatot a hűvösebb estéken is. A szobához teli fürdőszoba tartozik zuhanykabinnal, a nagy ablakokon át pedig közvetlen kilátás nyílik a környező erdőre — így minden reggelt a fák zöldje és a madárcsicsergés köszönt. A tér 2–4 fő kényelmes elszállásolására alkalmas: pároknak romantikus visszavonulóként, nagyobb társaságoknál pedig a háromágyas alsó szinttel kiegészülve.",
-      "beds": "Franciaágy",
-      "size": "42 m²",
-      "guests": "2–4 fő",
-      "badges": [
-        "Franciaágy",
-        "Fürdőszoba",
-        "Nappali",
-        "Erdei panoráma"
-      ],
-      "highlights": [
-        "Franciaágy magas, gerendázott mennyezet alatt",
-        "Fatüzelésű kályha a hangulatos estékhez",
-        "Külön nappali sarok",
-        "Teli fürdőszoba zuhanykabinnal",
-        "Közvetlen erdei panoráma",
-        "Klíma és Smart TV"
-      ],
-      "price": "120"
-    },
-    "room2": {
-      "name": "Alsó szint",
       "tagline": "Háromágyas szoba",
       "desc": "Háromágyas szoba csempézett padlóval, saját fürdővel és közvetlen kertkapcsolattal — pár lépésre a szaunától és a medencétől.",
-      "long": "Az alsó szint három egyszemélyes ággyal ideális baráti társaságoknak, testvéreknek vagy a nagyobb család fiatalabb tagjainak. A csempézett padlós, világos tér saját fürdőszobával és zuhanykabinnal rendelkezik, a kertre nyíló ajtó pedig közvetlen kapcsolatot teremt a szabadtérrel — mindössze néhány lépés választja el a szaunától, a kültéri medencétől és a bográcsozó terasztól. A szoba 2–3 fő elszállásolására alkalmas, 3–6 fős foglalás esetén pedig a felső szinttel kiegészülve az egész társaság kényelmesen elfér.",
+      "long": "A felső szint három egyszemélyes ággyal ideális baráti társaságoknak, testvéreknek vagy a nagyobb család fiatalabb tagjainak. A csempézett padlós, világos tér saját fürdőszobával és zuhanykabinnal rendelkezik, a kertre nyíló ajtó pedig közvetlen kapcsolatot teremt a szabadtérrel — mindössze néhány lépés választja el a szaunától, a kültéri medencétől és a bográcsozó terasztól. A szoba 2–3 fő elszállásolására alkalmas, 3–6 fős foglalás esetén pedig az alsó szinttel kiegészülve az egész társaság kényelmesen elfér.",
       "beds": "3 × egységes ágy",
       "size": "34 m²",
       "guests": "2–3 fő",
@@ -154,10 +144,32 @@
         "Csempézett padló",
         "Saját fürdőszoba zuhanykabinnal",
         "Közvetlen kertkapcsolat",
-        "Pár lépésre a szaunától és a medencétől",
-        "Klíma és Smart TV"
+        "Pár lépésre a szaunától és a medencétől"
       ],
       "price": "100"
+    },
+    "room2": {
+      "name": "Alsó szint",
+      "tagline": "Mester hálószoba & nappali",
+      "desc": "Tágas franciaágyas hálószoba gerendázott dongaboltozatos mennyezettel, fatüzelésű kályhával, teli fürdőszobával és közvetlen erdei panorámával.",
+      "long": "Az alsó szint a Vityilló legimpozánsabb tere: magas, gerendázott dongaboltozatos mennyezet alatt kényelmes franciaágy, kényelmes ülősarok és egy fatüzelésű kályha teremt otthonos hangulatot a hűvösebb estéken is. A szobához teli fürdőszoba tartozik zuhanykabinnal, a nagy ablakokon át pedig közvetlen kilátás nyílik a környező erdőre — így minden reggelt a fák zöldje és a madárcsicsergés köszönt. A tér 2–4 fő kényelmes elszállásolására alkalmas: pároknak romantikus visszavonulóként, nagyobb társaságoknál pedig a háromágyas felső szinttel kiegészülve.",
+      "beds": "Franciaágy",
+      "size": "42 m²",
+      "guests": "2–4 fő",
+      "badges": [
+        "Franciaágy",
+        "Fürdőszoba",
+        "Nappali",
+        "Erdei panoráma"
+      ],
+      "highlights": [
+        "Franciaágy magas, gerendázott mennyezet alatt",
+        "Fatüzelésű kályha a hangulatos estékhez",
+        "Kényelmes ülősarok a hálótérben",
+        "Teli fürdőszoba zuhanykabinnal",
+        "Közvetlen erdei panoráma"
+      ],
+      "price": "120"
     }
   },
   "experiences": {

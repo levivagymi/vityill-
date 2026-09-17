@@ -120,7 +120,7 @@ export default function AvailabilityStrip({ compact = false }: { compact?: boole
           </div>
         )}
 
-        <div className="avail-el grid lg:grid-cols-[1fr_auto] gap-10 items-center bg-foreground/[0.03] border border-foreground/[0.08] rounded-2xl p-7 lg:p-10">
+        <div className="avail-el grid lg:grid-cols-[1fr_auto] gap-10 items-center bg-card border border-foreground/[0.08] rounded-2xl p-7 lg:p-10">
           <div>
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="inline-flex items-center gap-1.5 font-sans text-xs uppercase tracking-wider text-muted-foreground bg-foreground/[0.06] border border-foreground/10 rounded-full px-3 py-1.5">

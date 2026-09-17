@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import Magnetic from '@/components/ui/Magnetic'
 import type { ExperienceScrollItem } from '@/components/sections/ExperiencesScroll'
 
 export default function ExperienceRow({
@@ -31,13 +32,15 @@ export default function ExperienceRow({
           >
             {exploreLabel} <ArrowRight size={15} />
           </Link>
-          <Link
-            href={bookHref}
-            className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground hover:gap-3 transition-all cursor-pointer"
-            data-cursor="view"
-          >
-            {bookNowLabel} <ArrowRight size={15} />
-          </Link>
+          <Magnetic>
+            <Link
+              href={bookHref}
+              className="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 text-background font-sans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200 cursor-pointer"
+              data-cursor="view"
+            >
+              {bookNowLabel} <ArrowRight size={15} />
+            </Link>
+          </Magnetic>
         </div>
       </div>
     </>

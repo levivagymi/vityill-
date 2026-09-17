@@ -8,10 +8,11 @@ import { fxFull } from '@/lib/fx'
 import Reveal from '@/components/ui/Reveal'
 import PageHero, { type Crumb } from '@/components/ui/PageHero'
 import ExperienceRow from '@/components/experience/ExperienceRow'
-import type { ExperienceSlug } from '@/lib/nav'
+import Magnetic from '@/components/ui/Magnetic'
 
 export type ExperienceScrollItem = {
-  slug: ExperienceSlug
+  /** React-key only — not necessarily an ExperienceSlug (this component is also reused for rooms). */
+  slug: string
   eyebrow: string
   title: string
   detail: string
@@ -180,13 +181,15 @@ export default function ExperiencesScroll({
                       >
                         {exploreLabel} <ArrowRight size={15} />
                       </Link>
-                      <Link
-                        href={bookHref}
-                        className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-foreground hover:gap-3 transition-all cursor-pointer"
-                        data-cursor="view"
-                      >
-                        {bookNowLabel} <ArrowRight size={15} />
-                      </Link>
+                      <Magnetic>
+                        <Link
+                          href={bookHref}
+                          className="inline-flex items-center gap-2 bg-foreground hover:bg-foreground/90 text-background font-sans font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-200 cursor-pointer"
+                          data-cursor="view"
+                        >
+                          {bookNowLabel} <ArrowRight size={15} />
+                        </Link>
+                      </Magnetic>
                     </div>
                   </div>
                 ))}

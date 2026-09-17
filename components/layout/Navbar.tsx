@@ -2,15 +2,24 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
-import { Menu, X, Sun, Moon, Search } from 'lucide-react'
+import { Menu, X, Sun, Moon, Search, ChevronDown } from 'lucide-react'
+import { NavigationMenu } from '@base-ui/react/navigation-menu'
 import gsap from '@/lib/gsap'
 import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import { useCommand } from '@/components/command/command-context'
 import Logo from '@/components/brand/Logo'
-import { MAIN_NAV, href, switchLocalePath } from '@/lib/nav'
+import Magnetic from '@/components/ui/Magnetic'
+import { EXPERIENCE_ICONS } from '@/components/experience/experience-icons'
+import {
+  MAIN_NAV, href, switchLocalePath,
+  ROOM_SLUGS, ROOM_KEY_BY_SLUG, roomHref,
+  EXPERIENCE_SLUGS, experienceHref,
+} from '@/lib/nav'
 import type { Locale } from '@/lib/types'
+
+type NavSubItem = { key: string; label: string; sublabel: string; href: string; icon?: React.ReactNode }
 
 export default function Navbar() {
   const dict = useDict()
@@ -22,12 +31,16 @@ export default function Navbar() {
 
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [expandedKey, setExpandedKey] = useState<string | null>(null)
 
   const headerRef = useRef<HTMLElement>(null)
   const drawerRef = useRef<HTMLDivElement>(null)
   const backdropRef = useRef<HTMLDivElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const menuBtnRef = useRef<HTMLButtonElement>(null)
+
+  // Closes the drawer and collapses any open accordion sub-list, so the next open starts fresh.
+  const closeDrawer = () => { setMenuOpen(false); setExpandedKey(null) }
 
   useEffect(() => {
     // The header carries .fx-reveal, which only resolves to opacity:0 under
@@ -51,7 +64,7 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 768) setMenuOpen(false) }
+    const onResize = () => { if (window.innerWidth >= 768) closeDrawer() }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
@@ -68,7 +81,7 @@ export default function Navbar() {
     closeBtnRef.current?.focus()
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setMenuOpen(false)
+        closeDrawer()
         menuBtnRef.current?.focus()
       }
     }
@@ -106,6 +119,25 @@ export default function Navbar() {
     ? 'bg-foreground/[0.06] border-foreground/10 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.12]'
     : 'bg-white/[0.08] border-white/15 text-on-dark-muted hover:text-on-dark-strong hover:bg-white/[0.15]'
 
+  // Nav items that lead to sub-pages get a dropdown listing them directly,
+  // instead of only being reachable via an extra click-through or ⌘K.
+  const roomSubItems: NavSubItem[] = ROOM_SLUGS.map((slug) => {
+    const r = dict.rooms[ROOM_KEY_BY_SLUG[slug]]
+    return { key: slug, label: r.name, sublabel: r.tagline, href: roomHref(lang, slug) }
+  })
+  const experienceSubItems: NavSubItem[] = EXPERIENCE_SLUGS.map((slug) => {
+    const exp = dict.experiences[slug]
+    const Icon = EXPERIENCE_ICONS[slug]
+    return {
+      key: slug, label: exp.title, sublabel: exp.eyebrow, href: experienceHref(lang, slug),
+      icon: <Icon size={16} className="text-foreground shrink-0" aria-hidden />,
+    }
+  })
+  const SUBMENUS: Partial<Record<(typeof MAIN_NAV)[number]['dictKey'], NavSubItem[]>> = {
+    rooms: roomSubItems,
+    experiences: experienceSubItems,
+  }
+
   return (
     <>
       <header
@@ -120,18 +152,66 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             <Logo variant="lockup" height={scrolled ? 34 : 38} tone={scrolled ? 'auto' : 'light'} />
 
-            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-              {MAIN_NAV.map(({ dictKey, key, hash }) => (
-                <Link
-                  key={dictKey}
-                  href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)}
-                  className={`text-sm font-sans transition-colors duration-200 tracking-wide cursor-pointer ${linkColor}`}
-                  data-cursor="view"
-                >
-                  {dict.nav[dictKey]}
-                </Link>
-              ))}
-            </nav>
+            <NavigationMenu.Root className="hidden md:block">
+              <NavigationMenu.List className="flex items-center gap-6 lg:gap-8">
+                {MAIN_NAV.map(({ dictKey, key, hash }) => {
+                  const subItems = SUBMENUS[dictKey]
+                  if (!subItems) {
+                    return (
+                      <NavigationMenu.Link
+                        key={dictKey}
+                        render={<Link href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)} data-cursor="view" />}
+                        className={`text-sm font-sans transition-colors duration-200 tracking-wide cursor-pointer ${linkColor}`}
+                      >
+                        {dict.nav[dictKey]}
+                      </NavigationMenu.Link>
+                    )
+                  }
+                  return (
+                    <NavigationMenu.Item key={dictKey}>
+                      <NavigationMenu.Trigger
+                        render={<Link href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)} data-cursor="view" />}
+                        nativeButton={false}
+                        className={`group flex items-center gap-1 text-sm font-sans transition-colors duration-200 tracking-wide cursor-pointer ${linkColor}`}
+                      >
+                        {dict.nav[dictKey]}
+                        <ChevronDown size={13} className="transition-transform duration-200 group-data-[popup-open]:rotate-180" aria-hidden />
+                      </NavigationMenu.Trigger>
+                      <NavigationMenu.Content
+                        className={`p-2 grid gap-0.5 ${subItems.length > 4 ? 'grid-cols-2 w-[min(90vw,520px)]' : 'grid-cols-1 w-[min(90vw,320px)]'}`}
+                      >
+                        {subItems.map((item) => (
+                          <NavigationMenu.Link
+                            key={item.key}
+                            render={<Link href={item.href} data-cursor="view" />}
+                            className="flex items-start gap-2.5 rounded-lg px-3 py-2.5 hover:bg-foreground/[0.05] transition-colors duration-200 cursor-pointer"
+                          >
+                            {item.icon}
+                            <span className="flex flex-col">
+                              <span className="text-sm font-sans text-foreground">{item.label}</span>
+                              <span className="text-xs font-sans text-muted-foreground">{item.sublabel}</span>
+                            </span>
+                          </NavigationMenu.Link>
+                        ))}
+                      </NavigationMenu.Content>
+                    </NavigationMenu.Item>
+                  )
+                })}
+              </NavigationMenu.List>
+
+              <NavigationMenu.Portal>
+                <NavigationMenu.Positioner sideOffset={14} collisionPadding={16} className="z-50 box-border">
+                  <NavigationMenu.Popup
+                    className="relative rounded-2xl border border-foreground/[0.08] bg-background/95 backdrop-blur-md shadow-xl shadow-black/20 overflow-hidden
+                               transition-[opacity,transform] duration-300 [transition-timing-function:var(--ease-cinematic)]
+                               data-[starting-style]:opacity-0 data-[starting-style]:scale-[0.97]
+                               data-[ending-style]:opacity-0 data-[ending-style]:scale-[0.97]"
+                  >
+                    <NavigationMenu.Viewport />
+                  </NavigationMenu.Popup>
+                </NavigationMenu.Positioner>
+              </NavigationMenu.Portal>
+            </NavigationMenu.Root>
 
             <div className="flex items-center gap-2 lg:gap-3">
               <div className={`hidden sm:flex items-center gap-1 rounded-full px-2 py-1 border transition-colors duration-500 ${
@@ -175,15 +255,19 @@ export default function Navbar() {
                 {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
               </button>
 
-              <Link
-                href={href(lang, 'booking')}
-                className={`hidden md:block text-sm font-sans font-semibold px-4 py-2 rounded-full transition-all duration-200 hover:shadow-lg cursor-pointer ${
-                  scrolled ? 'bg-foreground hover:bg-foreground/90 text-background' : 'bg-[#FFF4CC] hover:bg-[rgba(255,244,204,0.9)] text-[#1A4731]'
-                }`}
-                data-cursor="view"
-              >
-                {dict.nav.bookNow}
-              </Link>
+              <div className="hidden md:block">
+                <Magnetic>
+                  <Link
+                    href={href(lang, 'booking')}
+                    className={`block text-sm font-sans font-semibold px-4 py-2 rounded-full transition-all duration-200 hover:shadow-lg cursor-pointer ${
+                      scrolled ? 'bg-foreground hover:bg-foreground/90 text-background' : 'bg-[#FFF4CC] hover:bg-[rgba(255,244,204,0.9)] text-[#1A4731]'
+                    }`}
+                    data-cursor="view"
+                  >
+                    {dict.nav.bookNow}
+                  </Link>
+                </Magnetic>
+              </div>
 
               <button
                 ref={menuBtnRef}
@@ -204,7 +288,7 @@ export default function Navbar() {
         ref={backdropRef}
         className="fixed inset-0 z-40 bg-[#0a1f14]/60 backdrop-blur-sm"
         style={{ display: 'none' }}
-        onClick={() => setMenuOpen(false)}
+        onClick={closeDrawer}
       />
 
       <div
@@ -220,7 +304,7 @@ export default function Navbar() {
           <Logo variant="lockup" height={30} tone="auto" />
           <button
             ref={closeBtnRef}
-            onClick={() => setMenuOpen(false)}
+            onClick={closeDrawer}
             className="p-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             aria-label={dict.nav.menuClose}
           >
@@ -230,22 +314,63 @@ export default function Navbar() {
 
         <nav className="flex flex-col p-5 gap-1 flex-1">
           <button
-            onClick={() => { setMenuOpen(false); setCommandOpen(true) }}
+            onClick={() => { closeDrawer(); setCommandOpen(true) }}
             className="drawer-item flex items-center gap-2.5 text-left py-3 px-3 mb-2 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer border-b border-foreground/[0.08]"
           >
             <Search size={16} aria-hidden />
             {dict.command.title}
           </button>
-          {MAIN_NAV.map(({ dictKey, key, hash }) => (
-            <Link
-              key={dictKey}
-              href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)}
-              onClick={() => setMenuOpen(false)}
-              className="drawer-item text-left py-3 px-3 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer"
-            >
-              {dict.nav[dictKey]}
-            </Link>
-          ))}
+          {MAIN_NAV.map(({ dictKey, key, hash }) => {
+            const subItems = SUBMENUS[dictKey]
+            if (!subItems) {
+              return (
+                <Link
+                  key={dictKey}
+                  href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)}
+                  onClick={closeDrawer}
+                  className="drawer-item text-left py-3 px-3 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer"
+                >
+                  {dict.nav[dictKey]}
+                </Link>
+              )
+            }
+            const isExpanded = expandedKey === dictKey
+            return (
+              <div key={dictKey} className="drawer-item">
+                <div className="flex items-center gap-1">
+                  <Link
+                    href={hash ? `${href(lang, key)}#${hash}` : href(lang, key)}
+                    onClick={closeDrawer}
+                    className="flex-1 text-left py-3 px-3 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-base transition-all duration-200 cursor-pointer"
+                  >
+                    {dict.nav[dictKey]}
+                  </Link>
+                  <button
+                    onClick={() => setExpandedKey(isExpanded ? null : dictKey)}
+                    aria-expanded={isExpanded}
+                    aria-label={dict.nav[dictKey]}
+                    className="p-3 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                  >
+                    <ChevronDown size={16} className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} aria-hidden />
+                  </button>
+                </div>
+                {isExpanded && (
+                  <div className="flex flex-col gap-0.5 pl-4 pb-1">
+                    {subItems.map((item) => (
+                      <Link
+                        key={item.key}
+                        href={item.href}
+                        onClick={closeDrawer}
+                        className="text-left py-2.5 px-3 text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] rounded-lg font-sans text-sm transition-all duration-200 cursor-pointer"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </nav>
 
         <div className="p-5 border-t border-foreground/[0.08]">
@@ -254,7 +379,7 @@ export default function Navbar() {
               <Link
                 key={l}
                 href={switchLocalePath(pathname, l)}
-                onClick={() => setMenuOpen(false)}
+                onClick={closeDrawer}
                 aria-current={lang === l ? 'true' : undefined}
                 className={`drawer-item flex-1 text-center text-sm py-2 rounded-lg uppercase tracking-wider font-sans transition-all ${
                   lang === l
@@ -275,13 +400,17 @@ export default function Navbar() {
             {theme === 'dark' ? dict.nav.themeLight : dict.nav.themeDark}
           </button>
 
-          <Link
-            href={href(lang, 'booking')}
-            onClick={() => setMenuOpen(false)}
-            className="drawer-item block text-center w-full bg-foreground hover:bg-foreground/90 text-background font-semibold py-3 rounded-full font-sans transition-colors cursor-pointer"
-          >
-            {dict.nav.bookNow}
-          </Link>
+          <div className="drawer-item">
+            <Magnetic className="w-full">
+              <Link
+                href={href(lang, 'booking')}
+                onClick={closeDrawer}
+                className="block text-center w-full bg-foreground hover:bg-foreground/90 text-background font-semibold py-3 rounded-full font-sans transition-colors cursor-pointer"
+              >
+                {dict.nav.bookNow}
+              </Link>
+            </Magnetic>
+          </div>
         </div>
       </div>
     </>
