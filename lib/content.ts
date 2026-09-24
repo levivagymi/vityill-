@@ -127,19 +127,40 @@ export const ROOM_MEDIA: Record<RoomKey, { slug: string; hero: string; gallery: 
   },
 }
 
-export const GALLERY_IMAGES: { src: string; alt: string; aspect: 'landscape' | 'portrait' }[] = [
-  { src: imageUrl('forest-clearing-dawn'), alt: 'Erdős tisztás piknikasztalokkal a birtok mellett', aspect: 'portrait' },
-  { src: imageUrl('house-exterior-day'), alt: 'A Vityilló Vendégház kívülről, üvegezett verandával', aspect: 'landscape' },
-  { src: imageUrl('wellness-fireplace-corner'), alt: 'Kandallós pihenősarok a nappaliban', aspect: 'landscape' },
-  { src: imageUrl('hot-tub-jets'), alt: 'Kültéri jakuzzi bugyogó vízzel napközben', aspect: 'landscape' },
-  { src: imageUrl('room-upper-hero'), alt: 'Mester hálószoba magas gerendás tetőtérrel', aspect: 'portrait' },
-  { src: imageUrl('kitchen-modern'), alt: 'Modern, világos konyha ívelt bejárattal', aspect: 'landscape' },
-  { src: imageUrl('forest-path-driveway'), alt: 'Erdei ösvény a birtokhoz vezetve', aspect: 'landscape' },
-  { src: imageUrl('living-room-cozy'), alt: 'Otthonos nappali szarvasmintás díszpárnákkal', aspect: 'landscape' },
-  { src: imageUrl('bograc-panorama'), alt: 'Bográcsozó hely panorámás kilátással a völgyre', aspect: 'landscape' },
-  { src: imageUrl('view-panorama-well'), alt: 'Panorámás kilátás a fenyvesre a teraszról', aspect: 'portrait' },
-  { src: imageUrl('room-upper-stove-detail'), alt: 'Hangulatos hálószoba kandallóval', aspect: 'landscape' },
-  { src: imageUrl('forest-path-misty'), alt: 'Ködös erdei ösvény kora reggel', aspect: 'landscape' },
+/** Kültér = outdoor/exterior, Beltér = indoor/interior, Wellness = spa-ish
+ *  moments (fireplace lounge, hot tub) — see the wellness-fireplace-corner
+ *  comment above: no dedicated sauna/spa photo exists among the real source
+ *  photos, so Wellness stays intentionally smaller than the other two rather
+ *  than being padded with unrelated shots. */
+export type GalleryCategory = 'kulter' | 'belter' | 'wellness'
+
+export const GALLERY_IMAGES: { src: string; alt: string; aspect: 'landscape' | 'portrait'; category: GalleryCategory }[] = [
+  // Existing 12 — order/alt/aspect unchanged (homepage teaser does
+  // GALLERY_IMAGES.slice(0, limit) and /galeria's PageHero uses index 0 as
+  // its banner image, so nothing here may be reordered or inserted before).
+  { src: imageUrl('forest-clearing-dawn'), alt: 'Erdős tisztás piknikasztalokkal a birtok mellett', aspect: 'portrait', category: 'kulter' },
+  { src: imageUrl('house-exterior-day'), alt: 'A Vityilló Vendégház kívülről, üvegezett verandával', aspect: 'landscape', category: 'kulter' },
+  { src: imageUrl('wellness-fireplace-corner'), alt: 'Kandallós pihenősarok a nappaliban', aspect: 'landscape', category: 'wellness' },
+  { src: imageUrl('hot-tub-jets'), alt: 'Kültéri jakuzzi bugyogó vízzel napközben', aspect: 'landscape', category: 'wellness' },
+  { src: imageUrl('room-upper-hero'), alt: 'Mester hálószoba magas gerendás tetőtérrel', aspect: 'portrait', category: 'belter' },
+  { src: imageUrl('kitchen-modern'), alt: 'Modern, világos konyha ívelt bejárattal', aspect: 'landscape', category: 'belter' },
+  { src: imageUrl('forest-path-driveway'), alt: 'Erdei ösvény a birtokhoz vezetve', aspect: 'landscape', category: 'kulter' },
+  { src: imageUrl('living-room-cozy'), alt: 'Otthonos nappali szarvasmintás díszpárnákkal', aspect: 'landscape', category: 'belter' },
+  { src: imageUrl('bograc-panorama'), alt: 'Bográcsozó hely panorámás kilátással a völgyre', aspect: 'landscape', category: 'kulter' },
+  { src: imageUrl('view-panorama-well'), alt: 'Panorámás kilátás a fenyvesre a teraszról', aspect: 'portrait', category: 'kulter' },
+  { src: imageUrl('room-upper-stove-detail'), alt: 'Hangulatos hálószoba kandallóval', aspect: 'landscape', category: 'belter' },
+  { src: imageUrl('forest-path-misty'), alt: 'Ködös erdei ösvény kora reggel', aspect: 'landscape', category: 'kulter' },
+
+  // Appended for the categorized /galeria grid — all reuse already-mapped
+  // IMAGE_NUMBERS keys, no new Supabase uploads.
+  { src: imageUrl('house-exterior-portrait'), alt: 'A Vityilló Vendégház homlokzata, körben zöldellő kerttel', aspect: 'portrait', category: 'kulter' },
+  { src: imageUrl('patio-lights-dusk'), alt: 'Fénnyel díszített terasz alkonyatkor', aspect: 'landscape', category: 'kulter' },
+  { src: imageUrl('room-upper-bed-window'), alt: 'Franciaágy nagy ablak mellett, természetes fénnyel', aspect: 'landscape', category: 'belter' },
+  { src: imageUrl('room-lower-hero'), alt: 'Hármas ágyas hálószoba magas, gerendás mennyezettel', aspect: 'portrait', category: 'belter' },
+  { src: imageUrl('room-lower-beds-wardrobe'), alt: 'Hálószoba ágyakkal és tágas gardróbszekrénnyel', aspect: 'landscape', category: 'belter' },
+  { src: imageUrl('living-room-sunroom'), alt: 'Napfényes, üvegezett nappali panorámás kilátással', aspect: 'landscape', category: 'belter' },
+  { src: imageUrl('dining-room-deer-art'), alt: 'Étkezősarok szarvasmintás falképpel', aspect: 'landscape', category: 'belter' },
+  { src: imageUrl('hot-tub-full-view'), alt: 'Kültéri jakuzzi teljes látványa a teraszon', aspect: 'landscape', category: 'wellness' },
 ]
 
 /** Wide forest-birtok banner reused for subpage hero backgrounds. */

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getDictionary, hasLocale } from '../dictionaries'
 import PageHero from '@/components/ui/PageHero'
-import Gallery from '@/components/sections/Gallery'
+import GalleryExplorer from '@/components/gallery/GalleryExplorer'
 import BookingCta from '@/components/sections/BookingCta'
 import { GALLERY_IMAGES } from '@/lib/content'
 
@@ -30,7 +30,7 @@ export default async function GalleryPage({ params }: Props) {
         crumbs={[{ label: dict.common.home, href: `/${lang}` }, { label: dict.nav.gallery }]}
       />
       <main className="pt-6">
-        <Gallery withHeading={false} />
+        <GalleryExplorer />
         <BookingCta />
       </main>
     </>

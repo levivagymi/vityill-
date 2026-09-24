@@ -246,7 +246,16 @@
     "close": "Close",
     "prev": "Previous",
     "next": "Next",
-    "of": "of"
+    "of": "of",
+    "viewModeLabel": "Switch gallery view",
+    "viewTabs": "Filter view",
+    "viewSections": "Section view",
+    "categories": {
+      "all": "All",
+      "kulter": "Outdoor",
+      "belter": "Indoor",
+      "wellness": "Wellness"
+    }
   },
   "booking": {
     "label": "Booking",

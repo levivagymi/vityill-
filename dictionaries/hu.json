@@ -246,7 +246,16 @@
     "close": "Bezárás",
     "prev": "Előző",
     "next": "Következő",
-    "of": "/"
+    "of": "/",
+    "viewModeLabel": "Nézet váltása",
+    "viewTabs": "Szűrő nézet",
+    "viewSections": "Szekció nézet",
+    "categories": {
+      "all": "Összes",
+      "kulter": "Kültér",
+      "belter": "Beltér",
+      "wellness": "Wellness"
+    }
   },
   "booking": {
     "label": "Foglalás",
@@ -407,8 +416,8 @@
   "footer": {
     "tagline": "Luxus menedék Szomód szívében",
     "contact": "Kapcsolat",
-    "phone": "+36 30 123 4567",
-    "email": "info@vityillo.hu",
+    "phone": "+36 30 455 2876",
+    "email": "vityillo@gmail.com",
     "address": "Szomód, Magyarország",
     "navTitle": "Navigáció",
     "legal": "Jogi információk",

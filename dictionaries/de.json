@@ -246,7 +246,16 @@
     "close": "Schließen",
     "prev": "Zurück",
     "next": "Weiter",
-    "of": "von"
+    "of": "von",
+    "viewModeLabel": "Galerieansicht wechseln",
+    "viewTabs": "Filteransicht",
+    "viewSections": "Abschnittsansicht",
+    "categories": {
+      "all": "Alle",
+      "kulter": "Außenbereich",
+      "belter": "Innenbereich",
+      "wellness": "Wellness"
+    }
   },
   "booking": {
     "label": "Buchung",
