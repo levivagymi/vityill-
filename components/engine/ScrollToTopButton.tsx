@@ -1,9 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { ArrowUp } from 'lucide-react'
 import { ScrollTrigger } from '@/lib/gsap'
 import { useLenis } from '@/components/engine/LenisProvider'
 import { useDict } from '@/components/providers/DictProvider'
+import { isExperienceSubpath } from '@/lib/nav'
 import { prefersReducedMotion } from '@/lib/utils'
 
 /**
@@ -15,6 +17,7 @@ import { prefersReducedMotion } from '@/lib/utils'
 export default function ScrollToTopButton() {
   const dict = useDict()
   const lenis = useLenis()
+  const pathname = usePathname()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -25,6 +28,9 @@ export default function ScrollToTopButton() {
     })
     return () => st.kill()
   }, [])
+
+  // Experience subpages are chrome-free (see Footer).
+  if (isExperienceSubpath(pathname)) return null
 
   const handleClick = () => {
     const reduced = prefersReducedMotion()

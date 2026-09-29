@@ -51,6 +51,13 @@ export type ExperienceSlug = (typeof EXPERIENCE_SLUGS)[number]
 export const experienceHref = (lang: Locale, slug: ExperienceSlug): string =>
   `/${lang}/${ROUTES.experiences}/${slug}`
 
+const EXPERIENCE_SUBPATH = new RegExp(`^/[a-z]{2}/${ROUTES.experiences}/[^/]+/?$`)
+
+/** True on an immersive experience subpage (/{lang}/elmenyek/{slug}) — those
+ *  pages run chrome-free, so site-wide furniture (footer, back-to-top) opts out. */
+export const isExperienceSubpath = (pathname: string | null): boolean =>
+  !!pathname && EXPERIENCE_SUBPATH.test(pathname)
+
 /** Maps a homepage amenity card to its immersive experience subpage. */
 export const EXPERIENCE_SLUG_BY_AMENITY: Record<AmenityKey, ExperienceSlug> = {
   sauna: 'sauna', pool: 'jacuzzi', grill: 'bograc', forest: 'erdo',

@@ -1,13 +1,13 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { fxFull } from '@/lib/fx'
 import { useDict } from '@/components/providers/DictProvider'
 import Logo from '@/components/brand/Logo'
-import { MAIN_NAV, href } from '@/lib/nav'
+import { MAIN_NAV, href, isExperienceSubpath } from '@/lib/nav'
 import type { Locale } from '@/lib/types'
 
 const FacebookIcon = () => (
@@ -22,7 +22,18 @@ const InstagramIcon = () => (
   </svg>
 )
 
+/**
+ * The immersive experience subpages end on their own scene, so the footer
+ * steps aside there. Gating in a wrapper (rather than returning null inside
+ * SiteFooter) keeps the reveal timeline tied to a real mount of the footer.
+ */
 export default function Footer() {
+  const pathname = usePathname()
+  if (isExperienceSubpath(pathname)) return null
+  return <SiteFooter />
+}
+
+function SiteFooter() {
   const dict = useDict()
   const params = useParams()
   const lang = (params?.lang as Locale) ?? 'hu'

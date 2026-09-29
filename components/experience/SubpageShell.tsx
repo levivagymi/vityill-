@@ -1,11 +1,14 @@
 'use client'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react'
+import gsap from '@/lib/gsap'
 import { useDict } from '@/components/providers/DictProvider'
 import Magnetic from '@/components/ui/Magnetic'
 import Reveal from '@/components/ui/Reveal'
 import { href, experienceHref, EXPERIENCE_SLUGS, type ExperienceSlug } from '@/lib/nav'
+import { prefersReducedMotion } from '@/lib/utils'
 import type { Locale } from '@/lib/types'
 
 /**
@@ -40,6 +43,35 @@ export default function SubpageShell({
     (_, k) => EXPERIENCE_SLUGS[(idx + k + 1) % EXPERIENCE_SLUGS.length],
   )
 
+  const copyRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    // The pinned title block would otherwise show through around the card
+    // rising over it. Fade it line by line, bottom-up, so each line is gone
+    // before the card reaches it; scrubbed, so it returns on the way back.
+    // Not gated on fxFull(): this is legibility, not decoration.
+    const copy = copyRef.current
+    if (!copy) return
+    const reduced = prefersReducedMotion()
+    const ctx = gsap.context(() => {
+      const lines = gsap.utils.toArray<HTMLElement>('[data-fade]', copy).reverse()
+      const tl = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          // Done by the time the card's top edge meets the block's top edge.
+          end: () => `+=${copy.offsetHeight * 0.85}`,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      })
+      lines.forEach((el, i) => tl.to(el, { opacity: 0, y: reduced ? 0 : -24 }, i * 0.15))
+    }, copy)
+    return () => ctx.revert()
+  }, [])
+
   return (
     <main className="relative">
       {/* Pinned scene */}
@@ -51,18 +83,18 @@ export default function SubpageShell({
           style={{ background: 'linear-gradient(to top, var(--background), transparent)' }}
         />
 
-        <div className="absolute inset-x-0 bottom-0 z-[4] px-4 sm:px-6 lg:px-8 pb-14 sm:pb-16">
+        <div ref={copyRef} className="absolute inset-x-0 bottom-0 z-[4] px-4 sm:px-6 lg:px-8 pb-14 sm:pb-16">
           <div className="max-w-7xl mx-auto">
-            <p className="font-sans uppercase tracking-[0.3em] text-muted-foreground mb-3" style={{ fontSize: 'var(--step--1)' }}>
+            <p data-fade className="font-sans uppercase tracking-[0.3em] text-muted-foreground mb-3" style={{ fontSize: 'var(--step--1)' }}>
               {eyebrow}
             </p>
-            <h1 className="font-heading text-foreground leading-[1.02] tracking-tight max-w-3xl" style={{ fontSize: 'var(--step-5)' }}>
+            <h1 data-fade className="font-heading text-foreground leading-[1.02] tracking-tight max-w-3xl" style={{ fontSize: 'var(--step-5)' }}>
               {title}
             </h1>
-            <p className="font-sans text-muted-foreground leading-relaxed max-w-xl mt-4" style={{ fontSize: 'var(--step-0)' }}>
+            <p data-fade className="font-sans text-muted-foreground leading-relaxed max-w-xl mt-4" style={{ fontSize: 'var(--step-0)' }}>
               {desc}
             </p>
-            <p className="mt-8 flex items-center gap-2 font-sans text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+            <p data-fade className="mt-8 flex items-center gap-2 font-sans text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
               <ChevronDown size={13} aria-hidden /> {dict.experiences.scrollHint}
             </p>
           </div>
@@ -70,7 +102,9 @@ export default function SubpageShell({
       </div>
 
       {/* Editorial content scrolling over the scene */}
-      <section className="relative z-10 px-4 sm:px-6 lg:px-8 pb-24 lg:pb-32">
+      {/* No footer on these pages — the bottom padding keeps enough scroll
+          depth for the scene intensity and lets the card settle mid-screen. */}
+      <section ref={sectionRef} className="relative z-10 px-4 sm:px-6 lg:px-8" style={{ paddingBottom: '30svh' }}>
         <div className="max-w-7xl mx-auto">
           <Reveal className="max-w-2xl">
             <div className="bg-card/90 backdrop-blur-md border border-foreground/10 rounded-2xl p-7 lg:p-10 shadow-2xl shadow-black/20">
