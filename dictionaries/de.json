@@ -25,7 +25,8 @@
     "backHome": "Zurück zur Startseite",
     "from": "Ab",
     "perNight": "/ Nacht",
-    "explore": "Entdecken"
+    "explore": "Entdecken",
+    "skipToContent": "Zum Inhalt springen"
   },
   "hero": {
     "eyebrow": "Szomód, Ungarn",
@@ -270,27 +271,16 @@
     "adults": "Anzahl Erwachsene",
     "childrenUnder4": "Kinder (0–3 Jahre, kostenlos)",
     "childrenOver4": "Kinder (ab 4 Jahren)",
-    "nationality": "Staatsangehörigkeit",
-    "residence": "Wohnsitzland",
-    "postalCode": "Postleitzahl",
-    "gender": "Geschlecht",
-    "birthYear": "Geburtsjahr",
-    "channel": "Wie haben Sie uns gefunden?",
+    "channel": "Wie haben Sie uns gefunden? (optional)",
     "requests": "Besondere Wünsche (optional)",
-    "genderMale": "Männlich",
-    "genderFemale": "Weiblich",
-    "genderOther": "Divers",
     "channelDirect": "Direkt",
     "channelAirbnb": "Airbnb",
     "channelBooking": "Booking.com",
     "channelFacebook": "Facebook",
     "channelOther": "Sonstiges",
-    "selectGender": "Geschlecht wählen",
     "selectChannel": "Quelle wählen",
-    "selectCountry": "Land wählen",
     "requiredField": "Dieses Feld ist erforderlich",
     "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
-    "invalidYear": "Bitte geben Sie ein gültiges Geburtsjahr ein (1900–2010)",
     "invalidPhone": "Bitte geben Sie eine gültige Telefonnummer ein",
     "minAdults": "Mindestens 1 Erwachsener ist erforderlich",
     "tooManyGuests": "Es können höchstens 6 Gäste gleichzeitig buchen",
@@ -301,7 +291,7 @@
     "errorTitle": "Ein Fehler ist aufgetreten",
     "errorMsg": "Ihre Anfrage konnte gerade nicht gesendet werden. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.",
     "newBooking": "Neue Buchung",
-    "ntak": "Die Daten werden gemäß den NTAK-Anforderungen (Nemzeti Turisztikai Adatszolgáltató Központ) verarbeitet.",
+    "ntak": "Die vom NTAK vorgeschriebenen Gästedaten (z. B. Staatsangehörigkeit, Geburtsjahr) erfragen wir nicht hier, sondern erfassen sie bei der Anreise, beim Check-in.",
     "stepStay": "Aufenthalt",
     "stepGuest": "Gästedaten",
     "stepReview": "Überblick",
@@ -325,10 +315,13 @@
     "datesError": "Das Abreisedatum muss nach der Anreise liegen",
     "minNightsError": "Der Mindestaufenthalt beträgt 2 Nächte",
     "pastDateError": "Das Datum darf nicht in der Vergangenheit liegen",
-    "agree": "Ich habe die AGB und die Datenschutzerklärung gelesen und akzeptiere sie.",
+    "agree": "Ich habe die Allgemeinen Geschäftsbedingungen gelesen und akzeptiere sie:",
     "agreeError": "Sie müssen die Bedingungen akzeptieren, um fortzufahren",
     "guestsValue": "{adults} Erwachsene, {children} Kinder",
-    "selectDatesFirst": "Bitte wählen Sie zuerst Ihr An- und Abreisedatum."
+    "selectDatesFirst": "Bitte wählen Sie zuerst Ihr An- und Abreisedatum.",
+    "adultConfirm": "Ich bestätige, dass ich mindestens 18 Jahre alt bin.",
+    "adultConfirmError": "Für eine Buchung müssen Sie volljährig sein.",
+    "privacyNotice": "Ihre Angaben verwenden wir ausschließlich zur Bearbeitung Ihrer Buchungsanfrage und zur Kontaktaufnahme. Details:"
   },
   "availability": {
     "label": "Verfügbarkeit",
@@ -388,36 +381,26 @@
     "checkInTime": "Anreise: ab 15:00 Uhr",
     "checkOutTime": "Abreise: bis 10:00 Uhr",
     "directions": "Route planen",
-    "newMessage": "Weitere Nachricht senden"
+    "newMessage": "Weitere Nachricht senden",
+    "privacyNotice": "Ihre Angaben verwenden wir ausschließlich zur Beantwortung Ihrer Nachricht. Details:",
+    "disabledNotice": "Der Nachrichtenversand über die Website ist derzeit nicht aktiv. Bitte kontaktieren Sie uns telefonisch oder per E-Mail:"
   },
   "testimonials": {
     "label": "Was unsere Gäste sagen",
     "title": "Bewertungen",
     "avgLabel": "Durchschnittliche Bewertung",
-    "satisfiedLabel": "Zufriedene Gäste",
     "reviewCountLabel": "Gästebewertungen",
     "leaveReviewCta": "Bewerte uns auch!",
     "starsLabel": "3 Sterne",
-    "goTo": "Bewertung",
     "wallTitle": "Geschichten unserer Gäste",
     "wallSubtitle": "Echte Momente von Menschen, die hier aufgetankt haben",
-    "ratingOnlyQuote": "Hat nur bewertet, ohne geschriebene Rezension.",
-    "stories": [
-      { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "Sauna und Außenpool waren perfekt. Jeden Morgen weckte uns Vogelgesang — pure Magie." },
-      { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung in Szomód ist atemberaubend." },
-      { "name": "Sarah Johnson", "country": "London, UK", "rating": 5, "quote": "Ein traumhafter Rückzugsort. Der private Wald ist magisch — wir wollten gar nicht abreisen." },
-      { "name": "Nagy Balázs & Zsuzsa", "country": "Győr, HU", "rating": 5, "quote": "Der abendliche Kesselgrill am Feuer war unvergesslich. Wir kommen auf jeden Fall wieder!" },
-      { "name": "Markus Schmidt", "country": "München, DE", "rating": 5, "quote": "Luxus und Natur in perfekter Harmonie. Der Ausblick am Morgen ist unbeschreiblich schön." },
-      { "name": "Horváth Lilla", "country": "Pécs, HU", "rating": 5, "quote": "Aus dem Jacuzzi die Sterne beobachten, rundherum nur Waldesstille. Mehr kann man nicht verlangen." },
-      { "name": "Claire Dubois", "country": "Lyon, FR", "rating": 5, "quote": "Ein perfekter Zufluchtsort. Jedes Detail atmet Ruhe — die private Sauna war ein Traum." },
-      { "name": "Szabó Márk", "country": "Tata, HU", "rating": 5, "quote": "Perfekt für ein Wochenende mit Freunden: Kesselgrill, Pool, Wanderwege ab der Haustür. Professionell und doch familiär." }
-    ]
+    "ratingOnlyQuote": "Hat nur bewertet, ohne geschriebene Rezension."
   },
   "footer": {
     "tagline": "Luxus-Rückzugsort im Herzen von Szomód",
     "contact": "Kontakt",
-    "phone": "+36 30 123 4567",
-    "email": "info@vityillo.hu",
+    "phone": "+36 30 455 2876",
+    "email": "vityillo.szomod@gmail.com",
     "address": "Szomód, Ungarn",
     "navTitle": "Navigation",
     "legal": "Rechtliches",
@@ -426,14 +409,28 @@
     "ntak": "NTAK-zertifizierte Unterkunft",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "terms": "AGB"
+    "terms": "AGB",
+    "cookieSettings": "Cookie-Einstellungen"
   },
   "cookie": {
-    "title": "Wir verwenden Cookies",
-    "text": "Unsere Website verwendet Cookies für den Betrieb und zur Verbesserung Ihres Erlebnisses.",
-    "accept": "Akzeptieren",
-    "decline": "Ablehnen",
-    "more": "Datenschutzerklärung"
+    "title": "Cookies und externe Inhalte",
+    "text": "Wir verwenden keine Tracking-, Analyse- oder Werbe-Cookies. In Ihrem Browser speichern wir nur Einstellungen, die für den Betrieb nötig sind (z. B. Design, diese Entscheidung). Google Maps wird nur mit Ihrer Einwilligung geladen, weil Google dabei Ihre IP-Adresse erhält und Cookies setzen kann.",
+    "acceptAll": "Alle akzeptieren",
+    "necessaryOnly": "Nur notwendige",
+    "settings": "Einstellungen",
+    "save": "Auswahl speichern",
+    "more": "Datenschutzerklärung",
+    "necessaryTitle": "Unbedingt erforderlich",
+    "necessaryText": "Speichert Design, Darstellungsmodus und diese Entscheidung in Ihrem Browser. Nicht abschaltbar; es werden keine Daten übermittelt.",
+    "alwaysOn": "Immer aktiv",
+    "externalTitle": "Externer Inhalt: Google Maps",
+    "externalText": "Beim Laden der eingebetteten Karte erhält Google Ihre IP-Adresse und kann Cookies setzen. Die Einwilligung können Sie jederzeit unter „Cookie-Einstellungen“ in der Fußzeile widerrufen."
+  },
+  "consent": {
+    "mapTitle": "Google Maps",
+    "mapText": "Die Karte wird von Google-Servern geladen: Google erhält dabei Ihre IP-Adresse und kann Cookies setzen.",
+    "loadOnce": "Karte laden",
+    "alwaysAllow": "Immer erlauben"
   },
   "scrollTop": {
     "label": "Nach oben"
@@ -447,19 +444,19 @@
       "sections": [
         {
           "heading": "Dienstanbieter",
-          "body": "Vityilló Gästehaus\nBetreiber: Vityilló Kft.\nSitz: 2896 Szomód, Fő utca 1., Ungarn"
+          "body": "Vityilló Gästehaus\nBetreiber: Ádám Róbert (in Ungarn steuerlich registrierte Privatperson)\nBetriebsstätte und Postanschrift: Szőlősor dűlő 119, 2896 Szomód, Ungarn"
         },
         {
           "heading": "Registrierungsdaten",
-          "body": "Handelsregisternummer: 11-09-000000\nUSt-IdNr.: 00000000-2-11\nNTAK-Registrierungsnummer: MA00000000"
+          "body": "Unterkunftsart: Privatunterkunft (magánszálláshely)\nNTAK-Registrierungsnummer: MA25108720"
         },
         {
           "heading": "Kontakt",
-          "body": "Telefon: +36 30 123 4567\nE-Mail: info@vityillo.hu"
+          "body": "Telefon: +36 30 455 2876\nE-Mail: vityillo.szomod@gmail.com"
         },
         {
           "heading": "Hosting-Anbieter",
-          "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA"
+          "body": "Vercel Inc.\n440 N Barranca Avenue #4133, Covina, CA 91723, USA\nE-Mail: privacy@vercel.com"
         }
       ]
     },
@@ -469,27 +466,35 @@
       "sections": [
         {
           "heading": "1. Verantwortlicher",
-          "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Kontakt: info@vityillo.hu, +36 30 123 4567."
+          "body": "Ádám Róbert, in Ungarn steuerlich registrierte Privatperson, Betreiber des Vityilló Gästehauses (Szőlősor dűlő 119, 2896 Szomód, Ungarn). Kontakt: vityillo.szomod@gmail.com, +36 30 455 2876."
         },
         {
           "heading": "2. Umfang der verarbeiteten Daten",
-          "body": "In den Buchungs- und Kontaktformularen angegebene Daten: Name, E-Mail-Adresse, Telefonnummer, An- und Abreisedatum, Anzahl der Gäste sowie die gesetzlich vorgeschriebenen Gästedaten (Staatsangehörigkeit, Anschrift, Geburtsjahr, Ausweisdaten)."
+          "body": "Kontaktformular: Name, E-Mail-Adresse, Telefonnummer (optional), Betreff und Nachricht.\nBuchungsanfrage: Name, E-Mail-Adresse, Telefonnummer, An- und Abreisedatum, Anzahl der Gäste (Erwachsene sowie Kinder nach Altersgruppe) und optional, wie Sie uns gefunden haben, sowie besondere Wünsche.\nBei der Anreise, beim Check-in, erfassen wir die gesetzlich vorgeschriebenen Gästedaten (z. B. Staatsangehörigkeit, Geburtsdaten, Ausweisdaten) – die Website fragt diese nicht ab."
         },
         {
           "heading": "3. Zweck und Rechtsgrundlage",
-          "body": "Erfüllung der Buchung und Kontaktpflege (Vertragserfüllung) sowie Erfüllung der für Beherbergungsdienstleistungen geltenden gesetzlichen Pflichten, einschließlich der NTAK-Meldung und des VIZA-Systems (rechtliche Verpflichtung)."
+          "body": "Kontakt- und Buchungsanfragen: Beantwortung Ihrer Anfrage und vorvertragliche Maßnahmen (Art. 6 Abs. 1 lit. b und f DSGVO).\nBeim Check-in erfasste Gästedaten: Erfüllung der für Beherbergungsdienstleistungen geltenden gesetzlichen Pflichten, einschließlich der NTAK-Meldung und des VIZA-Systems (Art. 6 Abs. 1 lit. c DSGVO).\nLaden von Google Maps: Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)."
         },
         {
           "heading": "4. Speicherdauer",
-          "body": "Buchhaltungsbelege werden gesetzlich vorgeschrieben 8 Jahre lang aufbewahrt; Buchungsdaten werden bis zum Wegfall des Zwecks gespeichert."
+          "body": "Buchhaltungsbelege werden gesetzlich vorgeschrieben 8 Jahre lang aufbewahrt; Buchungsdaten werden bis zum Wegfall des Zwecks gespeichert. Die Website speichert Formulareingaben nicht: Sie werden dem Betreiber per E-Mail zugestellt."
         },
         {
-          "heading": "5. Datenübermittlung",
-          "body": "Ihre Daten werden nur aufgrund einer gesetzlichen Verpflichtung (z. B. NTAK, Behörden) übermittelt. Zu Marketingzwecken werden sie nicht an Dritte weitergegeben."
+          "heading": "5. Datenübermittlung und Auftragsverarbeiter",
+          "body": "Ihre Daten werden nur aufgrund einer gesetzlichen Verpflichtung (z. B. NTAK, Behörden) übermittelt. Zu Marketingzwecken werden sie nicht an Dritte weitergegeben.\nFür den Betrieb der Website setzen wir folgende Auftragsverarbeiter ein:\n• Vercel Inc. (USA) – Hosting und Auslieferung der Website; technische Zugriffsprotokolle (z. B. IP-Adresse).\n• Supabase Inc. – Speicherung und Auslieferung von Bildern und Videos; beim Abruf Ihre IP-Adresse.\n• Resend (USA) – Zustellung der Formularnachrichten per E-Mail an den Betreiber.\nÜbermittlungen außerhalb des Europäischen Wirtschaftsraums erfolgen auf Grundlage eines Angemessenheitsbeschlusses (EU-US Data Privacy Framework) oder von Standarddatenschutzklauseln."
         },
         {
-          "heading": "6. Ihre Rechte",
-          "body": "Sie können Auskunft, Berichtigung oder Löschung Ihrer Daten sowie die Einschränkung der Verarbeitung verlangen. Beschwerden können Sie bei der ungarischen NAIH (naih.hu) einreichen."
+          "heading": "6. Google Maps",
+          "body": "Die eingebettete Karte wird nur mit Ihrer Einwilligung geladen. Google (Google Ireland Ltd. bzw. Google LLC) erhält dabei als eigenständiger Verantwortlicher Ihre IP-Adresse und kann Cookies setzen. Ihre Einwilligung können Sie jederzeit unter „Cookie-Einstellungen“ in der Fußzeile widerrufen."
+        },
+        {
+          "heading": "7. Cookies und lokaler Speicher",
+          "body": "Wir verwenden keine Tracking-, Analyse- oder Werbe-Cookies. Im lokalen Speicher Ihres Browsers liegen nur für den Betrieb nötige Einstellungen, die nicht übermittelt werden:\n• vityillo-consent-v1 – Ihre Einwilligungsentscheidung (bis zur Löschung)\n• vityillo-theme – helles/dunkles Design (bis zur Löschung)\n• hasWatchedCinematic – die Eröffnungsanimation wurde abgespielt (bis zur Löschung)\n• vityillo-dev-notice-seen, cinematic-prompt-seen, cinematic-force – Anzeigestatus (bis zum Schließen des Browser-Tabs)"
+        },
+        {
+          "heading": "8. Ihre Rechte",
+          "body": "Sie können Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Datenübertragbarkeit verlangen sowie der auf berechtigten Interessen beruhenden Verarbeitung widersprechen. Eine Einwilligung können Sie jederzeit widerrufen; die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung bleibt unberührt. Beschwerden können Sie bei der ungarischen Datenschutzbehörde (NAIH, 1055 Budapest, Falk Miksa utca 9–11, naih.hu) einreichen oder den Rechtsweg beschreiten."
         }
       ]
     },
@@ -499,7 +504,7 @@
       "sections": [
         {
           "heading": "1. Vertragsgegenstand",
-          "body": "Das Vityilló Gästehaus (Betreiber: Vityilló Kft.) erbringt Beherbergungsdienstleistungen gemäß diesen Bedingungen."
+          "body": "Das Vityilló Gästehaus (Betreiber: Ádám Róbert, in Ungarn steuerlich registrierte Privatperson; NTAK-Registrierungsnummer: MA25108720) erbringt Beherbergungsdienstleistungen als Privatunterkunft gemäß diesen Bedingungen."
         },
         {
           "heading": "2. Buchung und Bestätigung",

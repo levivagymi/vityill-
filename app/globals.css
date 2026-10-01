@@ -238,6 +238,15 @@
   box-shadow: 0 0 0 1px var(--glow-ring), 0 0 24px -6px var(--glow-soft);
 }
 
+/* The skip link focuses <main> programmatically (tabindex=-1) so the next Tab
+   continues from the content. A ring around the entire page body there is
+   noise, not a focus indicator. */
+main[tabindex='-1']:focus,
+main[tabindex='-1']:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Pointer intent glow on interactive cards/links flagged for the custom cursor. */
 a[data-cursor='view']:hover,
 button[data-cursor='view']:hover {

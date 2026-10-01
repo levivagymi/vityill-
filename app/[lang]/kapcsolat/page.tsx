@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, Clock, ExternalLink } from 'lucide-react'
 import { getDictionary, hasLocale } from '../dictionaries'
 import PageHero from '@/components/ui/PageHero'
 import ContactForm from '@/components/contact/ContactForm'
+import LocationMap from '@/components/sections/LocationMap'
 import { HERO_BANNER } from '@/lib/content'
 
 type Props = { params: Promise<{ lang: string }> }
@@ -77,15 +78,7 @@ export default async function ContactPage({ params }: Props) {
             </div>
 
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-foreground/[0.08]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4141.433965054247!2d18.325239263444374!3d47.696310253120345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476a4f3c8d51135d%3A0xb90cf9714fdda3b!2zVml0eWlsbMOzIFZlbmTDqWdow6F6!5e0!3m2!1shu!2shu!4v1788459810620!5m2!1shu!2shu"
-                width="100%"
-                height="100%"
-                style={{ border: 'none', filter: 'invert(85%) hue-rotate(165deg) brightness(0.8) contrast(0.9)' }}
-                title="Vityilló Vendégház, Szomód"
-                loading="lazy"
-                className="absolute inset-0"
-              />
+              <LocationMap title="Vityilló Vendégház, Szomód" loadLabel={dict.location.loadMap} />
             </div>
           </div>
         </div>

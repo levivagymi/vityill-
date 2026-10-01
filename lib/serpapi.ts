@@ -3,11 +3,11 @@ import type { Locale } from '@/lib/types'
 
 /** Vityilló's Google Business Profile as SerpApi's `data_id` (`<feature_id>:<cid>`).
  *  Decoded from the same Google Maps CID already embedded in the embed-iframe
- *  `src` in app/[lang]/kapcsolat/page.tsx and components/sections/LocationMap.tsx
+ *  `src` in components/sections/LocationMap.tsx
  *  (`!1s0x476a4f3c8d51135d%3A0xb90cf9714fdda3b!`). Deliberately duplicated here
- *  rather than shared with those files - this is a fresh, single-purpose
- *  constant for the reviews integration; refactoring the iframe URLs is out
- *  of scope. If the Maps listing is ever re-verified/merged, update both. */
+ *  rather than shared with that client component - this is a server-only,
+ *  single-purpose constant for the reviews integration. If the Maps listing
+ *  is ever re-verified/merged, update both. */
 const GOOGLE_MAPS_DATA_ID = '0x476a4f3c8d51135d:0xb90cf9714fdda3b'
 
 /** Reviews change rarely; this keeps SerpApi usage (metered, paid) to at most

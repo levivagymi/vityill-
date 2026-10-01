@@ -91,16 +91,21 @@ export function scrollUnlock(lenis: Lenis | null) {
 }
 
 /** Scroll an in-page anchor into view. `offset` is negative to leave room for
- *  the fixed navbar, matching Lenis's own sign convention. */
-export function scrollToAnchor(lenis: Lenis | null, selector: string, offset = 0) {
+ *  the fixed navbar, matching Lenis's own sign convention. `immediate` jumps
+ *  without animating (the skip link - a keyboard user expects to land, not
+ *  to watch the page travel). */
+export function scrollToAnchor(lenis: Lenis | null, selector: string, offset = 0, immediate = false) {
   if (lenis) {
-    lenis.scrollTo(selector, { offset })
+    lenis.scrollTo(selector, { offset, immediate })
     return
   }
   const el = document.querySelector<HTMLElement>(selector)
   if (!el) return
   const top = el.getBoundingClientRect().top + window.scrollY + offset
-  window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
+  // 'instant', not 'auto', for the jump: <html> carries Tailwind's
+  // scroll-smooth class and 'auto' defers to it. Reduced motion keeps 'auto' -
+  // globals.css already forces scroll-behavior: auto there.
+  window.scrollTo({ top, behavior: immediate ? 'instant' : prefersReducedMotion() ? 'auto' : 'smooth' })
 }
 
 /** Jump to the top of the document without animation. */

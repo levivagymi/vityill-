@@ -25,7 +25,8 @@
     "backHome": "Vissza a főoldalra",
     "from": "Tól",
     "perNight": "/ éj",
-    "explore": "Felfedezés"
+    "explore": "Felfedezés",
+    "skipToContent": "Ugrás a tartalomra"
   },
   "hero": {
     "eyebrow": "Szomód, Magyarország",
@@ -270,27 +271,16 @@
     "adults": "Felnőttek száma",
     "childrenUnder4": "Gyermekek száma (0–3 év, ingyenes)",
     "childrenOver4": "Gyermekek száma (4 év felett)",
-    "nationality": "Állampolgárság",
-    "residence": "Lakóhely országa",
-    "postalCode": "Irányítószám",
-    "gender": "Nem",
-    "birthYear": "Születési év",
-    "channel": "Hogyan talált ránk?",
+    "channel": "Hogyan talált ránk? (opcionális)",
     "requests": "Különleges kérések (opcionális)",
-    "genderMale": "Férfi",
-    "genderFemale": "Nő",
-    "genderOther": "Egyéb",
     "channelDirect": "Közvetlen",
     "channelAirbnb": "Airbnb",
     "channelBooking": "Booking.com",
     "channelFacebook": "Facebook",
     "channelOther": "Egyéb",
-    "selectGender": "Válasszon nemet",
     "selectChannel": "Válasszon forrást",
-    "selectCountry": "Válasszon országot",
     "requiredField": "Ez a mező kötelező",
     "invalidEmail": "Érvényes email cím szükséges",
-    "invalidYear": "Érvényes születési évet adjon meg (1900–2010)",
     "invalidPhone": "Érvényes telefonszámot adjon meg",
     "minAdults": "Legalább 1 felnőtt szükséges",
     "tooManyGuests": "Legfeljebb 6 vendég foglalhat egyszerre",
@@ -301,7 +291,7 @@
     "errorTitle": "Hiba történt",
     "errorMsg": "A foglalást most nem sikerült elküldeni. Kérjük, próbálja újra, vagy keressen minket telefonon.",
     "newBooking": "Új foglalás",
-    "ntak": "Az adatokat az NTAK (Nemzeti Turisztikai Adatszolgáltató Központ) előírásainak megfelelően kezeljük.",
+    "ntak": "Az NTAK által előírt vendégadatokat (pl. állampolgárság, születési év) nem itt kérjük el, hanem érkezéskor, a bejelentkezésnél rögzítjük.",
     "stepStay": "Tartózkodás",
     "stepGuest": "Vendégadatok",
     "stepReview": "Áttekintés",
@@ -325,10 +315,13 @@
     "datesError": "A távozás dátuma legyen későbbi az érkezésnél",
     "minNightsError": "A minimális tartózkodás 2 éjszaka",
     "pastDateError": "A dátum nem lehet a múltban",
-    "agree": "Elolvastam és elfogadom az ÁSZF-et és az adatkezelési tájékoztatót.",
+    "agree": "Elolvastam és elfogadom az Általános Szerződési Feltételeket:",
     "agreeError": "A folytatáshoz el kell fogadnia a feltételeket",
     "guestsValue": "{adults} felnőtt, {children} gyermek",
-    "selectDatesFirst": "Kérjük, először válasszon érkezési és távozási dátumot."
+    "selectDatesFirst": "Kérjük, először válasszon érkezési és távozási dátumot.",
+    "adultConfirm": "Kijelentem, hogy elmúltam 18 éves.",
+    "adultConfirmError": "A foglaláshoz nagykorúnak kell lennie.",
+    "privacyNotice": "A megadott adatokat kizárólag a foglalási kérés feldolgozására és a kapcsolattartásra használjuk. Részletek:"
   },
   "availability": {
     "label": "Elérhetőség",
@@ -388,36 +381,26 @@
     "checkInTime": "Érkezés: 15:00-tól",
     "checkOutTime": "Távozás: 10:00-ig",
     "directions": "Útvonalterv",
-    "newMessage": "Új üzenet írása"
+    "newMessage": "Új üzenet írása",
+    "privacyNotice": "A megadott adatokat kizárólag az üzenete megválaszolására használjuk. Részletek:",
+    "disabledNotice": "Az online üzenetküldés jelenleg nem aktív. Kérjük, keressen minket telefonon vagy e-mailben:"
   },
   "testimonials": {
     "label": "Vendégeink mondják",
     "title": "Értékelések",
     "avgLabel": "Átlagos értékelés",
-    "satisfiedLabel": "Elégedett vendég",
     "reviewCountLabel": "Vendég értékelte",
     "leaveReviewCta": "Értékeld Te is!",
     "starsLabel": "3 csillag",
-    "goTo": "Vélemény",
     "wallTitle": "Vendégeink történetei",
     "wallSubtitle": "Valódi pillanatok azoktól, akik nálunk töltődtek fel",
-    "ratingOnlyQuote": "Csak értékelést hagyott, szöveges vélemény nélkül.",
-    "stories": [
-      { "name": "Kovács Eszter", "country": "Budapest, HU", "rating": 5, "quote": "A szauna és a kültéri medence tökéletes volt. Reggel a madarak énekére ébredtünk — varázslatos." },
-      { "name": "Thomas Müller", "country": "Wien, AT", "rating": 5, "quote": "Ein wunderschöner Ort zum Entspannen. Die Umgebung in Szomód ist atemberaubend." },
-      { "name": "Sarah Johnson", "country": "London, UK", "rating": 5, "quote": "Absolutely stunning retreat. The private forest setting is magical — we didn't want to leave." },
-      { "name": "Nagy Balázs & Zsuzsa", "country": "Győr, HU", "rating": 5, "quote": "A bográcsos esti grillezés feledhetetlen élmény volt. Feltétlenül visszatérünk!" },
-      { "name": "Markus Schmidt", "country": "München, DE", "rating": 5, "quote": "Luxus und Natur in perfekter Harmonie. Der Ausblick am Morgen ist unbeschreiblich." },
-      { "name": "Horváth Lilla", "country": "Pécs, HU", "rating": 5, "quote": "A jacuzziból néztük a csillagokat, körülöttünk csak az erdő csendje. Ennél többet nem is kérhettünk volna." },
-      { "name": "Claire Dubois", "country": "Lyon, FR", "rating": 5, "quote": "Un refuge parfait. Chaque détail respire le calme — le sauna privé était un rêve." },
-      { "name": "Szabó Márk", "country": "Tata, HU", "rating": 5, "quote": "Baráti hétvégére tökéletes: bogrács, medence, túrautak a küszöbről. Profi, mégis családias." }
-    ]
+    "ratingOnlyQuote": "Csak értékelést hagyott, szöveges vélemény nélkül."
   },
   "footer": {
     "tagline": "Luxus menedék Szomód szívében",
     "contact": "Kapcsolat",
     "phone": "+36 30 455 2876",
-    "email": "vityillo@gmail.com",
+    "email": "vityillo.szomod@gmail.com",
     "address": "Szomód, Magyarország",
     "navTitle": "Navigáció",
     "legal": "Jogi információk",
@@ -426,14 +409,28 @@
     "ntak": "NTAK Hitelesített Szálláshely",
     "imprint": "Impresszum",
     "privacy": "Adatvédelem",
-    "terms": "ÁSZF"
+    "terms": "ÁSZF",
+    "cookieSettings": "Süti-beállítások"
   },
   "cookie": {
-    "title": "Sütiket használunk",
-    "text": "Weboldalunk a működéshez és az élmény javításához sütiket használ.",
-    "accept": "Elfogadom",
-    "decline": "Elutasítom",
-    "more": "Adatkezelési tájékoztató"
+    "title": "Sütik és külső tartalmak",
+    "text": "Követő-, analitikai vagy hirdetési sütit nem használunk. A böngészőjében csak a működéshez nélkülözhetetlen beállításokat tároljuk (pl. téma, ez a döntés). A Google Térkép csak az Ön hozzájárulásával töltődik be, mert betöltéskor a Google megkapja az IP-címét, és sütiket helyezhet el.",
+    "acceptAll": "Mindet elfogadom",
+    "necessaryOnly": "Csak a szükségesek",
+    "settings": "Beállítások",
+    "save": "Kiválasztottak mentése",
+    "more": "Adatkezelési tájékoztató",
+    "necessaryTitle": "Nélkülözhetetlen",
+    "necessaryText": "A téma, a megjelenítési mód és ennek a döntésnek a tárolása a böngészőjében. Nem kapcsolható ki, és semmilyen adat nem kerül továbbításra.",
+    "alwaysOn": "Mindig aktív",
+    "externalTitle": "Külső tartalom: Google Térkép",
+    "externalText": "A beágyazott térkép betöltésekor a Google megkapja az IP-címét, és sütiket helyezhet el. A hozzájárulás a lábléc „Süti-beállítások” pontjában bármikor visszavonható."
+  },
+  "consent": {
+    "mapTitle": "Google Térkép",
+    "mapText": "A térkép a Google szervereiről töltődik be: ekkor a Google megkapja az IP-címét, és sütiket helyezhet el.",
+    "loadOnce": "Térkép betöltése",
+    "alwaysAllow": "Mindig engedélyezem"
   },
   "scrollTop": {
     "label": "Vissza a tetejére"
@@ -447,19 +444,19 @@
       "sections": [
         {
           "heading": "Szolgáltató",
-          "body": "Vityilló Vendégház\nÜzemeltető: Vityilló Kft.\nSzékhely: 2896 Szomód, Fő utca 1., Magyarország"
+          "body": "Vityilló Vendégház\nÜzemeltető: Ádám Róbert (adószámmal rendelkező magánszemély)\nTelephely és levelezési cím: 2896 Szomód, Szőlősor dűlő 119., Magyarország"
         },
         {
           "heading": "Nyilvántartási adatok",
-          "body": "Cégjegyzékszám: 11-09-000000\nAdószám: 00000000-2-11\nNTAK regisztrációs szám: MA00000000"
+          "body": "Szálláshely típusa: magánszálláshely\nNTAK regisztrációs szám: MA25108720"
         },
         {
           "heading": "Kapcsolat",
-          "body": "Telefon: +36 30 123 4567\nE-mail: info@vityillo.hu"
+          "body": "Telefon: +36 30 455 2876\nE-mail: vityillo.szomod@gmail.com"
         },
         {
           "heading": "Tárhelyszolgáltató",
-          "body": "Vercel Inc.\n340 S Lemon Ave #4133, Walnut, CA 91789, USA"
+          "body": "Vercel Inc.\n440 N Barranca Avenue #4133, Covina, CA 91723, USA\nE-mail: privacy@vercel.com"
         }
       ]
     },
@@ -469,27 +466,35 @@
       "sections": [
         {
           "heading": "1. Adatkezelő",
-          "body": "Vityilló Kft. (2896 Szomód, Fő utca 1.). Kapcsolat: info@vityillo.hu, +36 30 123 4567."
+          "body": "Ádám Róbert adószámmal rendelkező magánszemély, a Vityilló Vendégház üzemeltetője (2896 Szomód, Szőlősor dűlő 119.). Kapcsolat: vityillo.szomod@gmail.com, +36 30 455 2876."
         },
         {
           "heading": "2. Kezelt adatok köre",
-          "body": "A foglalási és kapcsolatfelvételi űrlapon megadott adatok: név, e-mail cím, telefonszám, érkezési és távozási dátum, vendégek száma, valamint a jogszabály által előírt vendégadatok (állampolgárság, lakcím, születési év, okmányadatok)."
+          "body": "Kapcsolatfelvételi űrlap: név, e-mail-cím, telefonszám (opcionális), tárgy és az üzenet szövege.\nFoglalási kérés: név, e-mail-cím, telefonszám, érkezési és távozási dátum, a vendégek száma (felnőttek, illetve gyermekek korcsoport szerint), valamint opcionálisan a megismerés forrása és a különleges kérések.\nÉrkezéskor, a bejelentkezésnél rögzítjük a jogszabály által előírt vendégadatokat (pl. állampolgárság, születési adatok, okmányadatok) – ezeket a weboldal nem kéri el."
         },
         {
           "heading": "3. Az adatkezelés célja és jogalapja",
-          "body": "A foglalás teljesítése és kapcsolattartás (szerződés teljesítése), valamint a szálláshely-szolgáltatásra vonatkozó jogszabályi kötelezettségek teljesítése, ideértve az NTAK adatszolgáltatást és a VIZA rendszert (jogi kötelezettség)."
+          "body": "Kapcsolatfelvétel és foglalási kérés: a megkeresés megválaszolása, illetve a szerződés megkötését megelőző lépések (GDPR 6. cikk (1) b) és f) pont).\nA bejelentkezéskor rögzített vendégadatok: a szálláshely-szolgáltatásra vonatkozó jogi kötelezettségek teljesítése, ideértve az NTAK-adatszolgáltatást és a VIZA rendszert (GDPR 6. cikk (1) c) pont).\nA Google Térkép betöltése: az Ön hozzájárulása (GDPR 6. cikk (1) a) pont)."
         },
         {
           "heading": "4. Adatmegőrzés",
-          "body": "A számviteli bizonylatokat a jogszabály szerint 8 évig, a foglalási adatokat a cél megszűnéséig őrizzük meg."
+          "body": "A számviteli bizonylatokat a jogszabály szerint 8 évig, a foglalási adatokat a cél megszűnéséig őrizzük meg. A weboldal az űrlapokon beküldött adatokat nem tárolja: azok e-mailben jutnak el az üzemeltetőhöz."
         },
         {
-          "heading": "5. Adattovábbítás",
-          "body": "Adatait kizárólag jogszabályi kötelezettség alapján (pl. NTAK, hatóságok) továbbítjuk. Marketing célból harmadik félnek nem adjuk át."
+          "heading": "5. Adattovábbítás és adatfeldolgozók",
+          "body": "Adatait jogszabályi kötelezettség alapján (pl. NTAK, hatóságok) továbbítjuk; marketingcélból harmadik félnek nem adjuk át.\nA weboldal működtetéséhez az alábbi adatfeldolgozókat vesszük igénybe:\n• Vercel Inc. (USA) – tárhely és a weboldal kiszolgálása; a kérések technikai naplói (pl. IP-cím).\n• Supabase Inc. – a képek és videók tárolása és kiszolgálása; letöltéskor az IP-cím.\n• Resend (USA) – az űrlapüzenetek e-mailes továbbítása az üzemeltetőnek.\nAz Európai Gazdasági Térségen kívülre irányuló továbbítás megfelelőségi határozat (EU–USA adatvédelmi keretrendszer) vagy általános adatvédelmi kikötések alapján történik."
         },
         {
-          "heading": "6. Az Ön jogai",
-          "body": "Ön kérheti adatai hozzáférését, helyesbítését, törlését, valamint az adatkezelés korlátozását. Panaszával a NAIH-hoz (naih.hu) fordulhat."
+          "heading": "6. Google Térkép",
+          "body": "A beágyazott térkép csak az Ön hozzájárulásával töltődik be. Ekkor a Google (Google Ireland Ltd., illetve Google LLC) önálló adatkezelőként megkapja az IP-címét, és sütiket helyezhet el. Hozzájárulását a lábléc „Süti-beállítások” pontjában bármikor visszavonhatja."
+        },
+        {
+          "heading": "7. Sütik és helyi tárolás",
+          "body": "Követő-, analitikai vagy hirdetési sütit nem használunk. A böngésző helyi tárolójában kizárólag a működéshez szükséges beállításokat tároljuk, és ezeket nem továbbítjuk:\n• vityillo-consent-v1 – a hozzájárulási döntés (törlésig)\n• vityillo-theme – világos/sötét téma (törlésig)\n• hasWatchedCinematic – a nyitó animáció már lejátszódott (törlésig)\n• vityillo-dev-notice-seen, cinematic-prompt-seen, cinematic-force – megjelenítési állapot (a böngészőfül bezárásáig)"
+        },
+        {
+          "heading": "8. Az Ön jogai",
+          "body": "Kérheti adatai hozzáférését, helyesbítését, törlését, kezelésének korlátozását, adathordozhatóságát, és tiltakozhat a jogos érdeken alapuló adatkezelés ellen. Hozzájárulását bármikor visszavonhatja; ez nem érinti a visszavonás előtti adatkezelés jogszerűségét. Panaszával a Nemzeti Adatvédelmi és Információszabadság Hatósághoz (NAIH, 1055 Budapest, Falk Miksa utca 9–11., naih.hu) vagy bírósághoz fordulhat."
         }
       ]
     },
@@ -499,7 +504,7 @@
       "sections": [
         {
           "heading": "1. A szerződés tárgya",
-          "body": "A Vityilló Vendégház (Üzemeltető: Vityilló Kft.) szálláshely-szolgáltatást nyújt a jelen feltételek szerint."
+          "body": "A Vityilló Vendégház (üzemeltető: Ádám Róbert adószámmal rendelkező magánszemély; NTAK regisztrációs szám: MA25108720) magánszálláshely-szolgáltatást nyújt a jelen feltételek szerint."
         },
         {
           "heading": "2. Foglalás és visszaigazolás",

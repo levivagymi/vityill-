@@ -18,9 +18,10 @@ export const MAX_GUESTS = 6
 /** Shortest bookable stay, in nights. */
 export const MIN_NIGHTS = 2
 
-/** Booking contact must be an adult; oldest accepted birth year is a sanity bound. */
-export const MIN_BIRTH_YEAR = 1900
-export const MAX_BIRTH_YEAR = new Date().getFullYear() - 18
+/** Optional "how did you find us?" answers - shared by the wizard and the
+ *  server schema so the two can never disagree. */
+export const BOOKING_CHANNELS = ['direct', 'airbnb', 'booking', 'facebook', 'other'] as const
+export type BookingChannel = (typeof BOOKING_CHANNELS)[number]
 
 /** Today as a yyyy-mm-dd string in local time. */
 export const todayISO = (): string => {
@@ -112,11 +113,3 @@ export function calculateStayPrice(input: StayInput): PriceEstimate {
   const total = breakdown.reduce((sum, g) => sum + g.subtotal, 0)
   return { nights, paidGuestCount, totalGuestCount, breakdown, total }
 }
-
-export const COUNTRIES = [
-  'Magyarország', 'Ausztria', 'Németország', 'Szlovákia', 'Románia', 'Csehország',
-  'Lengyelország', 'Horvátország', 'Szerbia', 'Ukrajna', 'Olaszország', 'Franciaország',
-  'Egyesült Királyság', 'Spanyolország', 'Hollandia', 'Svájc', 'Belgium', 'Svédország',
-  'Dánia', 'Norvégia', 'Finnország', 'Oroszország', 'USA', 'Kanada', 'Ausztrália',
-  'Japán', 'Kína', 'India', 'Brazília', 'Argentína', 'Más / Other',
-]

@@ -176,7 +176,7 @@ export const ROOM_AMENITY_KEYS: RoomAmenityKey[] = [
   'wifi', 'ac', 'heating', 'hairdryer', 'bathroom', 'linens', 'smarttv', 'charging', 'dishwasher',
 ]
 
-/** Imagery paired by index with dict.testimonials.stories for the guest wall. */
+/** Imagery paired by index with the live Google reviews on the guest wall. */
 export const STORY_IMAGES: string[] = [
   imageUrl('patio-lights-dusk'),
   imageUrl('dining-room-deer-art'),

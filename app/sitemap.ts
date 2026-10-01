@@ -1,10 +1,15 @@
 import type { MetadataRoute } from 'next'
+import { notFound } from 'next/navigation'
 import { ROUTES, ROOM_SLUGS, EXPERIENCE_SLUGS } from '@/lib/nav'
+import { SITE_INDEXABLE, SITE_URL as BASE } from '@/lib/site'
 
-const BASE = 'https://vityillo.hu'
 const LOCALES = ['hu', 'en', 'de'] as const
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // Pre-launch: a clean 404 rather than an empty <urlset> - there is no URL
+  // inventory to advertise until the site is opened to search engines.
+  if (!SITE_INDEXABLE) notFound()
+
   const paths: string[] = [
     '',
     ROUTES.rooms,

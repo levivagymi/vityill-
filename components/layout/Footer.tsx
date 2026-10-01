@@ -5,6 +5,7 @@ import { useParams, usePathname } from 'next/navigation'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import gsap from '@/lib/gsap'
 import { fxFull } from '@/lib/fx'
+import { openConsentSettings } from '@/lib/consent'
 import { useDict } from '@/components/providers/DictProvider'
 import Logo from '@/components/brand/Logo'
 import { MAIN_NAV, href, isExperienceSubpath } from '@/lib/nav'
@@ -146,6 +147,15 @@ function SiteFooter() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <button
+                  type="button"
+                  onClick={openConsentSettings}
+                  className="text-sm text-muted-foreground hover:text-foreground font-sans transition-colors cursor-pointer"
+                >
+                  {dict.footer.cookieSettings}
+                </button>
+              </li>
             </ul>
 
             <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">
@@ -184,6 +194,13 @@ function SiteFooter() {
                 {label}
               </Link>
             ))}
+            <button
+              type="button"
+              onClick={openConsentSettings}
+              className="text-xs text-muted-foreground hover:text-foreground font-sans transition-colors cursor-pointer"
+            >
+              {dict.footer.cookieSettings}
+            </button>
           </div>
         </div>
       </div>

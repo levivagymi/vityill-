@@ -8,10 +8,13 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import Magnetic from '@/components/ui/Magnetic'
 import { STORY_IMAGES } from '@/lib/content'
 import { allowAmbientMotion } from '@/lib/utils'
-import type { Dictionary } from '@/lib/types'
 import { useLiveReviews } from '@/lib/reviews'
 
-type Story = Dictionary['testimonials']['stories'][number] & { image: string }
+type Story = { name: string; country: string; rating: number; quote: string; image: string }
+/** Below this many live Google reviews the quote wall stays hidden. There is
+ *  deliberately no curated fallback: showing invented or unverifiable guest
+ *  quotes as real ones is a blacklisted unfair commercial practice
+ *  (UCPD Annex I 23b-23c / Fttv. melléklet). */
 const MIN_LIVE_REVIEWS = 5
 /** Vityilló's Google Maps place - same business as GOOGLE_MAPS_DATA_ID in
  *  lib/serpapi.ts, given here as the short link so guests land straight on
@@ -91,23 +94,15 @@ export default function GuestStories() {
         quote: r.text || dict.testimonials.ratingOnlyQuote,
         image: STORY_IMAGES[i % STORY_IMAGES.length],
       }))
-    : dict.testimonials.stories.map((s, i) => ({
-        ...s,
-        image: STORY_IMAGES[i % STORY_IMAGES.length],
-      }))
+    : []
 
-  const ratingPool = useLive ? liveReviews.map((r) => r.rating) : dict.testimonials.stories.map((s) => s.rating)
-  // liveTotalCount/liveAvgRating come from Google's place-level stats (SerpApi's
-  // place_info), covering every review Google has - not just the handful this
-  // page fetched for the quote wall. Prefer them whenever live data is in play;
-  // fall back to the fetched/curated sample only if SerpApi didn't report them.
-  const avgRating =
-    useLive && liveAvgRating !== null
-      ? liveAvgRating
-      : ratingPool.length
-        ? ratingPool.reduce((sum, r) => sum + r, 0) / ratingPool.length
-        : 0
-  const reviewCount = useLive && liveTotalCount !== null ? liveTotalCount : ratingPool.length
+  // Google's place-level stats (SerpApi's place_info), covering every review
+  // Google has - not just the handful fetched for the wall. Shown only when
+  // Google actually reported them; an average is never made up locally.
+  const stats =
+    liveTotalCount !== null && liveAvgRating !== null && liveTotalCount > 0
+      ? { avgRating: liveAvgRating, reviewCount: liveTotalCount }
+      : null
 
   useEffect(() => {
     // One-time hydration of a browser-only media-query/save-data check.
@@ -155,12 +150,17 @@ export default function GuestStories() {
         { opacity: 1, duration: 0.6, ease: 'power2.out' },
       )
     }, sectionRef)
-    // Live quotes replace curated ones and can be a different length, changing
-    // section height — pinned/scrubbed triggers further down the page must re-measure.
-    ScrollTrigger.refresh()
     wasLiveRef.current = useLive
     return () => ctx.revert()
   }, [useLive])
+
+  useEffect(() => {
+    if (reviewsStatus === 'loading') return
+    // The wall and the stats row only appear once the reviews request settles,
+    // changing the section height - pinned/scrubbed triggers further down the
+    // page must re-measure.
+    ScrollTrigger.refresh()
+  }, [reviewsStatus])
 
   return (
     <section id="testimonials" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
@@ -178,7 +178,7 @@ export default function GuestStories() {
       </div>
 
       <div ref={storiesWrapRef}>
-        {marquee ? (
+        {stories.length === 0 ? null : marquee ? (
           <div className="relative" role="region" aria-label={dict.testimonials.wallTitle}>
             <div className="overflow-hidden" style={{ maskImage: 'linear-gradient(90deg, transparent, black 6%, black 94%, transparent)' }}>
               <div ref={rowARef} className="flex w-max gap-5" style={{ willChange: 'transform' }}>
@@ -199,19 +199,23 @@ export default function GuestStories() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center gap-8 mt-14 pt-8 border-t border-foreground/[0.08]">
-          <div className="text-center">
-            <div className="font-heading text-3xl text-foreground font-semibold">{avgRating.toFixed(1)}</div>
-            <div className="flex justify-center mt-1">
-              <Stars count={Math.round(avgRating)} />
-            </div>
-            <div className="text-xs font-sans text-muted-foreground mt-1 uppercase tracking-wider">{dict.testimonials.avgLabel}</div>
-          </div>
-          <div className="w-px h-12 bg-foreground/[0.08]" />
-          <div className="text-center">
-            <div className="font-heading text-3xl text-foreground font-semibold">{reviewCount}</div>
-            <div className="text-xs font-sans text-muted-foreground mt-2 uppercase tracking-wider">{dict.testimonials.reviewCountLabel}</div>
-          </div>
-          <div className="w-px h-12 bg-foreground/[0.08]" />
+          {stats && (
+            <>
+              <div className="text-center">
+                <div className="font-heading text-3xl text-foreground font-semibold">{stats.avgRating.toFixed(1)}</div>
+                <div className="flex justify-center mt-1">
+                  <Stars count={Math.round(stats.avgRating)} />
+                </div>
+                <div className="text-xs font-sans text-muted-foreground mt-1 uppercase tracking-wider">{dict.testimonials.avgLabel}</div>
+              </div>
+              <div className="w-px h-12 bg-foreground/[0.08]" />
+              <div className="text-center">
+                <div className="font-heading text-3xl text-foreground font-semibold">{stats.reviewCount}</div>
+                <div className="text-xs font-sans text-muted-foreground mt-2 uppercase tracking-wider">{dict.testimonials.reviewCountLabel}</div>
+              </div>
+              <div className="w-px h-12 bg-foreground/[0.08]" />
+            </>
+          )}
           <div className="text-center">
             <div className="font-heading text-3xl text-foreground font-semibold">★★★</div>
             <div className="text-xs font-sans text-muted-foreground mt-2 uppercase tracking-wider">{dict.testimonials.starsLabel}</div>

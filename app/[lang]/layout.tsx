@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { LangUpdater } from '@/components/LangUpdater'
 import { getDictionary, hasLocale } from './dictionaries'
 import { notFound } from 'next/navigation'
+import { SITE_URL } from '@/lib/site'
 import LenisProvider from '@/components/engine/LenisProvider'
 import PointerFx from '@/components/engine/PointerFx'
 import ScrollProgress from '@/components/engine/ScrollProgress'
@@ -14,6 +15,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import CookieBanner from '@/components/layout/CookieBanner'
 import DevNoticeModal from '@/components/layout/DevNoticeModal'
+import SkipLink from '@/components/layout/SkipLink'
 
 type Props = { children: React.ReactNode; params: Promise<{ lang: string }> }
 
@@ -26,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!hasLocale(lang)) return {}
   const dict = await getDictionary(lang)
   return {
-    metadataBase: new URL('https://vityillo.hu'),
+    metadataBase: new URL(SITE_URL),
     title: { default: dict.meta.title, template: `%s · Vityilló Vendégház` },
     description: dict.meta.description,
     alternates: {
@@ -60,6 +62,8 @@ export default async function LangLayout({ children, params }: Props) {
       <LenisProvider>
         <DictProvider dict={dict}>
           <CommandProvider>
+            {/* First focusable element on every page (WCAG 2.4.1). */}
+            <SkipLink />
             <DevNoticeModal />
             <LangUpdater lang={lang} />
             <PageTransitionOverlay />

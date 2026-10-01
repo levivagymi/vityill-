@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import Script from 'next/script'
 import { FX_BOOTSTRAP } from '@/lib/fx'
+import { SITE_INDEXABLE } from '@/lib/site'
 import './globals.css'
 
 // No `weight` array: Google serves Playfair Display as a wght-axis variable
@@ -27,6 +28,18 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Vityilló Vendégház',
   description: 'Luxus vendégház Szomódon, a Szőlősor dűlőben.',
+  // Inherited by every route; no page sets its own `robots`. The X-Robots-Tag
+  // header in next.config.ts carries the same signal to non-HTML responses.
+  ...(SITE_INDEXABLE
+    ? {}
+    : {
+        robots: {
+          index: false,
+          follow: false,
+          nocache: true,
+          googleBot: { index: false, follow: false, noimageindex: true },
+        },
+      }),
 }
 
 export const viewport: Viewport = {

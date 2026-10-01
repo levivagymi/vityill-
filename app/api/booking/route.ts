@@ -1,48 +1,25 @@
 import { NextResponse } from 'next/server'
-import { promises as fs } from 'fs'
-import path from 'path'
 import { randomUUID } from 'crypto'
 import { BOOKING_ENABLED } from '@/lib/booking'
-import { bookingServerSchema, type BookingPayload } from '@/lib/booking-schema'
-
-type BookingRecord = BookingPayload & { id: string; receivedAt: string }
-
-/** Append the booking request to a local NDJSON log. Failures are non-fatal
- *  (e.g. read-only serverless FS) — the request still succeeds and is logged. */
-async function persistBooking(record: BookingRecord) {
-  try {
-    const dir = path.join(process.cwd(), 'data')
-    await fs.mkdir(dir, { recursive: true })
-    await fs.appendFile(path.join(dir, 'bookings.ndjson'), JSON.stringify(record) + '\n', 'utf8')
-  } catch (err) {
-    console.warn('[booking] could not persist to disk:', (err as Error).message)
-  }
-}
-
-/** Notify the host. Real email sending is wired only when SMTP env vars exist;
- *  otherwise it is a no-op so the flow works end-to-end without credentials. */
-async function notifyHost(record: BookingRecord) {
-  if (!process.env.SMTP_HOST) {
-    console.info(`[booking] new request ${record.id} from ${record.email} (email sending not configured)`)
-    return
-  }
-  // Placeholder for an SMTP/transactional-email integration.
-  console.info(`[booking] would email host about ${record.id}`)
-}
+import { bookingServerSchema } from '@/lib/booking-schema'
+import { sendBookingNotification, type BookingRecord } from '@/lib/email'
+import { checkRequestOrigin, isHoneypotFilled, readJsonBody, siteAllowedHosts } from '@/lib/api-guard'
 
 export async function POST(request: Request) {
   if (!BOOKING_ENABLED) {
     return NextResponse.json({ ok: false, error: 'booking_disabled' }, { status: 503 })
   }
 
-  let json: unknown
-  try {
-    json = await request.json()
-  } catch {
-    return NextResponse.json({ ok: false, error: 'invalid_json' }, { status: 400 })
-  }
+  const origin = checkRequestOrigin(request.headers, siteAllowedHosts())
+  if (!origin.ok) return NextResponse.json({ ok: false, error: origin.error }, { status: origin.status })
 
-  const parsed = bookingServerSchema.safeParse(json)
+  const body = await readJsonBody(request)
+  if (!body.ok) return NextResponse.json({ ok: false, error: body.error }, { status: body.status })
+
+  // Bots get the same answer a person would - no signal to tune against.
+  if (isHoneypotFilled(body.value)) return NextResponse.json({ ok: true, id: randomUUID() })
+
+  const parsed = bookingServerSchema.safeParse(body.value)
   if (!parsed.success) {
     return NextResponse.json(
       { ok: false, error: 'validation', issues: parsed.error.flatten() },
@@ -55,9 +32,15 @@ export async function POST(request: Request) {
     receivedAt: new Date().toISOString(),
     ...parsed.data,
   }
+  const delivery = await sendBookingNotification(record)
 
-  await persistBooking(record)
-  await notifyHost(record)
-
+  if (delivery === 'failed') {
+    return NextResponse.json({ ok: false, error: 'delivery_failed' }, { status: 502 })
+  }
+  // Locally a missing Resend key is a convenience no-op; in production it
+  // would mean every request silently vanishes, so it is an error there.
+  if (delivery === 'not_configured' && process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ ok: false, error: 'email_not_configured' }, { status: 503 })
+  }
   return NextResponse.json({ ok: true, id: record.id })
 }
